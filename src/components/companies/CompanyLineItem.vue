@@ -5,11 +5,11 @@
         <div class="since">{{ _since }}</div>
         <div class="owner">{{ _owner }}</div>
         <div class="status">
-            <input type="checkbox" :checked="_active" />
+            <input type="checkbox" :checked="_active" onclick="return false"/> <label>Active</label>
         </div>
         <!-- edit button -->
         <div class="edit">
-            <button @click="selectCompany(_id)" class="edit"><img src="./edit.png" width="16" />
+            <button @click="setCurrentCompany(_id)" class="edit"><img class="icon" src="./edit.jpg" width="12" />
                 Edit
             </button>
         </div>
@@ -22,7 +22,7 @@
 
         components: {},
 
-        props: [ _id, '_name', '_since', '_owner', '_active' ],
+        props: [ '_id', '_name', '_since', '_owner', '_active' ],
 
         data() {
 
@@ -30,8 +30,8 @@
         },
 
         methods: {
-            selectCompany(id) {
-                
+            setCurrentCompany(id) {
+                this.$store.dispatch('set_current_company', id)
             }
         },
 
@@ -40,5 +40,15 @@
 </script>
 
 <style scoped>
+    .icon {
+        /* padding-top: 4px; */
+        padding-bottom: -4px;
+    }
 
+    .line-item {
+        display: grid;
+        grid-template-columns: 220px 80px 160px 80px 80px;
+        text-align: left;
+        margin-left: 20px;
+    }
 </style>
