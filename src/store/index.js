@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
+    activeNav: '',
     currentUser: {
       firstName: 'Zach',
       lastName: 'Lefeistre',
@@ -69,12 +70,20 @@ export default createStore({
     }
   },
   mutations: {
+    SET_ACTIVE_NAV(state, navElement) {
+      state.activeNave = navElement
+    },
+
     SET_CURRENT_COMPANY(state, companyId) {
       state.currentCompany = companyId
     },
 
   },
   actions: {
+    set_active_nav({ commit }, navElement) {
+      commit('SET_ACTIVE_NAV', navElement)
+    },
+
     set_current_company({ commit }, id) {
       commit('SET_CURRENT_COMPANY', id)
     }

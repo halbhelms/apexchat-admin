@@ -2,7 +2,14 @@
     <div class="companies">
         <CompaniesHeader />
         <CompanyDataHeader />
-        <CompanyLineItem v-for="company in $store.state.companies" :key="company.id" :_name="company.name" :_since="company.since" :_owner="company.owner" :_active="company.active" />
+        <CompanyLineItem 
+            v-for="company in $store.state.companies" 
+            :key="company.id" 
+            :_name="company.name" 
+            :_since="company.since" 
+            :_owner="company.owner" 
+            :_active="company.active" 
+            :_id="company.id" />
     </div>
 </template>
 

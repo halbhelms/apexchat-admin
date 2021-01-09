@@ -35,6 +35,7 @@
         display: grid;
         padding: 4px 0 4px 0;
         grid-template-columns: 220px 80px 160px 80px 80px;
+        margin-bottom: 8px;
     }
 
     .filler {
