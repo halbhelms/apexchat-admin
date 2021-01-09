@@ -98,7 +98,7 @@
         margin-top: 6px;
         /* margin-left: 20px; */
         /* border: 1px solid navy; */
-        border: 0;
+        border: 1px solid silver;
         border-radius: 12px;
         line-height: 1.5rem;
         width: 4.3rem;
@@ -130,7 +130,10 @@
         margin-bottom: 6px;
         cursor: pointer;
         background-color: #008AE6;
+        filter: brightness(125%);
         color: white;
+        padding-top: 2px;
+        padding-bottom: 2px;
     }
 
     .normal-line-item {
@@ -141,6 +144,8 @@
         font-size: 0.9rem;
         margin-bottom: 6px;
         cursor: pointer;
+        padding-top: 2px;
+        padding-bottom: 2px;        
     }
 
     svg {
