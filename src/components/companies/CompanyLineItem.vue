@@ -1,6 +1,6 @@
 <template>
     <!-- inclosing div -->
-    <div @click="setCurrentCompany(_id)" :class="[$store.state.currentCompany == _id ? 'highlighted-line-item' : 'normal-line-item' ]">
+    <div @click="setCurrentCompany(_id)" :class="[ $store.state.currentCompany == _id ? 'highlighted-line-item' : 'normal-line-item' ]">
         <!-- data columns -->
         <div class="name">{{ _name }}</div>
         <div class="since">{{ _since }}</div>
