@@ -1,16 +1,16 @@
 <template>
     <div class="companies">
-        <CompaniesHeader />
+        <LeadsHeader />
     </div>
 </template>
 
 <script>
-    import CompaniesHeader from '../components/companies/CompaniesHeader'
+    import LeadsHeader from '../components/leads/LeadsHeader'
 
     export default {
         name: 'Companies',
 
-        components: { CompaniesHeader },
+        components: { LeadsHeader },
 
         props: [],
 
