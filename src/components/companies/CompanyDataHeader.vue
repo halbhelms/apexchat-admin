@@ -41,4 +41,9 @@
     .filler {
         min-width: 100%;
     }
+
+    .header-column {
+        text-align: left;
+        margin-left: 24px;
+    }
 </style>
