@@ -98,7 +98,7 @@
     button.lead svg {
         padding-right: 0px;
         width: 22px;
-        margin-left: -4px;
+        margin-left: -5px;
     }
 
     button.videos svg {
