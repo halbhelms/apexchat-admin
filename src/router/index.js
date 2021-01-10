@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Companies from '../views/Companies'
 import Leads from '../views/Leads'
 import Videos from '../views/Videos'
+import Edit from '../views/Edit'
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     path: "/videos/",
     name: "Videos",
     component: Videos
+  },
+  {
+    path: "/edit/:id",
+    name: "Edit",
+    component: Edit
   },
   
 ];

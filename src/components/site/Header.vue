@@ -4,13 +4,17 @@
         <div class="faq-logo">
             <img id="faq-logo" src="./FAQlogo.png">
         </div>
-        <!-- customer logo -->
-        <div class="customer-name">
-            You are viewing data from: <br /><span class="name">{{$store.getters.getCurrentCompany($store.state.currentCompany).name}}</span>
+        <!-- customer name -->
+        <!-- if a currentCompany exists -->
+        <div v-if="$store.state.currentCompany" class="customer-name">
+            Selected Company: <br /><span class="name">{{$store.getters.getCurrentCompany($store.state.currentCompany).name}}</span>
+        </div>
+        <!-- else no currentCompany -->
+        <div v-else class="customer-name unselected">
+            Select a company
         </div>
         <!-- account area -->
         <div class="account-area" @click="toggleAccountForm">
-            <!-- <img src="./sample-gravatar.jpeg" alt="" id="sample-gravatar"> -->
             <img class="account-logo" src="./account-gear.png" alt="" width="32">
             <span class="account-name">
                 {{ $store.state.currentUser.firstName }} {{ $store.state.currentUser.lastName }}
@@ -171,23 +175,13 @@
         color: black;
     }
 
+    .unselected {
+        border: 2px solid red;
+    }
+
     #username, #password {
         border: 1px solid silver;
         border-radius: 6px;
         padding-left: 4px;
     }
-
-    /* #sample-gravatar {
-        height: 50px;
-        border: 2px solid white;
-        border-radius: 25px;
-    } */
-
-    /* .border-only {
-        border: 3px solid gray;
-        border-radius: 34px;
-        width: 56px;
-    } */
-
-
 </style>
