@@ -108,6 +108,11 @@ export default createStore({
   },
   
   mutations: {
+    ADD_COMPANY(state, newCompany) {
+      newCompany.id = state.companies.length + 1;
+      state.companies.push(newCompany)
+    },
+
     EDIT_COMPANY(state, editedCompany) {
       let index = state.companies.findIndex( company => company.id == editedCompany.id)
       state.companies.splice(index, editedCompany)
@@ -124,6 +129,11 @@ export default createStore({
   },
   
   actions: {
+    add_company({ commit }, company) {
+      commit('ADD_COMPANY', company)
+      router.push({name: 'Companies'})
+    },
+
     edit_company({ commit }, company) {
       commit('EDIT_COMPANY', company)
       router.push({name: 'Companies'})

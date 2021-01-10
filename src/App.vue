@@ -73,6 +73,10 @@ import Header from './components/site/Header'
   min-height: 100vh;
 }
 
+a:link, a:visited, a:hover, a:active {
+  text-decoration: none;
+}
+
 * {
   box-sizing: border-box;
 }

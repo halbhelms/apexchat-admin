@@ -4,6 +4,7 @@ import Companies from '../views/Companies'
 import Leads from '../views/Leads'
 import Videos from '../views/Videos'
 import Edit from '../views/Edit'
+import AddCompany from '../views/AddCompany'
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: "/edit/:id",
     name: "Edit",
     component: Edit
+  },
+  {
+    path: "/companies/add/",
+    name: "AddCompany",
+    component: AddCompany
   },
   
 ];
