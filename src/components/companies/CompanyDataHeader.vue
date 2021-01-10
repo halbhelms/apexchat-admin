@@ -4,7 +4,7 @@
         <div class="since header-column">Since</div>
         <div class="owner header-column">Owner</div>
         <div class="status header-column">Status</div>
-        <div class="action header-column">Action</div>
+        <div class="action header-column">Actions</div>
     </div>
 </template>
 
@@ -34,7 +34,7 @@
         color:antiquewhite;
         display: grid;
         padding: 4px 0 4px 0;
-        grid-template-columns: 220px 80px 160px 80px 80px;
+        grid-template-columns: 220px 80px 160px 80px 110px;
         margin-bottom: 8px;
     }
 
