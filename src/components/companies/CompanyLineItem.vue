@@ -69,8 +69,6 @@
 
         methods: {
             setCurrentCompany(id) {
-                console.log('id', id);
-                
                 this.$store.dispatch('set_current_company', id)
             }
         },
@@ -87,14 +85,25 @@
         border: 1px solid silver;
         border-radius: 18px;
         line-height: 1.5rem;
-        width: 30px;
-        height: 30px;
+        width: 26px;
+        height: 26px;
         padding-top: 3px;
         background-color: #008AE6;
         color:aliceblue;
         font-size: 0.8rem;
         line-height: 1rem;
         margin-top: -4px;
+    }
+
+    button.lead svg {
+        padding-right: 0px;
+        width: 22px;
+        margin-left: -4px;
+    }
+
+    button.videos svg {
+        width: 22px;
+        margin-left: -4px;
     }
 
     button.edit:hover {
