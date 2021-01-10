@@ -9,10 +9,6 @@
         <div v-if="$store.state.currentCompany" class="customer-name">
             Selected Company: <br /><span class="name">{{$store.getters.getCurrentCompany($store.state.currentCompany).name}}</span>
         </div>
-        <!-- else no currentCompany -->
-        <div v-else class="customer-name unselected">
-            Select a company
-        </div>
         <!-- account area -->
         <div class="account-area" @click="toggleAccountForm">
             <img class="account-logo" src="./account-gear.png" alt="" width="32">

@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <div class="title">Leads</div>
+        <div class="title">Leads <span v-if="$store.state.currentCompany" class="title-company">for {{ $store.getters.getCurrentCompany($store.state.currentCompany).name }}</span></div>
     </div>
 </template>
 
