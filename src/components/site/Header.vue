@@ -176,7 +176,9 @@
     }
 
     .unselected {
-        border: 2px solid red;
+        color: red;
+        font-weight: 900;
+        font-size: 1.5rem;
     }
 
     #username, #password {
