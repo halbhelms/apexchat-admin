@@ -226,6 +226,12 @@ chats: [
   },
   
   getters: {
+    getChatsForLead(state) {
+      return (id) => {
+        return state.leads.filter( lead => { lead.id == id})
+      }
+    },
+
     getCompanyById(state) {
       return (id) => {
         return state.companies.find( company => company.id == id)
