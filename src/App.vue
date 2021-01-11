@@ -14,11 +14,11 @@
             <Leads />
           </router-link>
         </div>
-        <div class="sidebar-element">
+        <!-- <div class="sidebar-element">
           <router-link :to="{name: 'Videos'}">
             <Videos />
           </router-link>
-        </div>
+        </div> -->
         <!-- <div class="sidebar-element">
           <router-link :to="{name: 'Support'}">
             <Support />
@@ -35,7 +35,7 @@
 <script>
 import Companies from './components/sidenav/Companies'
 import Leads from './components/sidenav/Leads'
-import Videos from './components/sidenav/Videos'
+// import Videos from './components/sidenav/Videos'
 import Header from './components/site/Header'
   
   export default {
@@ -43,7 +43,7 @@ import Header from './components/site/Header'
     components: {
       Companies,
       Leads,
-      Videos,
+      // Videos,
       Header
     },
 
