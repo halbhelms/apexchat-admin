@@ -266,7 +266,7 @@ export default createStore({
 
     EDIT_COMPANY(state, editedCompany) {
       let index = state.companies.findIndex( company => company.id == editedCompany.id)
-      state.companies.splice(index, editedCompany)
+      state.companies.splice(index, 1, editedCompany)
     },
 
     SET_ACTIVE_NAV(state, navElement) {
@@ -280,7 +280,7 @@ export default createStore({
     TOGGLE_DISPUTED(state, leadId) {
       let index = state.leads.findIndex( lead => lead.id == leadId)
       let lead = state.leads[index]
-      let disputed = {disputed: !lead.disputed, working: 'hopefully'}
+      let disputed = {disputed: !lead.disputed}
       let newLead = {...lead, ...disputed}
       state.leads.splice(index, 1, newLead)    
     }
