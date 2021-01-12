@@ -13,18 +13,25 @@ const routes = [
     component: Companies
   },
   {
-    path: "/leads/",
+    path: "/leads",
     name: "Leads",
-    component: Leads
+    component: Leads,
+    children: [
+      {
+        path: "/companies/:id/leads",
+        name: "CompanyLeads",
+        component: Leads
+      }
+    ]
   },
   {
-    path: "/videos/",
-    name: "Videos",
+    path: "/companies/:id/videos",
+    name: "CompanyVideos",
     component: Videos
   },
   {
-    path: "/edit/:id",
-    name: "Edit",
+    path: "/companies/:id/edit",
+    name: "CompanyEdit",
     component: Edit
   },
   {

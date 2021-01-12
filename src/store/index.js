@@ -141,7 +141,7 @@ export default createStore({
         disputed: false,
       },
     ],
-chats: [
+    chats: [
       {
         id: 1,
         texts: [
@@ -240,7 +240,20 @@ chats: [
 
     getCurrentCompany(state) {
       return (id) => {
-        return state.companies.find( company => company.id == id )
+        return state.companies.find( company => company.id == id)
+      }
+    },
+
+    getDisputedStatusById(state) {
+      return (id) => {
+        let lead =  state.leads.find( lead => lead.id == id)
+        return lead.disputed
+      }
+    },
+
+    getLeadsForCompany(state) {
+      return (id) => {
+        return state.leads.filter( lead => lead.companyId == id)
       }
     }
   },
@@ -264,6 +277,14 @@ chats: [
       state.currentCompany = companyId
     },
 
+    TOGGLE_DISPUTED(state, leadId) {
+      let index = state.leads.findIndex( lead => lead.id == leadId)
+      let lead = state.leads[index]
+      let disputed = {disputed: !lead.disputed, working: 'hopefully'}
+      let newLead = {...lead, ...disputed}
+      state.leads.splice(index, 1, newLead)    
+    }
+
   },
   
   actions: {
@@ -283,6 +304,10 @@ chats: [
 
     set_current_company({ commit }, id) {
       commit('SET_CURRENT_COMPANY', id)
+    },
+
+    toggle_disputed({ commit }, leadId) {
+      commit('TOGGLE_DISPUTED', leadId)
     }
   },
   modules: {}
