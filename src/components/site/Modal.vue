@@ -1,5 +1,8 @@
 <template>
     <div class="modal">
+        <div class="title">
+            
+        </div>
    </div>
 </template>
 
@@ -28,6 +31,7 @@
         left: 160px;
         top: 120px;
         background-color: lightgrey;
+        opacity: 0.8;
         width: 78%;
         height: 440px;
         margin-left: 4%;
