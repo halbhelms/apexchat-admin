@@ -6,7 +6,14 @@
         <div class="since">{{ _since }}</div>
         <div class="owner">{{ _owner }}</div>
         <div class="status">
-            <input type="checkbox" :checked="_active" onclick="return false"/> <label>Active</label>
+            <!-- <input type="checkbox" :checked="_active" onclick="return false"/> <label>Active</label> -->
+            <!-- <div class="active-status" v-if="_active"/>
+            <div class="inactive-status" v-if="!_active"/> -->
+            <img v-if="_active" src="./admin-active-status.png" width="24"/>
+            <img v-if="!_active" src="./admin-inactive-status.png" width="24"/>
+
+
+            
         </div>
         <!-- action buttons -->
         <div class="buttons">
@@ -57,19 +64,18 @@
         border-radius: 12px;
         background-color: white;
         background-position: center;
-        background-size: 140%;
         cursor: pointer;
         margin: 0 2px 0 2px;
     }
 
     .action-button:hover {
-        transition: all 0.5s ease;
+        transition: all 0.3s ease;
         transform: scale(1.25) perspective(1px);
-        color: white;
     }
 
         .edit {
             background-image: url('admin-edit.png');
+            background-size: 180%;
         }
 
         .leads {
@@ -79,6 +85,7 @@
 
         .videos {
             background-image: url('admin-videos.png');
+            background-size: 140%;
         }
 
     .action-button-img{
@@ -86,46 +93,16 @@
         border-radius: 12px;
     }
 
-
-
-   /* button.edit, button.lead, button.videos {
-        margin-left: 8px;
-        margin-top: 6px;
+    .active-status {
+        background-color: #0066CC; 
+        background-image: url('admin-active.png');
+        background-position: center;
+        width: 36px;
+        height: 18px;
         border: 1px solid silver;
-        border-radius: 18px;
-        line-height: 1.5rem;
-        width: 26px;
-        height: 26px;
-        padding-top: 3px;
-        background-color: #008AE6;
-        color:aliceblue;
-        font-size: 0.8rem;
-        line-height: 1rem;
-        margin-top: -4px;
-    } */
-
-    /* button.lead svg {
-        padding-right: 0px;
-        width: 22px;
-        margin-left: -5px;
+        border-radius: 10px;
+        background-size: 86%;
     }
-
-    button.videos svg {
-        width: 22px;
-        margin-left: -4px;
-    }
-
-    button.edit:hover {
-        background-color: #2d83af; */
-        /* filter: brightness(115%);
-        transition: all 0.5s ease;
-        transform: scale(1.05) perspective(1px);
-        color: white;
-    }
-
-    button.edit:active, button.embed-code:focus {
-        border-radius: 12px;
-    } */
 
     .highlighted-line-item {
         display: grid;
@@ -142,6 +119,10 @@
         padding-bottom: 2px;
     }
 
+    .highlighted-line-item .action-button {
+        border: 2px solid lightseagreen;
+    }
+
     .normal-line-item {
         display: grid;
         grid-template-columns: 220px 80px 160px 80px 140px;
@@ -152,11 +133,5 @@
         cursor: pointer;
         padding-top: 2px;
         padding-bottom: 2px;        
-    }
-
-    svg {
-        width: 18px;
-        height: 18px;
-        padding-right: 2px;
     }
 </style>
