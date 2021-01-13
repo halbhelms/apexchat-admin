@@ -1,5 +1,4 @@
 <template>
-    {{ leads[1] }}
     <div class="companies">
         <LeadsHeader />
         <LeadsDataHeader />
@@ -16,6 +15,7 @@
             :_phone="lead.phone"
             :_contact="lead.contact"
             :_disputed="lead.disputed"/>
+        <Modal />
     </div>
 </template>
 
@@ -23,11 +23,12 @@
     import LeadsHeader from '../components/leads/LeadsHeader'
     import LeadsDataHeader from '../components/leads/LeadsDataHeader'
     import LeadsLineItem from '../components/leads/LeadsLineItem'
+    import Modal from '../components/site/Modal'
 
     export default {
         name: 'Companies',
 
-        components: { LeadsHeader, LeadsDataHeader, LeadsLineItem },
+        components: { LeadsHeader, LeadsDataHeader, LeadsLineItem, Modal },
 
         props: [],
 
