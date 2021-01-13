@@ -6,14 +6,8 @@
         <div class="since">{{ _since }}</div>
         <div class="owner">{{ _owner }}</div>
         <div class="status">
-            <!-- <input type="checkbox" :checked="_active" onclick="return false"/> <label>Active</label> -->
-            <!-- <div class="active-status" v-if="_active"/>
-            <div class="inactive-status" v-if="!_active"/> -->
             <img v-if="_active" src="./admin-active-status.png" width="24"/>
             <img v-if="!_active" src="./admin-inactive-status.png" width="24"/>
-
-
-            
         </div>
         <!-- action buttons -->
         <div class="buttons">
