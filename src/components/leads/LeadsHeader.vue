@@ -51,16 +51,13 @@
 
 <style scoped>
     .date-filter {
-           display: grid;
-        grid-template-columns: 50% auto;
+        display: grid;
+        grid-template-columns: 33% auto 33%;
         padding-top: 8px;
         font-size: 0.65rem;
     }
 
     .header {
-        /* box-shadow: 0 0 6px 0 silver;
-        background-color: rgb(237,240,245); */
-        /* width: 780px; */
         display: grid;
         grid-template-columns: 472px 308px;
         text-align: left;
