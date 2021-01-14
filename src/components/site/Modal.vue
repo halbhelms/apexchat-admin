@@ -3,8 +3,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <!-- header for lead -->
-                <img v-if="_chat.disputed" src="../site/dispute.png" width="26"/>
-                Details for Lead No. {{ _selectedLead.id }} 
+                <img v-if="_selectedLead.disputed" id="disputed-icon" src="../site/disputed.png" width="36"/>
+                <span class="header-text">Details for Lead No. {{ _selectedLead.id }} </span>
                 <!-- button to dismiss modal -->
                 <img @click="modalOff" class="modal-exit" src="../site/modal-exit.png" width="36" />
             </div>

@@ -103,7 +103,7 @@ export default createStore({
         location: 'Capital City, TX',
         address: '2071 Broad St. Capital City, TX',
         phone: 7413695442,
-        disputed: false,
+        disputed: true,
       },
       {
         id: 2,
@@ -116,7 +116,7 @@ export default createStore({
         location: 'Capital City, TX',
         address: '1156 N. Oak St, Capital City, TX',
         phone: 7418592541,
-        disputed: true,
+        disputed: false,
       },
       {
         id: 3,
