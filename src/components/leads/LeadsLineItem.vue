@@ -1,5 +1,5 @@
 <template>
-    <div class="leads-line-item">
+    <div class="leads-line-item" @click="$emit('lead-selected', _id)">
         <div class="column company-name">{{ name }}</div>
         <div class="column date">{{ date }}</div>
         <div class="column type">{{ _type }}</div>
@@ -68,6 +68,7 @@
         display: grid;
         grid-template-columns: 2fr 1.5fr 1fr 2fr 2.5fr 1.5fr 1fr;
         font-size: 0.85rem;
+        cursor: pointer;
     }
 
     .toggle {

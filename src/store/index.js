@@ -96,7 +96,7 @@ export default createStore({
         id: 1,
         chatId: 1,
         companyId: 1,
-        date: new Date(2020, 11, 24),
+        date: new Date(2020, 11, 24, 8, 29),
         type: 'Sales',
         contact: 'Edgar Holdren',
         location: 'Capital City, TX',
@@ -108,7 +108,7 @@ export default createStore({
         id: 2,
         companyId: 1,
         chatId: 0,
-        date: new Date(2020, 11, 7),
+        date: new Date(2020, 11, 7, 14, 57),
         type: 'Sales',
         contact: 'Donna Holmes',
         location: 'Capital City, TX',
@@ -120,7 +120,7 @@ export default createStore({
         id: 3,
         companyId: 1,
         chatId: 0,
-        date: new Date(2020, 11, 26),
+        date: new Date(2020, 11, 26, 13, 30),
         type: 'Sales',
         contact: 'Damien Edwards',
         location: 'Capital City, TX',
@@ -132,7 +132,7 @@ export default createStore({
         id: 4,
         companyId: 1,
         chatId: 0,
-        date: new Date(2020, 11, 29),
+        date: new Date(2020, 11, 29, 16, 14),
         type: 'Sales',
         contact: 'Sandra Dawson',
         location: 'Capital City, TX',
@@ -226,9 +226,9 @@ export default createStore({
   },
   
   getters: {
-    getChatsForLead(state) {
+    getChatById(state) {
       return (id) => {
-        return state.leads.filter( lead => { lead.id == id})
+        return state.chats.find( chat => chat.id == id).texts
       }
     },
 
@@ -248,6 +248,12 @@ export default createStore({
       return (id) => {
         let lead =  state.leads.find( lead => lead.id == id)
         return lead.disputed
+      }
+    },
+
+    getLeadById(state) {
+      return (id) => {
+        return state.leads.find( lead => lead.id == id)
       }
     },
 

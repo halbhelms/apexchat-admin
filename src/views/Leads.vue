@@ -3,6 +3,7 @@
         <LeadsHeader />
         <LeadsDataHeader />
         <LeadsLineItem 
+            @lead-selected="leadDrilldown"
             v-for="lead in leads" 
             :key="lead.id" 
             :_id="lead.id" 
@@ -15,7 +16,7 @@
             :_phone="lead.phone"
             :_contact="lead.contact"
             :_disputed="lead.disputed"/>
-        <Modal />
+        <Modal v-if="selectedLead" :_selectedLead="selectedLead" :_chat="chat" />
     </div>
 </template>
 
@@ -34,11 +35,21 @@
 
         data() {
             return {
-                leads: []
+                leads: [],
+                selectedLead: null,
+                chat: []
             }
         },
 
-        methods: {},
+        methods: {
+            leadDrilldown(leadId) {
+                let selectedLead = this.$store.getters.getLeadById(leadId)
+                let chat = this.$store.getters.getChatById(selectedLead.chatId)
+                
+                this.chat = chat
+                this.selectedLead = selectedLead
+            }
+        },
 
         computed: {},
 

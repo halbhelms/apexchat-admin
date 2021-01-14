@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <div class="title">Leads <span v-if="$store.state.currentCompany" class="title-company">for {{ $store.getters.getCurrentCompany($store.state.currentCompany).name }}</span></div>
+        <div class="title">Leads <span class="title-company"> {{ companyName }}</span></div>
     </div>
 </template>
 
@@ -15,10 +15,16 @@
         methods: {
             setDateFilter(filter) {
                 console.log('filter', filter);
-                
             }
         },
-        computed: {}
+        computed: {
+            companyName() {
+                if (this.$route.params.id) {
+                    return 'for' + this.$store.getters.getCompanyById(this.$route.params.id).name} else {
+                        return ''
+                    }
+            }
+        }
     }
 </script>
 
