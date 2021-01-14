@@ -16,7 +16,7 @@
             :_phone="lead.phone"
             :_contact="lead.contact"
             :_disputed="lead.disputed"/>
-        <Modal v-if="selectedLead" :_selectedLead="selectedLead" :_chat="chat" />
+        <Modal @modal-off="noSelectedLead" v-if="selectedLead" :_selectedLead="selectedLead" :_chat="chat" />
     </div>
 </template>
 
@@ -48,7 +48,11 @@
                 
                 this.chat = chat
                 this.selectedLead = selectedLead
-            }
+            },
+
+            noSelectedLead() {
+                this.selectedLead = null
+            },
         },
 
         computed: {},

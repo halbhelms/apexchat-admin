@@ -1,11 +1,11 @@
 <template>
-    <div class="leads-line-item" @click="$emit('lead-selected', _id)">
-        <div class="column company-name">{{ name }}</div>
-        <div class="column date">{{ date }}</div>
-        <div class="column type">{{ _type }}</div>
-        <div class="column contact">{{ _contact }}</div>
-        <div class="column location">{{ _location }}</div>
-        <div class="column phone">{{ phone }}</div>
+    <div class="leads-line-item" >
+        <div @click="$emit('lead-selected', _id)" class="column company-name">{{ name }}</div>
+        <div @click="$emit('lead-selected', _id)" class="column date">{{ date }}</div>
+        <div @click="$emit('lead-selected', _id)" class="column type">{{ _type }}</div>
+        <div @click="$emit('lead-selected', _id)" class="column contact">{{ _contact }}</div>
+        <div @click="$emit('lead-selected', _id)" class="column location">{{ _location }}</div>
+        <div @click="$emit('lead-selected', _id)" class="column phone">{{ phone }}</div>
         <div @click="toggleDisputed(_id)" :class="[disputedStatus ? 'disputed' : '', 'column toggle']">{{ disputedStatus }}</div>
     </div>
 </template>

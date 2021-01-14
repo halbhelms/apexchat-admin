@@ -1,13 +1,20 @@
 <template>
     <div class="outer modal-on">
         <div class="modal-content">
+            <div class="modal-header">
+                <!-- header for lead -->
+                <img v-if="_chat.disputed" src="../site/dispute.png" width="26"/>
+                Details for Lead No. {{ _selectedLead.id }} 
+                <!-- button to dismiss modal -->
+                <img @click="modalOff" class="modal-exit" src="../site/modal-exit.png" width="36" />
+            </div>
             <!-- contact information (1st column)-->
             <div class="contact-info">
                 <!-- date and contact name -->
                 <div class="contact-general">
                     <div class="contact-date contact-box">
                         <div class="contact-date-title title">Date</div>
-                        <div class="contac t-date-data data">{{ date }}</div>
+                        <div class="contact-date-data data">{{ date }}</div>
                     </div>
                     
                     <div class="contact-name contact-box">
@@ -45,8 +52,16 @@
                 </div>
             </div>
 
+
+            <!-- Chat messages -->
             <div class="chat">
-                Chat
+                <!-- should we display only visitor responses? -->
+                <div class="chat-separator">
+                    <input @change="visitorMessagesOnly" type="checkbox" id="visitor-only" class="visitor-only" :value="visitorOnly">
+                    <label for="visitor-only">Display visitor messages only</label>
+                </div>
+                <!-- display individual messages -->
+                <ChatLineItem v-for="(message, index) in messages" :key="index" :_message="message"/>
             </div>
 
         </div>
@@ -55,21 +70,30 @@
 
 <script>
     import { format } from 'date-fns'
+    import ChatLineItem from '../leads/ChatLineItem'
     export default {
         name: 'Modal',
 
-        components: {},
+        components: { ChatLineItem },
 
         props: ['_selectedLead', '_chat'],
 
         data() {
             return {
-                lead: {},
-                chat: []
+                // lead: {},
+                visitorOnly: false,
             }
         },
 
-        methods: {},
+        methods: {
+            modalOff() {
+                this.$emit('modal-off')
+            },
+
+            visitorMessagesOnly() {
+                this.visitorOnly = !this.visitorOnly
+            }
+        },
 
         computed: {
             date() {
@@ -79,12 +103,27 @@
             phone() {
                 let p = this._selectedLead.phone.toString()
                 return `${p.substring(0,3)}.${p.substring(3,6)}.${p.substring(6,10)}`
+            },
+
+            messages() {
+                // if we only want to show visitor messages
+                if (this.visitorOnly) {
+                    return this.$props._chat.filter( message => message.participantDisplayName == 'Visitor')
+                // or we want to display all messages
+                } else {
+                    return this.$props._chat
+                }
             }
         }
     }
 </script>
 
 <style scoped>
+    .chat-separator {
+        border-bottom: 1px solid silver;
+        border-top: 1px solid silver;
+        margin-bottom: 12px;
+    }
     .contact-box {
         display: grid;
         grid-template-columns: 30% auto;
@@ -132,6 +171,20 @@
         width: 90%; /* Could be more or less, depending on screen size */
         display: grid;
     }
+
+    .modal-exit {
+        float: right;
+        cursor: pointer;
+    }
+
+    .modal-header {
+        margin-bottom: 24px;
+        border-bottom: 2px solid silver;
+        font-size: 1.3rem;
+        font-weight: 900;
+    }
+
+   
 
 
     .title {
