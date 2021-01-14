@@ -7,20 +7,20 @@
                 <div class="contact-general">
                     <div class="contact-date contact-box">
                         <div class="contact-date-title title">Date</div>
-                        <div class="contac t-date-data data">12.15.2020 8.09PM</div>
+                        <div class="contac t-date-data data">{{ date }}</div>
                     </div>
                     
                     <div class="contact-name contact-box">
                         <div class="contact-name-title title">Name</div>
-                        <div class="contact-name-data data">Idee Dantes</div>
+                        <div class="contact-name-data data">{{ _selectedLead.contact }}</div>
                     </div>
                 </div>
                 
                 <!-- address (2d column) -->
                 <div class="contact-address">
-                    <div class="contact-location contact-box">
-                        <div class="contact-location-title title">location</div>
-                        <div class="contact-location-data data">5667 Broad, Nashville, TN</div>
+                    <div class="contact-location contact-box location">
+                        <div class="contact-location-title title">Location</div>
+                        <div class="contact-location-data data">{{ _selectedLead.address }}</div>
                     </div>
                 </div>
                 
@@ -31,7 +31,7 @@
                             Phone
                         </div>
                         <div class="contact-phone-data data">
-                            253.707.7195
+                            {{ phone }}
                         </div>
                     </div>
                     <div class="contact-email contact-box">
@@ -39,7 +39,7 @@
                             Email
                         </div>
                         <div class="contact-email-data data">
-                            idantes@cps.com
+                            {{ _selectedLead.email }}
                         </div>
                     </div>
                 </div>
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+    import { format } from 'date-fns'
     export default {
         name: 'Modal',
 
@@ -70,7 +71,16 @@
 
         methods: {},
 
-        computed: {}
+        computed: {
+            date() {
+                return format(this._selectedLead.date, 'M.d.y  :  h:m aaa')
+            },
+
+            phone() {
+                let p = this._selectedLead.phone.toString()
+                return `${p.substring(0,3)}.${p.substring(3,6)}.${p.substring(6,10)}`
+            }
+        }
     }
 </script>
 
@@ -79,6 +89,11 @@
         display: grid;
         grid-template-columns: 30% auto;
         text-align: left;
+    }
+
+    .location {
+        border-right: 1px solid silver;
+        border-left: 1px solid silver;
     }
 
     .contact-info {
@@ -123,9 +138,5 @@
         text-align: right;
         margin-right: 10px;
         font-weight: 800;
-    }
-
-    * {
-        outline: 1px solid red;
     }
 </style>
