@@ -6,9 +6,9 @@
         </div>
         <!-- customer name -->
         <!-- if a currentCompany exists -->
-        <div v-if="$store.state.currentCompany" class="customer-name">
+        <!-- <div v-if="$store.state.currentCompany" class="customer-name">
             Selected Company: <br /><span class="name">{{$store.getters.getCurrentCompany($store.state.currentCompany).name}}</span>
-        </div>
+        </div> -->
         <!-- account area -->
         <div class="account-area" @click="toggleAccountForm">
             <img class="account-logo" src="./account-gear.png" alt="" width="32">
@@ -82,12 +82,27 @@
 
 <style scoped>
     .account-area{
-        width: 180px;
+        /* width: 180px;
         margin-top: 20px;
         margin-left: 100px;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr; */
+        position: absolute;
+        left: 600px;
         cursor: pointer;
+    }
+
+    .account-logo {
+        position: absolute;
+        top: 22px;
+    }
+
+    .account-name {
+        position: absolute;
+        width: 220px;
+        top: 26px;
+        text-align: left;
+        margin-left: 38px;
     }
 
     button.account-form-cancel {
@@ -125,14 +140,20 @@
     }
 
     .customer-name {
-        /* text-align: right;
-        margin-left: 42px; */
-        margin-top: 12px;
+        /* position: absolute;
+        left: 140px; */
     }
 
     .account-name {
-        text-align: left;
-        margin-top: 4px;
+        /* text-align: left;
+        margin-top: 4px; */
+        /* position: absolute;
+        left: 600px; */
+    }
+
+    .faq-logo {
+        position: absolute;
+        /* left: 800px; */
     }
 
     .form-control {
@@ -147,10 +168,11 @@
     }
 
     .header {
-        display: grid;
+        position: relative;
+        /* display: grid;
         grid-template-columns: 320px 320px 320px;
         width: 960px;
-        max-width: 960px;
+        max-width: 960px; */
     }
 
     #faq-logo{
@@ -159,11 +181,11 @@
     }
 
     .customer-logo {
-        margin: 0px auto
+        /* margin: 0px auto */
     }
     #customer-logo {
-        height: 50px;
-        margin-top: 4px;
+        /* height: 50px;
+        margin-top: 4px; */
     }
 
     .name {

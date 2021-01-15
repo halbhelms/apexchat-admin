@@ -1,6 +1,6 @@
 <template>
     <!-- inclosing div -->
-    <div @click="setCurrentCompany(_id)" :class="[ $store.state.currentCompany == _id ? 'highlighted-line-item' : 'normal-line-item' ]">
+        <div class="normal-line-item">
         <!-- data columns -->
         <div class="name">{{ _name }}</div>
         <div class="since">{{ _since }}</div>
@@ -124,7 +124,7 @@
         margin-left: 20px;
         font-size: 0.9rem;
         margin-bottom: 6px;
-        cursor: pointer;
+        /* cursor: pointer; */
         padding-top: 2px;
         padding-bottom: 2px;        
     }
