@@ -150,6 +150,7 @@
 
             submitUserForm() {
                 this.company.users.push(this.user)
+                this.user = null;
             }
         },
 

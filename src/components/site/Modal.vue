@@ -130,6 +130,12 @@
         text-align: left;
     }
 
+    #disputed-icon{
+        position: absolute;
+        left: 240px;
+        top: -4px;
+    }
+
     .location {
         border-right: 1px solid silver;
         border-left: 1px solid silver;
@@ -142,6 +148,10 @@
 
     .modal-content {
         width: 90%;
+    }
+
+    .modal-header {
+        position: relative;
     }
 
     .modal-on {

@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <div class="title">Videos</div>
+        <div class="title">Videos for {{ _companyName }}</div>
     </div>
 </template>
 
@@ -8,7 +8,7 @@
     export default {
         name: 'VideosHeader',
         components: {},
-        props: {},
+        props: ['_companyName'],
         data() {
             return {}
         },
