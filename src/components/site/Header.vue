@@ -4,12 +4,8 @@
         <div class="faq-logo">
             <img id="faq-logo" src="./FAQlogo.png">
         </div>
-        <!-- customer name -->
-        <!-- if a currentCompany exists -->
-        <!-- <div v-if="$store.state.currentCompany" class="customer-name">
-            Selected Company: <br /><span class="name">{{$store.getters.getCurrentCompany($store.state.currentCompany).name}}</span>
-        </div> -->
-        <!-- account area -->
+
+        <!-- admin account area -->
         <div class="account-area" @click="toggleAccountForm">
             <img class="account-logo" src="./account-gear.png" alt="" width="32">
             <span class="account-name">
@@ -82,13 +78,8 @@
 
 <style scoped>
     .account-area{
-        /* width: 180px;
-        margin-top: 20px;
-        margin-left: 100px;
-        display: grid;
-        grid-template-columns: 1fr 1fr; */
         position: absolute;
-        left: 600px;
+        left: 680px;
         cursor: pointer;
     }
 

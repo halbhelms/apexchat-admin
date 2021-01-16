@@ -53,7 +53,7 @@
 <script>
     import EditHeader from '../components/edit/EditHeader'
     export default {
-        name: 'Edit',
+        name: 'EditCompany',
 
         components: {EditHeader},
 

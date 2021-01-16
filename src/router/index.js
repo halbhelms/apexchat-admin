@@ -31,8 +31,8 @@ const routes = [
   },
   {
     path: "/companies/:id/edit",
-    name: "CompanyEdit",
-    component: Edit
+    name: "EditCompany",
+    component: EditCompany
   },
   {
     path: "/companies/add/",
