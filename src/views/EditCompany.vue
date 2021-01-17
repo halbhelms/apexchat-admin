@@ -3,59 +3,22 @@
         <!-- title -->
         <EditHeader :_companyName="company.name" />
         <!-- edit form  -->
-        <div class="form">
-            <div class="filler"></div>
-            <div class="form-elements">
-                <!-- name -->
-                <div class="form-element">
-                    <label for="name">Company name</label>
-                    <input v-model="company.name" type="text" id="name" />
-                </div>
-                <!-- owner -->
-                <div class="form-element">
-                    <label for="owner">Owner</label>
-                    <input v-model="company.owner" type="text" id="owner" />
-                </div>
-                <!-- email -->
-                <div class="form-element">
-                    <label for="email">Email</label>
-                    <input v-model="company.email" type="text" id="email" />
-                </div>
-                <!-- phone -->
-                <div class="form-element">
-                    <label for="phone">Phone</label>
-                    <input v-model="company.phone" type="text" id="phone" />
-                </div>
-                <!-- selfManage -->
-                <div class="form-element">
-                    <div></div>
-                    <div>
-                        <input type="checkbox" v-model="company.selfManage"  id="self-manage" />
-                        <label class="no-bold" for="self-manage">We self-manage web work</label>
-                    </div>
-                </div>
-                <!-- apex info -->
-                <div class="form-element">
-                    <label for="apex-info">Apex info</label>
-                    <textarea v-model="company.apexInfo"  id="apex-info"></textarea>
-                </div>
-            </div>
-            <div class="filler"></div>
+        <div class="columns-2">
+            <CompanyInfoForm :_company="company" />
+            <UserInputForm :_users="users" />
         </div>
-        <!-- buttons -->
-        <router-link :to="{name: 'Companies'}">
-            <button class="cancel">Cancel</button>
-        </router-link>
-        <button @click="submitForm" class="submit">Save Changes</button>
     </div>
 </template>
 
 <script>
     import EditHeader from '../components/edit/EditHeader'
+    import CompanyInfoForm from '../components/companies/CompanyInfoForm'
+    import UserInputForm from '../components/companies/UserInputForm'
+
     export default {
         name: 'EditCompany',
 
-        components: {EditHeader},
+        components: {EditHeader, CompanyInfoForm, UserInputForm},
 
         props: [],
 
@@ -76,6 +39,7 @@
 
         created() {
             this.company = this.$store.getters.getCompanyById(this.$route.params.id)
+            this.users = this.$store.getters.getCompanyUsersForCompany(this.$route.params.id)
         }
     }
 </script>
@@ -102,16 +66,25 @@
         transform: brighten(-1.5%)
     }
 
-    .form {
+    .columns-2 {
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+
+    /* .form {
         display: grid;
         grid-template-columns: .5fr 3fr 2fr;
         text-align: left;
-    }
+    } */
 
     .form-element {
         display: grid;
         grid-template-columns: 1fr 1fr;
         margin-top: 8px;
+    }
+
+    .form-elements {
+        width: 100%;
     }
 
     input {

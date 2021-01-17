@@ -12,7 +12,7 @@
         <!-- action buttons -->
         <div class="buttons">
             <!-- edit button-->
-            <router-link :to="{name: 'CompanyEdit', params: {id: _id}}">
+            <router-link :to="{name: 'EditCompany', params: {id: _id}}">
                 <button class="action-button edit"></button>
             </router-link>
             <!-- leads button             -->

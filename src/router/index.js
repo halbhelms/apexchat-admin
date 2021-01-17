@@ -3,8 +3,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Companies from '../views/Companies'
 import Leads from '../views/Leads'
 import Videos from '../views/Videos'
-import Edit from '../views/Edit'
 import AddCompany from '../views/AddCompany'
+import EditCompany from '../views/EditCompany.vue'
 
 const routes = [
   {

@@ -100,12 +100,6 @@
         font-size: 1.2rem;
     }
 
-    /* .form {
-        display: grid;
-        grid-template-columns: .5fr 3fr 2fr;
-        text-align: left;
-    } */
-
     .form-element {
         display: grid;
         grid-template-columns: 40% auto;
