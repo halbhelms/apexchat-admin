@@ -33,7 +33,7 @@
             <!-- apex company id -->
             <div class="form-element">
                 <label for="apex-company-id">Apex company ID</label>
-                <textarea v-model="company.apex_company_id"  id="apex-company-id"></textarea>
+                <input v-model="company.apex_company_id"  id="apex-company-id" />
             </div>
             <!-- since -->
             <!-- apex info -->
