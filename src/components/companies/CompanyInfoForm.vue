@@ -46,6 +46,11 @@
                 <label for="since">Customer since</label>
                 <input v-model="company.customer_since" type="text" id="since" />
             </div>            
+            <!-- logo url -->
+            <div class="form-element">
+                <label for="logo-url">Logo URL</label>
+                <input v-model="company.logo_url" type="text" id="logo-url" />
+            </div>            
             <div class="filler"></div>
         <!-- buttons -->
         <router-link :to="{name: 'Companies'}">
@@ -78,6 +83,7 @@
                     apex_info: null,
                     self_manage_web: false,
                     email: null,
+                    logo_url: null,
                     users: [],
                     phone: null,
                     name: null,

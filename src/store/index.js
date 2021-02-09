@@ -8,6 +8,7 @@ export default createStore({
       firstName: 'Zach',
       lastName: 'Lefeistre',
       email: 'zlefeistre',
+      logoUrl: 'http://logos.com',
       authentication_token: 'apexforever',
       phone: '555.555.5555',
       company: null,
@@ -21,10 +22,10 @@ export default createStore({
         owner: 'Richard Davis',
         active: true,
         email: 'person@company.com',
+        logo_url: 'http://logos.com',
         phone: '555.555.5555',
         apexInfo: 'Lorem ipsum',
         selfManage: true,
-        logo_url: 'http://logo.com'
       },
       {
         id: 2,
@@ -33,6 +34,7 @@ export default createStore({
         owner: 'John Kwartow',
         active: true,
         email: 'person@company.com',
+        logo_url: 'http://logos.com',
         phone: '555.555.5555',
         apexInfo: 'Lorem ipsum',
         selfManage: true
@@ -44,6 +46,7 @@ export default createStore({
         owner: 'Max Eberschnaut',
         active: true,
         email: 'person@company.com',
+        logo_url: 'http://logos.com',
         phone: '555.555.5555',
         apexInfo: 'Lorem ipsum',
         selfManage: true
@@ -55,6 +58,7 @@ export default createStore({
         owner: 'Richard Bullworth',
         active: true,
         email: 'person@company.com',
+        logo_url: 'http://logos.com',
         phone: '555.555.5555',
         apexInfo: 'Lorem ipsum',
         selfManage: false
@@ -66,6 +70,7 @@ export default createStore({
         owner: 'Rene Bellagio',
         active: true,
         email: 'person@company.com',
+        logo_url: 'http://logos.com',
         phone: '555.555.5555',
         apexInfo: 'Lorem ipsum',
         selfManage: true
@@ -77,6 +82,7 @@ export default createStore({
         owner: 'Alicia Davis',
         active: false,
         email: 'person@company.com',
+        logo_url: 'http://logos.com',
         phone: '555.555.5555',
         apexInfo: 'Lorem ipsum',
         selfManage: false
@@ -88,6 +94,7 @@ export default createStore({
         owner: 'Hosey Hoserson',
         active: true,
         email: 'person@company.com',
+        logo_url: 'http://logos.com',
         phone: '555.555.5555',
         apexInfo: 'Lorem ipsum',
         selfManage: true
