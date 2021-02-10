@@ -18,7 +18,7 @@
 
         props: {
             _userId: {
-                type: String,
+                type: Number,
                 required: true,
             },
 
