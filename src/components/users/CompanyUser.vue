@@ -3,7 +3,7 @@
         <div :class="[_isAdmin ? 'admin' : '']">
             
         </div>
-        <div class="name">
+        <div class="name" @click="$emit('edit-user', _userId)">
             {{ _firstName }} {{ _lastName }}
         </div>
     </div>
