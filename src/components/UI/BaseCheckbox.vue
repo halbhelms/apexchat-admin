@@ -51,4 +51,8 @@
         margin-left: 36px;
         
     }
+
+    input {
+        margin-right: 6px;
+    }
 </style>

@@ -1,14 +1,21 @@
 <template>
+    <div class="company-user">
+        
+    </div>
 
 </template>
 
 <script>
     export default {
-        name: 'Users',
+        name: 'CompanyUser',
 
         components: {},
 
-        props: [],
+        props: {
+            _user: {
+                type: Object,
+            }
+        },
 
         data() {
             return {}

@@ -58,8 +58,9 @@
 
 div {
   width: 320px;
+  /* margin-left: 20px; */
   /* float: left; */
-  margin: 20px;
+  /* margin: 20px; */
 }
 
 div > div {

@@ -281,7 +281,17 @@ export default createStore({
         last_name: 'Watts',
         email: 'jwatts@cps.com',
         phone: '6416589554'
-      }
+      },
+      {
+        id: 2,
+        company_id: 1,
+        is_admin: false,
+        user_name: 'hhoserson',
+        first_name: "Hosey",
+        last_name: 'Hoserson',
+        email: 'hhoserson@cps.com',
+        phone: '7024563998'
+      },
     ]
   },
   

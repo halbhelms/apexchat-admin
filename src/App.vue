@@ -62,6 +62,10 @@ import Header from './components/site/Header'
 </script>
 
 <style>
+* {
+  margin: 0;
+}
+
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif; */
   font-family: 'Open Sans', sans-serif;
