@@ -292,6 +292,16 @@ export default createStore({
         email: 'hhoserson@cps.com',
         phone: '7024563998'
       },
+      {
+        id: 3,
+        company_id: 2,
+        is_admin: true,
+        user_name: 'mmantile',
+        first_name: "Mickey",
+        last_name: 'Mantle',
+        email: 'mmantle@cps.com',
+        phone: '702554863'
+      },
     ]
   },
   
@@ -305,6 +315,12 @@ export default createStore({
     getCompanyById(state) {
       return (id) => {
         return state.companies.find( company => company.id == id)
+      }
+    },
+
+    getCompanyNameById(state) {
+      return (id) => {
+        return state.companies.find( company => company.id == id).name
       }
     },
 
@@ -341,7 +357,7 @@ export default createStore({
 
     getUsersForCompany(state) {
       return (id) => {
-        return state.company_users.filter( user => user.company_id == id)
+        return state.companyUsers.filter( user => user.company_id == id)
       }
     },
 

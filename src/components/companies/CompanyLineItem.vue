@@ -23,6 +23,10 @@
             <router-link :to="{name: 'CompanyVideos', params: {id: _id}}">
                 <button class="action-button videos"></button>
             </router-link>
+            <!-- users button -->
+            <router-link :to="{name: 'CompanyUsers', params: {id: _id}}">
+                <button class="action-button users"></button>
+            </router-link>
         </div>
     </div>
 </template>
@@ -73,12 +77,17 @@
         }
 
         .leads {
-            background-size: 100%;
+            background-size: 120%;
             background-image: url('admin-leads.png');
         }
 
         .videos {
             background-image: url('admin-videos.png');
+            background-size: 140%;
+        }
+
+        .users {
+            background-image: url('admin-users.png');
             background-size: 140%;
         }
 

@@ -7,6 +7,7 @@ import AddCompany from '../views/AddCompany'
 import EditCompany from '../views/EditCompany.vue'
 import Temp from '../views/Temp.vue'
 import AddUser from '../views/AddUser.vue'
+import CompanyUsers from '../views/CompanyUsers.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: "/companies/:id/videos",
     name: "CompanyVideos",
     component: Videos
+  },
+  {
+    path: "/companies/:id/users",
+    name: "CompanyUsers",
+    component: CompanyUsers
   },
   {
     path: "/companies/:id/edit",
