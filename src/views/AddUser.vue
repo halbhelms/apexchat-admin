@@ -13,15 +13,18 @@
                 <base-button _mode="primary" _width="w-medium" _display="bk" @click="submitForm">Add User</base-button>
             </div>
         </div>
+        <div class="existing-users">
+            <the-existing-users></the-existing-users>
+        </div>
     </div>
 </template>
 
 <script>
-import SectionHeader from '../components/UI/SectionHeader.vue'
+    import TheExistingUsers from '../components/users/TheExistingUsers'
     export default {
         name: 'AddUser',
 
-        components: {SectionHeader},
+        components: {TheExistingUsers},
 
         props: [],
 

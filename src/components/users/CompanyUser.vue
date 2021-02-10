@@ -1,6 +1,11 @@
 <template>
     <div class="company-user">
-        
+        <div :class="[_isAdmin ? 'admin' : '']">
+            
+        </div>
+        <div class="name">
+            {{ _firstName }} {{ _lastName }}
+        </div>
     </div>
 
 </template>
@@ -12,9 +17,25 @@
         components: {},
 
         props: {
-            _user: {
-                type: Object,
-            }
+            _userId: {
+                type: String,
+                required: true,
+            },
+
+            _firstName: {
+                type: String,
+                required: true,
+            },
+
+            _lastName: {
+                type: String,
+                required: true,
+            },
+
+            _isAdmin: {
+                type: Boolean,
+                default: false,
+            },
         },
 
         data() {
@@ -28,5 +49,17 @@
 </script>
 
 <style scoped>
+    .company-user {
+        text-align: left;
+        padding-left: 10px;
+        display: grid;
+        grid-template-columns: 40px auto;
+        grid-gap: 0;
+    }
 
+    .admin {
+        background-image:url('./admin-user.png');
+        background-size: cover;
+        background-position: center;
+    }
 </style>
