@@ -5,6 +5,7 @@ import Leads from '../views/Leads'
 import Videos from '../views/Videos'
 import AddCompany from '../views/AddCompany'
 import EditCompany from '../views/EditCompany.vue'
+import Temp from '../views/Temp.vue'
 
 const routes = [
   {
@@ -38,6 +39,11 @@ const routes = [
     path: "/companies/add/",
     name: "AddCompany",
     component: AddCompany
+  },
+  {
+    path: "/temp/",
+    name: "Temp",
+    component: Temp
   },
   
 ];
