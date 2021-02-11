@@ -38,11 +38,23 @@
             },
         },
 
+        emits: {
+            'edit-user': (userId) => {
+            console.log("🚀 ~ file: CompanyUser.vue ~ line 43 ~ userId", userId)
+                if (userId) { return true}
+                return false;
+            }
+        },
+
         data() {
             return {}
         },
 
-        methods: {},
+        methods: {
+            editUser(userId) {
+                this.$emit('edit-user', userId)
+            }
+        },
 
         computed: {}
     }

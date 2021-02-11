@@ -2,19 +2,22 @@
     <section-header>Users: {{ companyName }} </section-header>
     <div class="layout">
         <div class="users">
-            <base-input _id="username" _label="User name" v-model="user.userName"></base-input>
-            <base-input _id="first-name" _label="First name" v-model="user.firstName"></base-input>
-            <base-input _id="last-name" _label="Last name" v-model="user.lastName"></base-input>
+            <base-input _id="username" _label="User name" v-model="user.user_name"></base-input>
+            <base-input _id="first-name" _label="First name" v-model="user.first_name"></base-input>
+            <base-input _id="last-name" _label="Last name" v-model="user.last_name"></base-input>
             <base-input _id="email" _label="Email" _type="email" v-model="user.email"></base-input>
             <base-input _id="phone" _label="Phone" _type="tel" v-model="user.phone"></base-input>
-            <base-input _id="temp-password" _label="Temporary password"  v-model="user.tempPassword"></base-input>
-            <base-checkbox _id="is-admin" _label="User an Admin?" v-model="user.isAdmin" _display="bk"></base-checkbox>
+            <base-input _id="temp-password" _label="Temporary password"  v-model="user.temp_password"></base-input>
+            <base-checkbox _id="is-admin" _label="User an Admin?" v-model="user.is_admin" _display="bk"></base-checkbox>
             <div class="submit-button">
-                <base-button _mode="primary" _width="w-medium" _display="bk" @click="submitForm">Add User</base-button>
+                <base-button _mode="primary" _radius="r-full" _width="w-medium" _display="bk" @button-clicked="submitForm"><span v-if="!user.id">Add</span><span v-else>Update</span></base-button>
             </div>
         </div>
         <div class="existing-users">
-            <the-existing-users :_companyUsers="companyUsers"></the-existing-users>
+            <the-existing-users 
+                @edit-user="editUser"
+                :_companyUsers="companyUsers">
+            </the-existing-users>
         </div>
     </div>
 </template>
@@ -31,19 +34,39 @@
         data() {
             return {
                 user: {
-                    userName: null,
-                    firstName: null,
-                    lastName: null,
+                    id: null,
+                    company_id: this.$route.params.id,
+                    is_admin: false,
+                    user_name: null,
+                    first_name: null,
+                    last_name: null,
                     email: null,
-                    tempPassword: null,
-                    isAdmin: false,
+                    phone: null,
                 },
                 companyUsers: [],
                 companyName: null,
             }
         },
 
-        methods: {},
+        methods: {
+            editUser(userId) {
+                this.user = this.$store.getters.getUserById(userId)
+            },
+
+            submitForm() {
+                if (this.user.id) {
+                    this.$store.dispatch('update_user', this.user)
+                } else {
+                    this.$store.dispatch('add_user', this.user)
+                }
+                this.user = {}
+                this.company_id = this.$route.params.id
+                this.user.company_id = this.$route.params.id
+
+                this.companyUsers = this.$store.getters.getUsersForCompany(this.$route.params.id)
+            }
+
+        },
 
         computed: {},
 

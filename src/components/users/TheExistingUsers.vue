@@ -1,7 +1,16 @@
 <template>
     <h3>Existing Users</h3>
     <div class="the-existing-users">
-        <company-user class="pointer" v-for="user in _companyUsers" :key="user.id" :_userId="user.id" :_firstName="user.first_name" :_lastName="user.last_name" :_isAdmin="user.is_admin" @edit-user="userToEdit"></company-user>
+        <company-user 
+            class="pointer" 
+            v-for="user in _companyUsers" 
+            :key="user.id" 
+            :_userId="user.id" 
+            :_firstName="user.first_name" 
+            :_lastName="user.last_name" 
+            :_isAdmin="user.is_admin" 
+            @edit-user="(userId) => $emit('edit-user', userId)">
+        </company-user>
     </div>
 </template>
 
@@ -19,20 +28,20 @@
             }
         },
 
-        data() {
-            return {
-                users: [],
-                editUser: null,
+        emits: {
+            'edit-user': (userId) => {
+                if (userId) { return true}
+                return false;
             }
         },
 
-        methods: {
-            userToEdit(userId) {
-                console.log('userId', userId);
-                
-                // get user
+        data() {
+            return {
+                users: [],
             }
         },
+
+        methods: {},
 
         computed: {},
 

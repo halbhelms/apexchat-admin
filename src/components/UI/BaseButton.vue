@@ -101,7 +101,7 @@ button:visited {
 }
 
 .r-full {
-    border-radius: 50%;
+    border-radius: 50px;
 }
 
 /* widths */

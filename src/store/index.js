@@ -355,6 +355,12 @@ export default createStore({
       }
     },
 
+    getUserById(state) {
+      return (id) => {
+        return state.companyUsers.find( user => user.id == id)
+      }
+    },
+
     getUsersForCompany(state) {
       return (id) => {
         return state.companyUsers.filter( user => user.company_id == id)
@@ -372,6 +378,11 @@ export default createStore({
     ADD_COMPANY(state, newCompany) {
       newCompany.id = state.companies.length + 1;
       state.companies.push(newCompany)
+    },
+
+    ADD_USER(state, user) {
+      console.log("🚀 ~ file: index.js ~ line 384 ~ ADD_USER ~ user", user)
+      state.companyUsers.push(user)
     },
 
     EDIT_COMPANY(state, editedCompany) {
@@ -393,14 +404,25 @@ export default createStore({
       let disputed = {disputed: !lead.disputed}
       let newLead = {...lead, ...disputed}
       state.leads.splice(index, 1, newLead)    
-    }
+    },
 
+    UPDATE_USER(state, editedUser) {
+      console.log("🚀 ~ file: index.js ~ line 409 ~ UPDATE_USER ~ editedUser", editedUser)
+      const index = state.companyUsers.findIndex(companyUser => editedUser.id == companyUser.id)
+      state.companyUsers.splice(index, 1, editedUser)
+    },
   },
   
   actions: {
     add_company({ commit }, company) {
       commit('ADD_COMPANY', company)
       router.push({name: 'Companies'})
+    },
+
+    add_user({ commit, state }, user) {
+      user.id = state.companyUsers.length + 1
+      console.log("🚀 ~ file: index.js ~ line 421 ~ add_user ~ user", user)
+      commit('ADD_USER', user)
     },
 
     edit_company({ commit }, company) {
@@ -418,7 +440,12 @@ export default createStore({
 
     toggle_disputed({ commit }, leadId) {
       commit('TOGGLE_DISPUTED', leadId)
-    }
+    },
+
+    update_user({ commit }, user) {
+      console.log("🚀 ~ file: index.js ~ line 443 ~ update_user ~ user", user)
+      commit('UPDATE_USER', user)
+    },
   },
   modules: {}
 });
