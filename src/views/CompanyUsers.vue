@@ -7,7 +7,7 @@
             <base-input _id="last-name" _label="Last name" v-model="user.last_name"></base-input>
             <base-input _id="email" _label="Email" _type="email" v-model="user.email"></base-input>
             <base-input _id="phone" _label="Phone" _type="tel" v-model="user.phone"></base-input>
-            <base-input _id="temp-password" _label="Temporary password"  v-model="user.temp_password"></base-input>
+            <base-input _id="temp-password" _label="Temporary password"  v-model="user.temp_password" v-if="!user.id"></base-input>
             <base-checkbox _id="is-admin" _label="User an Admin?" v-model="user.is_admin" _display="bk"></base-checkbox>
             <div class="submit-button">
                 <base-button _mode="primary" _radius="r-full" _width="w-medium" _display="bk" @button-clicked="submitForm"><span v-if="!user.id">Add</span><span v-else>Update</span></base-button>
