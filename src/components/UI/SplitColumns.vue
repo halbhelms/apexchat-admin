@@ -1,0 +1,42 @@
+<template>
+    <div class="split-columns">
+        <div class="left">
+            <slot name="left"></slot>
+        </div>
+
+        <div class="right">
+            <slot name="right"></slot>
+        </div>
+
+    </div>
+</template>
+
+<script>
+    export default {
+        name: 'SplitColumns',
+
+        components: {},
+
+        props: {},
+
+        data() {
+            return {}
+        },
+
+        methods: {},
+
+        computed: {}
+    }
+</script>
+
+<style scoped>
+    *{
+        outline: 1px dashed pink;
+    }
+
+    .split-columns {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-gap: 12px;
+    }
+</style>

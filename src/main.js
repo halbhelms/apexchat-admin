@@ -5,7 +5,9 @@ import store from "./store";
 import BaseButton from './components/UI/BaseButton.vue'
 import BaseInput from './components/UI/BaseInput.vue'
 import BaseCheckbox from './components/UI/BaseCheckbox.vue'
+import BaseTextarea from './components/UI/BaseTextarea.vue'
 import SectionHeader from './components/UI/SectionHeader.vue'
+import SplitColumns from './components/UI/SplitColumns.vue'
 
 const app = createApp(App)
   .use(store)
@@ -14,7 +16,9 @@ const app = createApp(App)
 app.component('base-button', BaseButton)
 app.component('base-input', BaseInput)
 app.component('base-checkbox', BaseCheckbox)
+app.component('base-textarea', BaseTextarea)
 app.component('section-header', SectionHeader)
+app.component('split-columns', SplitColumns)
 
 app.mount("#app");
   

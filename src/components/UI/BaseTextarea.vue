@@ -1,15 +1,15 @@
 <template>
 <div class="go-bottom">
   <div>
-    <input 
+    <textarea 
       v-bind="$attrs" 
       :id="_id" 
       :name="_id" 
-      :type="_type" 
       :value="modelValue" 
-      @input="$emit('update:modelValue', $event.target.value)" 
-      required
-    >
+      :rows="_rows"
+      @input="$emit('update:modelValue', $event.target.value)"
+      required>
+    </textarea>
     <label :for="_id">{{ _label }}</label>
   </div>
  </div>
@@ -32,6 +32,11 @@
                 required: true
             },
 
+            _rows: {
+              type: Number,
+              default: 5
+            },
+
             _type: {
                 type: String,
                 default: 'text'
@@ -44,9 +49,7 @@
         },
         
         data() {
-            return {
-                // modelValue: null,
-            }
+            return {}
         },
 
         methods: {},

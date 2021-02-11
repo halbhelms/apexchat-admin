@@ -1,6 +1,9 @@
 <template>
     <div :class="['base-button', _display]">
-        <button @click="$emit('button-clicked')" :class="[_mode, _radius, _width]">
+        <button 
+            @click="$emit('button-clicked')" 
+            :class="[_mode, _radius, _width]"
+        >
             <slot></slot>
         </button>
     </div>
@@ -56,6 +59,7 @@
 
 button {
     border: none;
+    outline: 0;
     padding: 4px 8px 4px 8px;
     text-decoration: none;
     cursor: pointer;
@@ -66,6 +70,7 @@ button {
 
 
 button:hover {
+    outline: 0;
     font-weight: 900;
     box-shadow: 0px 0px 2px 2px rgb(0, 138, 220);
     border: none;
@@ -81,6 +86,7 @@ button:active {
 
 button:visited {
     text-decoration: none;
+    outline: 0;
 }
 
 /* display */

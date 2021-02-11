@@ -26,6 +26,8 @@
     .header {
         box-shadow: 0 0 6px 0 silver;
         background-color: rgb(237,240,245);
+        width: 100%;
+        display: block;
     }
 
     .title {

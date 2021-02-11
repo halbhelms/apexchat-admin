@@ -1,34 +1,25 @@
 <template>
-    <VideosHeader :_companyName="selectedCompanyName"/>
-    <div class="videos">
-
-        <!-- list of customer's existing videos -->
-        <div class="existing-videos">
-            <!-- title for existing videos -->
-            <div class="existing-videos-title">
-                Video List
-            </div>
-            <!-- list of existing videos -->
-            <div class="existing-videos-list">
-                <!-- TODO: Display list -->
-            </div>
-        </div>
-
-        <!-- form for adding new Videos -->
-        <div class="video-add-form">
-            <div class="video-add-form-title">
-                Add a Video for {{ selectedCompanyName }}
-            </div>
-        </div>
-    </div>
+   <div class="videos">
+       <!-- section header -->
+       <section-header>Videos: {{ selectedCompanyName }}</section-header>
+       <!-- split columns layout -->
+       <split-columns>
+           <!-- add video form -->
+           <template v-slot:left>
+               <video-form @button-clicked="alert('Button clicked')"></video-form>
+           </template>
+           <!-- existing videos -->
+           <template v-slot:right>Right</template>
+       </split-columns>
+   </div>
 </template>
 
 <script>
-    import VideosHeader from '../components/videos/VideosHeader'
+    import VideoForm from '../components/videos/VideoForm'
     export default {
         name: 'Videos',
 
-        components: {VideosHeader },
+        components: {VideoForm},
 
         props: [],
 
@@ -57,12 +48,9 @@
 </script>
 
 <style scoped>
-    * {
-        outline: 1px solid red;
-    }
+
     
     .videos {
-        display: grid;
-        grid-template-columns: 50% 50%;
+
     }
 </style>
