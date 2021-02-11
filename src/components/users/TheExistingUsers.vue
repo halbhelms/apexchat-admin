@@ -9,6 +9,7 @@
             :_firstName="user.first_name" 
             :_lastName="user.last_name" 
             :_isAdmin="user.is_admin" 
+            @delete-user="(userId) => $emit('delete-user', userId)"
             @edit-user="(userId) => $emit('edit-user', userId)">
         </company-user>
     </div>

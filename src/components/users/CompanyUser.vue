@@ -6,6 +6,7 @@
         <div class="name" @click="$emit('edit-user', _userId)">
             {{ _firstName }} {{ _lastName }}
         </div>
+        <div class="delete-action" @click="$emit('delete-user', _userId)" />
     </div>
 
 </template>
@@ -61,11 +62,14 @@
 </script>
 
 <style scoped>
+    * {
+        /* outline: 1px dashed pink; */
+    }
     .company-user {
         text-align: left;
         padding-left: 10px;
         display: grid;
-        grid-template-columns: 40px auto;
+        grid-template-columns: 40px 220px 30px;
         grid-gap: 0;
     }
 
@@ -73,5 +77,12 @@
         background-image:url('./admin-user.png');
         background-size: cover;
         background-position: center;
+    }
+
+    .delete-action{
+        background-image: url('./delete.png');
+        background-size: 120%;
+        background-position: center;
+        cursor: pointer;
     }
 </style>

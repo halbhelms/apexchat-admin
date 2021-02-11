@@ -385,6 +385,11 @@ export default createStore({
       state.companyUsers.push(user)
     },
 
+    DELETE_COMPANY_USER(state, userId) {
+      const index = state.companyUsers.findIndex( user => user.id == userId)
+      state.companyUsers.splice(index, 1)
+    },
+
     EDIT_COMPANY(state, editedCompany) {
       let index = state.companies.findIndex( company => company.id == editedCompany.id)
       state.companies.splice(index, 1, editedCompany)
@@ -423,6 +428,11 @@ export default createStore({
       user.id = state.companyUsers.length + 1
       console.log("🚀 ~ file: index.js ~ line 421 ~ add_user ~ user", user)
       commit('ADD_USER', user)
+    },
+
+    delete_company_user({ commit }, userId) {
+      console.log("🚀 ~ file: index.js ~ line 429 ~ delete_company_user ~ userId", userId)
+      commit('DELETE_COMPANY_USER', userId)
     },
 
     edit_company({ commit }, company) {

@@ -16,6 +16,7 @@
         <div class="existing-users">
             <the-existing-users 
                 @edit-user="editUser"
+                @delete-user="deleteUser"
                 :_companyUsers="companyUsers">
             </the-existing-users>
         </div>
@@ -43,7 +44,7 @@
                     email: null,
                     phone: null,
                 },
-                companyUsers: [],
+                // companyUsers: [],
                 companyName: null,
             }
         },
@@ -53,6 +54,10 @@
                 this.user = this.$store.getters.getUserById(userId)
             },
 
+            deleteUser(userId) {
+                this.$store.dispatch('delete_company_user', userId)
+            },
+
             submitForm() {
                 if (this.user.id) {
                     this.$store.dispatch('update_user', this.user)
@@ -60,18 +65,20 @@
                     this.$store.dispatch('add_user', this.user)
                 }
                 this.user = {}
-                this.company_id = this.$route.params.id
+                // this.company_id = this.$route.params.id
                 this.user.company_id = this.$route.params.id
-
-                this.companyUsers = this.$store.getters.getUsersForCompany(this.$route.params.id)
             }
 
         },
 
-        computed: {},
+        computed: {
+            companyUsers() {
+                return this.$store.getters.getUsersForCompany(this.$route.params.id)
+            }
+        },
 
         created() {
-            this.companyUsers = this.$store.getters.getUsersForCompany(this.$route.params.id)
+            
             this.companyName = this.$store.getters.getCompanyNameById(this.$route.params.id)
         }
     }
