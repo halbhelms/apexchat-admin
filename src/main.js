@@ -6,6 +6,7 @@ import BaseButton from './components/UI/BaseButton.vue'
 import BaseInput from './components/UI/BaseInput.vue'
 import BaseCheckbox from './components/UI/BaseCheckbox.vue'
 import BaseTextarea from './components/UI/BaseTextarea.vue'
+import BaseSelect from './components/UI/BaseSelect.vue'
 import SectionHeader from './components/UI/SectionHeader.vue'
 import SplitColumns from './components/UI/SplitColumns.vue'
 
@@ -17,6 +18,7 @@ app.component('base-button', BaseButton)
 app.component('base-input', BaseInput)
 app.component('base-checkbox', BaseCheckbox)
 app.component('base-textarea', BaseTextarea)
+app.component('base-select', BaseSelect)
 app.component('section-header', SectionHeader)
 app.component('split-columns', SplitColumns)
 

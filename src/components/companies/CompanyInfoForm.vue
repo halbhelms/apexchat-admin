@@ -1,63 +1,18 @@
 <template>
-    <div class="form">
-        <div class="filler">Company</div>
-        <div class="form-elements">
-            <!-- name -->
-            <div class="form-element">
-                <label for="name">Name</label>
-                <input v-model="company.name" type="text" id="name" />
-            </div>
-            <!-- owner -->
-            <div class="form-element">
-                <label for="owner">Owner</label>
-                <input v-model="company.owner" type="text" id="owner" />
-            </div>
-            <!-- email -->
-            <div class="form-element">
-                <label for="email">Email</label>
-                <input v-model="company.email" type="text" id="email" />
-            </div>
-            <!-- phone -->
-            <div class="form-element">
-                <label for="phone">Phone</label>
-                <input v-model="company.phone" type="text" id="phone" />
-            </div>
-            <!-- selfManage -->
-            <div class="form-element">
-                <div></div>
-                <div>
-                    <input type="checkbox" v-model="company.self_manage_web"  id="self-manage" />
-                    <label class="no-bold" for="self-manage">Self-manages web work</label>
-                </div>
-            </div>
-            <!-- apex company id -->
-            <div class="form-element">
-                <label for="apex-company-id">Apex company ID</label>
-                <input v-model="company.apex_company_id"  id="apex-company-id" />
-            </div>
-            <!-- since -->
-            <!-- apex info -->
-            <div class="form-element">
-                <label for="apex-info">Apex info</label>
-                <textarea v-model="company.apex_info"  id="apex-info"></textarea>
-            </div>
-            <!-- since -->
-            <div class="form-element">
-                <label for="since">Customer since</label>
-                <input v-model="company.customer_since" type="text" id="since" />
-            </div>            
-            <!-- logo url -->
-            <div class="form-element">
-                <label for="logo-url">Logo URL</label>
-                <input v-model="company.logo_url" type="text" id="logo-url" />
-            </div>            
-            <div class="filler"></div>
-        <!-- buttons -->
-        <router-link :to="{name: 'Companies'}">
-            <button class="cancel">Cancel</button>
-        </router-link>
-        <button @click="submitForm" class="submit">Save Changes</button>
-        </div>
+    <section-header>Company Info</section-header>
+    <div class="company-info-form">
+        <base-input _label="Company name" _id="company-name" v-model="company.name"></base-input>
+        <base-input _label="Website address" _id="website-address" v-model="company.domain"></base-input>
+        <base-input _label="Logo url" _id="logo-url" v-model="company.logo_url"></base-input>
+        <base-input _label="Owner" _id="owner" v-model="company.owner"></base-input>
+        <base-input _label="Customer since (year)" _id="since" v-model="company.since"></base-input>
+        <base-input _label="Email" _type="email" _id="email" v-model="company.email"></base-input>
+        <base-input _label="Phone" _type="tel" _id="phone" v-model="company.phone"></base-input>
+        <base-input _label="Apex company ID" _id="apex-company-id" v-model="company.apex_company_id"></base-input>
+        <base-textarea _label="Apex info" _id="apex-info" v-model="company.apex_info"></base-textarea>
+        <base-checkbox _label="Self manage website?" _id="self-managed-web" v-model="company.self_managed_web"></base-checkbox>
+        <base-select _label="Active status" _id="status" v-model="company.status" :_options="statusOptions" class="select"></base-select>
+        <base-button _width="w-medium" _radius="r-full"><span v-if="$route.params.id">Save</span><span v-else>Add</span></base-button>
     </div>
 </template>
 
@@ -67,13 +22,7 @@
 
         components: {},
 
-        props: {
-            // _company will be sent in if this form is used for editing
-            _company: {
-                type: Object,
-                required: false
-            }
-        },
+        props: {},
 
         data() {
             return {
@@ -81,15 +30,18 @@
                     id: null,
                     apex_company_id: null,
                     apex_info: null,
-                    self_manage_web: false,
+                    self_managed_web: false,
                     email: null,
                     logo_url: null,
-                    users: [],
                     phone: null,
                     name: null,
                     owner: null,
-                    customer_since: new Date().getFullYear()
+                    time_zone: null,
+                    since: null,
+                    status: 'active'
                 },
+
+                statusOptions: ['active', 'paused']
             }
         },
 
@@ -117,65 +69,21 @@
 </script>
 
 <style scoped>
-    button {
-        margin-top: 20px;
-        margin-right: 8px;
-        background-color: rgb(0,138, 230);
-        color:antiquewhite;
-        border: 1px solid silver;
-        border-radius: 12px;
-        width: 7rem;
+    .company-info-form {
+        width: 400px;
     }
 
-    button.cancel {
-        background-color: silver;
-        /* color: rgb(0,138,230); */
-        color: navy;
-        width: 7rem;
+    .company-info-form * {
+        margin: 0 auto;
+        margin-top: 12px;
     }
 
-    button:hover {
-        transform: brighten(-1.5%)
+    .company-info-form:last-child {
+        margin-bottom: 24px;
     }
 
-    .filler {
-        font-weight: 900;
-        font-size: 1.2rem;
-    }
-
-    .form-element {
-        display: grid;
-        grid-template-columns: 40% auto;
-        margin-top: 8px;
-        width: 100%;
-    }
-
-    input {
-        border: 1px solid silver;
-        border-radius: 4px;
-        box-shadow: 0 0 3px 0 silver;
-    }
-
-    .is-admin {
-        text-align: left;
-    }
-
-    label {
-        text-align: right;
-        margin-right: 12px;
-        font-size: 0.9rem;
-        font-weight: 900;
-        color: black;
-    }
-
-    .no-bold {
-        font-weight:inherit;
-    }
-
-    textarea {
-        border-radius: 4px;
-        font-family: 'Open Sans';
-        box-shadow: 0 0 3px 0 silver;
-        height: 6rem;
+    .select {
+        margin: 0 auto;
+        margin-top: 12px;
     }
 </style>

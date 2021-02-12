@@ -1,5 +1,5 @@
 <template>
-    <div :class="['base-checkbox']">
+    <div :class="base-checkbox">
         <input :id="_id" type="checkbox" :checked="modelValue" @change="$emit('update:modelValue', $event.target.checked)">
         <label :for="_id">{{ _label }}</label>
     </div>
@@ -46,9 +46,9 @@
 <style scoped>
     .base-checkbox {
         /* position: relative; */
-        width: 100%;
-        text-align: left;
-        margin-left: 36px;
+        /* width: 100%; */
+        /* text-align: left; */
+        /* margin-left: 36px; */
         
     }
 
