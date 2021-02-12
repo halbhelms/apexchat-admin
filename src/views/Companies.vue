@@ -8,7 +8,7 @@
             :_name="company.name" 
             :_since="company.since" 
             :_owner="company.owner" 
-            :_active="company.active" 
+            :_active="company.status === 'active'" 
             :_id="company.id" />
     </div>
 </template>

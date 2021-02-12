@@ -13,19 +13,19 @@
         <div class="buttons">
             <!-- edit button-->
             <router-link :to="{name: 'EditCompany', params: {id: _id}}">
-                <button class="action-button edit"></button>
+                <button class="action-button edit" title="Edit company"></button>
             </router-link>
             <!-- leads button             -->
             <router-link :to="{name: 'CompanyLeads', params: {id: _id}}">
-                <button class="action-button leads"></button>
+                <button class="action-button leads" title="Company leads"></button>
             </router-link>
             <!-- videos button -->
             <router-link :to="{name: 'CompanyVideos', params: {id: _id}}">
-                <button class="action-button videos"></button>
+                <button class="action-button videos" title="Company videos"></button>
             </router-link>
             <!-- users button -->
             <router-link :to="{name: 'CompanyUsers', params: {id: _id}}">
-                <button class="action-button users"></button>
+                <button class="action-button users" title="Company users"></button>
             </router-link>
         </div>
     </div>
@@ -71,25 +71,25 @@
         transform: scale(1.25) perspective(1px);
     }
 
-        .edit {
-            background-image: url('admin-edit.png');
-            background-size: 180%;
-        }
+    .edit {
+        background-image: url('admin-edit.png');
+        background-size: 180%;
+    }
 
-        .leads {
-            background-size: 120%;
-            background-image: url('admin-leads.png');
-        }
+    .leads {
+        background-size: 120%;
+        background-image: url('admin-leads.png');
+    }
 
-        .videos {
-            background-image: url('admin-videos.png');
-            background-size: 140%;
-        }
+    .videos {
+        background-image: url('admin-videos.png');
+        background-size: 140%;
+    }
 
-        .users {
-            background-image: url('admin-users.png');
-            background-size: 140%;
-        }
+    .users {
+        background-image: url('admin-users.png');
+        background-size: 140%;
+    }
 
     .action-button-img{
         border: 2px solid navy;

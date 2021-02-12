@@ -31,21 +31,31 @@
 
 <style scoped>
     .add-icon {
-        vertical-align: top;
+        position: relative;
+        top: 6px;
     }
 
     .add-company {
         text-align: left;
-        margin-top: 6px;
+        /* margin-top: 6px; */
         margin-right: 20px;
     }
 
-    .add-text {
-        margin-left: 12px;
-        font-weight: 800;
+    .add-company:hover {
+        transition: all 0.3s ease-in;
+        transform: scale(1.05);
     }
 
-    span.add-text {
+    .add-company:active, .add-company:visited {
+        text-decoration: none;
+        color: black;
+    }
+
+    .add-text {
+        position: relative;
+        /* top: 6px; */
+        margin-left: 12px;
+        font-weight: 800;
     }
 
     .header {
