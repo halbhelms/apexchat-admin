@@ -41,7 +41,6 @@
                     since: null,
                     status: 'active'
                 },
-
                 statusOptions: ['active', 'paused'],
                 timeZones: ['Eastern Time (US & Canada)', 'Central Time (US & Canada)', 'Mountain Time (US & Canada)', 'Pacific Time (US & Canada)', 'Alaska', 'Hawaii'],
             }
@@ -49,8 +48,6 @@
 
         methods: {
             submitForm() {
-                console.log('this.company', this.company);
-                
                 // if $route.params.id, we're in editing mode
                 if (this.$route.params.id) {
                     this.$store.dispatch('update_company', this.company)
@@ -71,8 +68,6 @@
         },
 
         mounted() {
-            console.log('Here in mounted');
-            
             // if $route.params.id, use that company
             if (this.$route.params.id) {
                 this.company = this.$store.getters.getCompanyById(this.$route.params.id)
