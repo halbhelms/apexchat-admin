@@ -47,9 +47,7 @@
 
         methods: {
             submitForm() {
-                this.video = {company_id: this.$route.params.id}
                 this.$store.dispatch('add_video', this.video)
-
                 // reset video
                 this.video = {company_id: this.$route.params.id}
             }

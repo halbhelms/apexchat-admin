@@ -370,7 +370,7 @@ export default createStore({
 
     getVideosForCompany(state) {
       return (id) => {
-        return state.videos.filter( video => video.companyId == id)
+        return state.videos.filter( video => video.company_id == id)
       }
     }
   },
@@ -393,6 +393,11 @@ export default createStore({
     DELETE_COMPANY_USER(state, userId) {
       const index = state.companyUsers.findIndex( user => user.id == userId)
       state.companyUsers.splice(index, 1)
+    },
+
+    DELETE_VIDEO(state, videoId) {
+      const index = state.videos.findIndex( video => video.id == videoId)
+      state.videos.splice(index, 1)      
     },
 
     EDIT_COMPANY(state, editedCompany) {
@@ -445,6 +450,10 @@ export default createStore({
 
     delete_company_user({ commit }, userId) {
       commit('DELETE_COMPANY_USER', userId)
+    },
+
+    delete_video({ commit }, videoId) {
+      commit('DELETE_VIDEO', videoId)
     },
 
     edit_company({ commit }, company) {

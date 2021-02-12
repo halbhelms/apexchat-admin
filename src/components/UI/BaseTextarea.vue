@@ -63,7 +63,11 @@
   box-sizing: border-box;
 }
 
-.base-button{
+textarea {
+  font-family: inherit;
+}
+
+.base-textarea{
     display: inline-block;
 }
 

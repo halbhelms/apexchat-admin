@@ -54,5 +54,6 @@
 
     input {
         margin-right: 6px;
+        font-family: inherit;
     }
 </style>

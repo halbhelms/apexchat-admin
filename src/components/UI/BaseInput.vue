@@ -60,9 +60,13 @@
   box-sizing: border-box;
 }
 
-.base-button{
-    display: inline-block;
+input {
+  font-family: inherit;
 }
+
+/* .base-button{
+    display: inline-block;
+} */
 
 div {
   width: 320px;

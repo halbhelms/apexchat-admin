@@ -8,18 +8,22 @@
            <template v-slot:left>
                <video-form @button-clicked="alert('Button clicked')"></video-form>
            </template>
+
            <!-- existing videos -->
-           <template v-slot:right>Right</template>
+           <template v-slot:right>
+               <the-existing-videos></the-existing-videos>
+           </template>
        </split-columns>
    </div>
 </template>
 
 <script>
     import VideoForm from '../components/videos/VideoForm'
+    import TheExistingVideos from '../components/videos/TheExistingVideos'
     export default {
         name: 'Videos',
 
-        components: {VideoForm},
+        components: {VideoForm, TheExistingVideos},
 
         props: [],
 

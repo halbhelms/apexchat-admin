@@ -1,40 +1,28 @@
 <template>
     <h3>Existing Videos</h3>
     <div class="the-existing-videos">
-        <company-user 
+        <company-video 
             class="pointer" 
-            v-for="user in _companyUsers" 
-            :key="user.id" 
-            :_userId="user.id" 
-            :_firstName="user.first_name" 
-            :_lastName="user.last_name" 
-            :_isAdmin="user.is_admin" 
-            @delete-user="(userId) => $emit('delete-user', userId)"
-            @edit-user="(userId) => $emit('edit-user', userId)">
-        </company-user>
+            v-for="video in companyVideos" 
+            :key="video.id" 
+            :_id="video.id" 
+            :_title="video.title" 
+            @delete-video="deleteVideo"
+        >
+        </company-video>
     </div>
 </template>
 
 <script>
-    import CompanyUser from '../users/CompanyUser'
+    import CompanyVideo from './CompanyVideo'
     export default {
-        name: 'TheExistingUsers',
+        name: 'TheExistingVideos',
 
-        components: {CompanyUser},
+        components: {CompanyVideo},
 
-        props: {
-            _companyUsers: {
-                type: Array,
-                required: false
-            }
-        },
+        props: {},
 
-        emits: {
-            'edit-user': (userId) => {
-                if (userId) { return true}
-                return false;
-            }
-        },
+        emits: {},
 
         data() {
             return {
@@ -42,13 +30,19 @@
             }
         },
 
-        methods: {},
+        methods: {
+            deleteVideo(id) {
+                this.$store.dispatch('delete_video', id)
+            }
+        },
 
-        computed: {},
+        computed: {
+            companyVideos() {
+                return this.$store.getters.getVideosForCompany(this.$route.params.id)
+            }
+        },
 
-        created() {
-            // this.users = this.$store.state.companyUsers
-        }
+        created() {}
     }
 </script>
 
@@ -67,7 +61,7 @@
 
     }
 
-    .the-existing-users {
+    .the-existing-videos {
         /* border: 1px solid silver; */
         margin-right: 16px;
     }

@@ -66,6 +66,7 @@ button {
     text-align: center;
 	display:inline-block;
 	text-shadow:0px 1px 0px #2f6627;
+    font-family: inherit;
 }
 
 
