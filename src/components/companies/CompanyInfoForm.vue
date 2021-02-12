@@ -44,7 +44,6 @@
 
                 statusOptions: ['active', 'paused'],
                 timeZones: ['Eastern Time (US & Canada)', 'Central Time (US & Canada)', 'Mountain Time (US & Canada)', 'Pacific Time (US & Canada)', 'Alaska', 'Hawaii'],
-                buttonLabel: 'Add'
             }
         },
 
@@ -63,7 +62,7 @@
         },
 
         computed: {
-            formLabel() {
+            buttonLabel() {
                 if (this.$route.params.id) {
                     return 'Update'
                 }
@@ -72,9 +71,11 @@
         },
 
         mounted() {
+            console.log('Here in mounted');
+            
             // if $route.params.id, use that company
             if (this.$route.params.id) {
-                this.company = this.$props._company
+                this.company = this.$store.getters.getCompanyById(this.$route.params.id)
             }
         }
     }
