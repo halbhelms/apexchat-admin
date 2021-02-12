@@ -62,9 +62,6 @@
 </script>
 
 <style scoped>
-    * {
-        /* outline: 1px dashed pink; */
-    }
     .company-user {
         text-align: left;
         padding-left: 10px;

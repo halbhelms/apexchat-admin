@@ -30,10 +30,6 @@
 </script>
 
 <style scoped>
-    *{
-        outline: 1px dashed pink;
-    }
-
     .split-columns {
         display: grid;
         grid-template-columns: 50% 50%;
