@@ -20,84 +20,90 @@ export default createStore({
         name: 'CJS Heating and Air',
         since: '2012',
         owner: 'Richard Davis',
-        active: true,
+        status: 'active',
         email: 'person@company.com',
         logo_url: 'http://logos.com',
         phone: '555.555.5555',
         apexInfo: 'Lorem ipsum',
-        selfManage: true,
+        self_managed_web: false,
       },
       {
         id: 2,
         name: 'Westside Plumbing',
         since: '2008',
         owner: 'John Kwartow',
-        active: true,
+        status:'active',
         email: 'person@company.com',
         logo_url: 'http://logos.com',
         phone: '555.555.5555',
         apexInfo: 'Lorem ipsum',
-        selfManage: true
+        self_managed_web: false,
+        time_zone: 'Hawaii'
       },
       {
         id: 3,
         name: 'Houston HVAC',
         since: '2016',
         owner: 'Max Eberschnaut',
-        active: true,
+        status:'active',
         email: 'person@company.com',
         logo_url: 'http://logos.com',
         phone: '555.555.5555',
         apexInfo: 'Lorem ipsum',
-        selfManage: true
+        self_managed_web: true,
+        time_zone: 'Hawaii'
       },
       {
         id: 4,
         name: "RB's Home Services",
         since: '2008',
         owner: 'Richard Bullworth',
-        active: true,
+        status:'active',
         email: 'person@company.com',
         logo_url: 'http://logos.com',
         phone: '555.555.5555',
         apexInfo: 'Lorem ipsum',
-        selfManage: false
+        self_managed_web: false,
+        time_zone: 'Hawaii'
       },
       {
         id: 5,
         name: 'RWB Plumbing',
         since: '2002',
         owner: 'Rene Bellagio',
-        active: true,
+        status:'active',
         email: 'person@company.com',
         logo_url: 'http://logos.com',
         phone: '555.555.5555',
         apexInfo: 'Lorem ipsum',
-        selfManage: true
+        self_managed_web: true,
+        time_zone: 'Hawaii'
       },
       {
         id: 6,
         name: 'Davis & Sons',
         since: '1994',
         owner: 'Alicia Davis',
-        active: false,
+        status: 'active',
         email: 'person@company.com',
         logo_url: 'http://logos.com',
         phone: '555.555.5555',
         apexInfo: 'Lorem ipsum',
-        selfManage: false
+        self_managed_web: false,
+        time_zone: 'Hawaii'
       },
       {
         id: 7,
         name: 'Hoserson Electric',
         since: '2009',
         owner: 'Hosey Hoserson',
-        active: true,
+        status:'active',
         email: 'person@company.com',
         logo_url: 'http://logos.com',
         phone: '555.555.5555',
         apexInfo: 'Lorem ipsum',
-        selfManage: true
+        self_managed_web: true,
+        time_zone: 'Hawaii'
       },
     ],
     leads: [
@@ -400,11 +406,6 @@ export default createStore({
       state.videos.splice(index, 1)      
     },
 
-    EDIT_COMPANY(state, editedCompany) {
-      let index = state.companies.findIndex( company => company.id == editedCompany.id)
-      state.companies.splice(index, 1, editedCompany)
-    },
-
     SET_ACTIVE_NAV(state, navElement) {
       state.activeNave = navElement
     },
@@ -420,6 +421,11 @@ export default createStore({
       let newLead = {...lead, ...disputed}
       state.leads.splice(index, 1, newLead)    
     },
+
+    UPDATE_COMPANY(state, editedCompany) {
+      let index = state.companies.findIndex( company => company.id == editedCompany.id)
+      state.companies.splice(index, 1, editedCompany)
+    },    
 
     UPDATE_USER(state, editedUser) {
       console.log("🚀 ~ file: index.js ~ line 409 ~ UPDATE_USER ~ editedUser", editedUser)
@@ -456,11 +462,6 @@ export default createStore({
       commit('DELETE_VIDEO', videoId)
     },
 
-    edit_company({ commit }, company) {
-      commit('EDIT_COMPANY', company)
-      router.push({name: 'Companies'})
-    },
-
     set_active_nav({ commit }, navElement) {
       commit('SET_ACTIVE_NAV', navElement)
     },
@@ -473,10 +474,16 @@ export default createStore({
       commit('TOGGLE_DISPUTED', leadId)
     },
 
+    update_company({ commit }, company) {
+      commit('UPDATE_COMPANY', company)
+      router.push({name: 'Companies'})
+    },    
+
     update_user({ commit }, user) {
       console.log("🚀 ~ file: index.js ~ line 443 ~ update_user ~ user", user)
       commit('UPDATE_USER', user)
     },
   },
+
   modules: {}
 });
