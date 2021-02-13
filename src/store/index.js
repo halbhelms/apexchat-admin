@@ -4,6 +4,7 @@ import router from '../router/index';
 export default createStore({
   state: {
     activeNav: '',
+    dateFilter: 'Since login',
     currentUser: {
       firstName: 'Zach',
       lastName: 'Lefeistre',
@@ -414,6 +415,10 @@ export default createStore({
       state.currentCompany = companyId
     },
 
+    SET_DATE_FILTER(state, filter) {
+      state.dateFilter = filter
+    },
+
     SET_DISPUTED(state, {leadId, status}) {
       let index = state.leads.findIndex( lead => lead.id == leadId)
       let lead = state.leads[index]
@@ -470,6 +475,10 @@ export default createStore({
 
     set_current_company({ commit }, id) {
       commit('SET_CURRENT_COMPANY', id)
+    },
+
+    set_date_filter({ commit }, filter) {
+      commit('SET_DATE_FILTER', filter)
     },
 
     set_disputed({ commit }, options) {

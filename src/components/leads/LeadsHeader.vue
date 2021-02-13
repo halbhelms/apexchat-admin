@@ -5,39 +5,22 @@
     <div class="dashboard-header-container">
         <div class="header">
             <!-- title -->
-            <div class="title">Leads <span class="title-company"> {{ companyName }}</span></div>
-            <!-- time filter -->
-            <div class="date-filter">
-                <div class="filter">
-                    <input name="date-filter" type="radio" id="last-login" @change="setDateFilter('lastLogin')" />
-                    <label for="last-login" name="date-filter"> Since last login</label>
-                </div>
-                <div class="filter">
-                    <input name="date-filter" type="radio" id="last-30" @change="setDateFilter('last30')" />
-                    <label for="last-30" name="date-filter"> Last 30 Days</label>
-                </div>
-                <div class="filter">
-                    <input name="date-filter" type="radio" id="last-60" @change="setDateFilter('last60')" />
-                    <label for="last-60" name="date-filter"> Last 60 days</label>
-                </div>
-            </div>
+            <div class="title">Leads: <span class="title-company"> {{ companyName }}</span></div>
+            <DateFilter />
         </div>
     </div>
 </template>
 
 <script>
+    import DateFilter from '../UI/DateFilter'
     export default {
         name: 'LeadsHeader',
-        components: {},
+        components: {DateFilter},
         props: {},
         data() {
             return {}
         },
-        methods: {
-            setDateFilter(filter) {
-                console.log('filter', filter);
-            }
-        },
+        methods: {},
         computed: {
             companyName() {
                 if (this.$route.params.id) {
@@ -50,12 +33,12 @@
 </script>
 
 <style scoped>
-    .date-filter {
+    /* .date-filter {
         display: grid;
         grid-template-columns: 33% auto 33%;
         padding-top: 8px;
         font-size: 0.65rem;
-    }
+    } */
 
     .header {
         display: grid;
