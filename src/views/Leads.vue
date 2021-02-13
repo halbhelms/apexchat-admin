@@ -7,15 +7,12 @@
             v-for="lead in leads" 
             :key="lead.id" 
             :_id="lead.id" 
-            :_companyId="lead.companyId" 
-            :_location="lead.location"
+            :_company_id="lead.company_id" 
             :_chatId="lead.chatId"
             :_date="lead.date"
             :_type="lead.type"
-            :_address="lead.address"
-            :_phone="lead.phone"
             :_contact="lead.contact"
-            :_disputed="lead.disputed"/>
+            :_dispute_status="lead.dispute_status"/>
         <Modal @modal-off="noSelectedLead" v-if="selectedLead" :_selectedLead="selectedLead" :_chat="chat" />
     </div>
 </template>

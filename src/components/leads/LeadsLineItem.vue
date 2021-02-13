@@ -1,12 +1,9 @@
 <template>
     <div class="leads-line-item" >
-        <div @click="$emit('lead-selected', _id)" class="column company-name">{{ name }}</div>
         <div @click="$emit('lead-selected', _id)" class="column date">{{ date }}</div>
-        <div @click="$emit('lead-selected', _id)" class="column type">{{ _type }}</div>
-        <div @click="$emit('lead-selected', _id)" class="column contact">{{ _contact }}</div>
-        <div @click="$emit('lead-selected', _id)" class="column location">{{ _location }}</div>
-        <div @click="$emit('lead-selected', _id)" class="column phone">{{ phone }}</div>
-        <div @click="toggleDisputed(_id)" :class="[disputedStatus ? 'disputed' : '', 'column toggle']">{{ disputedStatus }}</div>
+        <div @click="$emit('lead-selected', _id)" class="column type">{{ lead.type }}</div>
+        <div @click="$emit('lead-selected', _id)" class="column contact">{{ lead.contact }}</div>
+        <div @click="cycleDisputeStatus(_id)" :class="[disputeClass, 'column']">{{ lead.disputeStatus }}</div>
     </div>
 </template>
 
@@ -17,16 +14,35 @@
 
         components: {},
 
-        props: ['_id', '_name', '_date', '_type', '_contact', '_location', '_phone', '_disputed', '_companyId'],
+        props: ['_id', '_date', '_type', '_contact', '_dispute_status', '_company_id'],
 
         data() {
-            return {}
+            return {
+                disputeCycleNumber: 0,
+                lead: {
+                    id: this.$props._id,
+                    date: this.$props._date,
+                    type: this.$props._type,
+                    contact: this.$props._contact,
+                    disputeStatus: this.$props._dispute_status,
+                    companyId: this.$props._company_id,
+                },
+            }
         },
 
         methods: {
-            toggleDisputed(id) {
-                this.$store.dispatch('toggle_disputed', id)
-            }
+            cycleDisputeStatus(id) {
+                const disputeStates = ['undisputed', 'disputed', 'resolved']
+                let num = this.disputeCycleNumber + 1
+                if (num >= disputeStates.length) {
+                    num = 0
+                }
+                this.disputeCycleNumber = num
+
+                this.lead.disputeStatus = disputeStates[this.disputeCycleNumber]
+                
+                this.$store.dispatch('set_disputed', {leadId:id, status:this.disputeStatus})
+            },
         },
 
         computed: {
@@ -34,22 +50,25 @@
                 return format(this.$props._date, 'M.ee.y')
             },
 
-            disputed() {
-                return this.$props._disputed ? 'Yes' : 'No'
+            disputeStatus() {
+                const disputeStates = ['undisputed', 'disputed', 'resolved']
+                return disputeStates[this.disputeCycleNumber]
             },
 
-            disputedStatus() {
-                return this.$store.getters.getDisputedStatusById(this.$props._id)
-            },
+            disputeClass() {
+                let selectedClass= 'none'
+                switch (this.lead.disputeStatus) {
+                    case 'undisputed': selectedClass = 'none'
+                    break
 
-            name() {
-                return this.$store.getters.getCompanyById(this.$props._companyId).name
-            },
+                    case 'disputed': selectedClass = 'red'
+                    break
 
-            phone() {
-                let p = this.$props._phone.toString()
-                return `${p.substring(0,3)}.${p.substring(3,6)}.${p.substring(6,10)}`
+                    case 'resolved': selectedClass = 'green'
+                }
+                return selectedClass
             }
+
         }
     }
 </script>
@@ -66,13 +85,22 @@
 
     .leads-line-item {
         display: grid;
-        grid-template-columns: 2fr 1.5fr 1fr 2fr 2.5fr 1.5fr 1fr;
+        grid-template-columns: 90px 70px 210px 80px;
         font-size: 0.85rem;
         cursor: pointer;
     }
 
     .toggle {
         cursor: pointer;
+    }
+
+    /* dispute colors */
+    .green {
+        color: green;
+    }
+
+    .red {
+        color: red;
     }
 
 </style>

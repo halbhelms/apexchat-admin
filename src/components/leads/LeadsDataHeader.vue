@@ -1,12 +1,9 @@
 <template>
-    <div class="leads-data-header">
-        <div class="column company-name">Company</div>
-        <div class="column date">Date</div>
-        <div class="column type">Type</div>
-        <div class="column contact">Contact</div>
-        <div class="column location">Location</div>
-        <div class="column phone">Phone</div>
-        <div class="column disputed">Disputed?</div>
+    <div class="company-data-header">
+        <div class="name header-column">Date</div>
+        <div class="type header-column">Type</div>
+        <div class="contact header-column">Contact</div>
+        <div class="status header-column">Status</div>
     </div>
 </template>
 
@@ -30,12 +27,23 @@
 </script>
 
 <style scoped>
-    .column {
-        border: 1px solid gray;
+    .company-data-header {
+        font-weight:900;
+        background-color: rgb(0,138,230);
+        color:antiquewhite;
+        display: grid;
+        padding: 4px 0 4px 0;
+        grid-template-columns: 90px 70px 210px 80px;
+        margin-bottom: 8px;
     }
 
-    .leads-data-header {
-        display: grid;
-        grid-template-columns: 2fr 1.5fr 1fr 2fr 2.5fr 1.5fr 1fr;
+    .header-column {
+        text-align: left;
+        margin-left: 24px;
+    }
+
+    .type {
+        position: relative;
+        left: -20px;
     }
 </style>

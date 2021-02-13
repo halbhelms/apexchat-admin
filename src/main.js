@@ -10,6 +10,10 @@ import BaseSelect from './components/UI/BaseSelect.vue'
 import SectionHeader from './components/UI/SectionHeader.vue'
 import SplitColumns from './components/UI/SplitColumns.vue'
 
+String.prototype.toProperCase = function () {
+    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
 const app = createApp(App)
   .use(store)
   .use(router)

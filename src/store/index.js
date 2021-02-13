@@ -118,7 +118,7 @@ export default createStore({
         location: 'Capital City, TX',
         address: '2071 Broad St. Capital City, TX',
         phone: 7413695442,
-        disputed: true,
+        dispute_status: 'disputed',
       },
       {
         id: 2,
@@ -132,7 +132,7 @@ export default createStore({
         location: 'Capital City, TX',
         address: '1156 N. Oak St, Capital City, TX',
         phone: 7418592541,
-        disputed: false,
+        dispute_status: 'undisputed',
       },
       {
         id: 3,
@@ -146,7 +146,7 @@ export default createStore({
         location: 'Capital City, TX',
         address: '1102 Verdugo. Capital City, TX',
         phone: 7415684529,
-        disputed: false,
+        dispute_status: 'undisputed',
       },
       {
         id: 4,
@@ -160,7 +160,7 @@ export default createStore({
         location: 'Capital City, TX',
         address: '237 Rainbow. Capital City, TX',
         phone: 7415234897,
-        disputed: false,
+        dispute_status: 'undisputed',
       },
     ],
     chats: [
@@ -414,11 +414,13 @@ export default createStore({
       state.currentCompany = companyId
     },
 
-    TOGGLE_DISPUTED(state, leadId) {
+    SET_DISPUTED(state, {leadId, status}) {
       let index = state.leads.findIndex( lead => lead.id == leadId)
       let lead = state.leads[index]
-      let disputed = {disputed: !lead.disputed}
+      let disputed = {dispute_status: status}
       let newLead = {...lead, ...disputed}
+      console.log("🚀 ~ file: index.js ~ line 422 ~ SET_DISPUTED ~ newLead", newLead)
+      
       state.leads.splice(index, 1, newLead)    
     },
 
@@ -470,8 +472,8 @@ export default createStore({
       commit('SET_CURRENT_COMPANY', id)
     },
 
-    toggle_disputed({ commit }, leadId) {
-      commit('TOGGLE_DISPUTED', leadId)
+    set_disputed({ commit }, options) {
+      commit('SET_DISPUTED', options)
     },
 
     update_company({ commit }, company) {
