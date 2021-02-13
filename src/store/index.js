@@ -1,9 +1,12 @@
 import { createStore } from "vuex";
 import router from '../router/index';
 
+import differenceInDays from 'date-fns/differenceInDays'
+
 export default createStore({
   state: {
     activeNav: '',
+    lastLogin: new Date('12-03-2020'),
     dateFilter: 'Since login',
     currentUser: {
       firstName: 'Zach',
@@ -15,6 +18,10 @@ export default createStore({
       company: null,
       time_zone: 'EST'
     },
+    // where do we start in the leads array?
+    leadsOffset: 0,
+    // How many leads should be returned?
+    leadsPerPage: 15,
     companies: [
       {
         id: 1,
@@ -351,17 +358,71 @@ export default createStore({
       }
     },
 
-    getLeadById(state) {
-      return (id) => {
-        return state.leads.find( lead => lead.id == id)
-      }
-    },
-
+    // getLeadById(state) {
+    //   return (id) => {
+    //     let unfilteredLeads = state.leads.find( lead => lead.id == id)
+    //   }
+    // },
+// do we need this since we also need to filter by dateFilter?
     getLeadsForCompany(state) {
       return (id) => {
         return state.leads.filter( lead => lead.companyId == id)
       }
     },
+
+    // date filter leads
+    getLeadsForDateFilter(state, getters) {
+      return (companyId) => {
+        if (state.dateFilter === 'lastLogin') {
+          return getters.getLeadsSinceLastLogin(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+        }
+        if (state.dateFilter === 'last30') {
+          return getters.getLeadsSinceLast30(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+        }
+        if (state.dateFilter === 'last60') {
+          return getters.getLeadsSinceLast60(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+        }
+      }
+    },
+
+
+    getLeadsSinceLastLogin(state) {
+      return (companyId) => {
+        let leads = []
+        state.leads.forEach( lead => {
+          if (lead.company_id === companyId && lead.date - state.lastLogin > 0) {
+            leads.push(lead)
+          }
+        })
+        return leads
+      }
+    },
+
+  getLeadsLast30(state) {
+    let leads = []
+      return (companyId) => {
+        state.leads.forEach( lead => {
+          if ( lead.company_id === companyId && differenceInDays(new Date(), lead.date) < 31) {
+            leads.push(lead)
+          }
+        })
+      return leads
+      }
+   },
+
+  getLeadsLast60(state) {
+    let leads = []
+      return (companyId) => {
+        state.leads.forEach( lead => {
+          if ( lead.company_id === companyId && differenceInDays(new Date(), lead.date) < 61) {
+            leads.push(lead)
+          }
+        })
+      return leads
+      }
+   },
+
+
 
     getUserById(state) {
       return (id) => {
