@@ -41,7 +41,9 @@
         methods: {
             leadDrilldown(leadId) {
                 let selectedLead = this.$store.getters.getLeadById(leadId)
-                let chat = this.$store.getters.getChatById(selectedLead.chatId)
+                console.log("🚀 ~ file: Leads.vue ~ line 44 ~ leadDrilldown ~ selectedLead", selectedLead)
+                let chat = this.$store.getters.getChatById(selectedLead.chat_id)
+                console.log("🚀 ~ file: Leads.vue ~ line 46 ~ leadDrilldown ~ chat", chat)
                 
                 this.chat = chat
                 this.selectedLead = selectedLead

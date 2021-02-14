@@ -24,7 +24,7 @@
         computed: {
             companyName() {
                 if (this.$route.params.id) {
-                    return 'for ' + this.$store.getters.getCompanyById(this.$route.params.id).name} else {
+                    return this.$store.getters.getCompanyById(this.$route.params.id).name} else {
                         return ''
                     }
             }

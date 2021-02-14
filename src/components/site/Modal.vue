@@ -27,7 +27,7 @@
                 <div class="contact-address">
                     <div class="contact-location contact-box location">
                         <div class="contact-location-title title">Location</div>
-                        <div class="contact-location-data data">{{ _selectedLead.address }}</div>
+                        <div class="contact-location-data data">{{ _selectedLead.location }}</div>
                     </div>
                 </div>
                 

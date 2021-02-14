@@ -501,15 +501,15 @@ export default createStore({
       }
     },
 
-    // getLeadById(state) {
-    //   return (id) => {
-    //     let unfilteredLeads = state.leads.find( lead => lead.id == id)
-    //   }
-    // },
+    getLeadById(state) {
+      return (id) => {
+        return state.leads.find( lead => lead.id == id)
+      }
+    },
 // do we need this since we also need to filter by dateFilter?
     getLeadsForCompany(state) {
       return (id) => {
-        return state.leads.filter( lead => lead.companyId == id)
+        return state.leads.filter( lead => lead.company_id == id)
       }
     },
 
@@ -646,7 +646,11 @@ export default createStore({
   },
   
   actions: {
-    add_company({ commit }, company) {
+    add_company({ commit, state }, company) {
+     // adding id only for testing. Real companies will get id from API
+      if( !company.id ) {
+        company.id = state.companies.length + 1
+      }      
       commit('ADD_COMPANY', company)
       router.push({name: 'Companies'})
     },
@@ -657,11 +661,10 @@ export default createStore({
     },
 
     add_video({ commit, state }, video) {
+      // adding id only for testing. Real videos will get id from API
       if( !video.id ) {
         video.id = state.videos.length + 1
       }
-      console.log('video', video);
-      
       commit('ADD_VIDEO', video)
     },
 

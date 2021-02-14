@@ -3,7 +3,7 @@
         <div @click="$emit('lead-selected', _id)" class="column date">{{ date }}</div>
         <div @click="$emit('lead-selected', _id)" class="column type">{{ lead.type }}</div>
         <div @click="$emit('lead-selected', _id)" class="column contact">{{ lead.contact }}</div>
-        <div @click="cycleDisputeStatus(_id)" :class="[disputeClass, 'column']">{{ lead.disputeStatus }}</div>
+        <div @click="cycleDisputeStatus(_id)" :class="[disputeClass, 'column']">{{ lead.status }}</div>
     </div>
 </template>
 
@@ -25,7 +25,7 @@
                     type: this.$props._type,
                     contact: this.$props._contact,
                     status: this.$props._status,
-                    companyId: this.$props._company_id,
+                    company_id: this.$props._company_id,
                 },
                 disputeStates: ['active', 'disputed', 'resolved']
             }
@@ -38,16 +38,14 @@
                     num = 0
                 }
                 this.disputeCycleNumber = num
-
                 this.lead.status = this.disputeStates[this.disputeCycleNumber]
-                
                 this.$store.dispatch('set_disputed', {leadId:id, status:this.status})
             },
         },
 
         computed: {
             date() {
-                return format(this.$props._date, 'M.ee.y')
+                return format(this.$props._date, 'MM.ee.y')
             },
 
             disputeStatus() {
@@ -57,7 +55,7 @@
             disputeClass() {
                 let selectedClass= 'none'
                 switch (this.lead.status) {
-                    case 'undisputed': selectedClass = 'none'
+                    case 'active': selectedClass = 'none'
                     break
 
                     case 'disputed': selectedClass = 'red'
