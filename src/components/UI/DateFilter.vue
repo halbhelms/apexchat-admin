@@ -2,15 +2,15 @@
 <!-- time filter -->
     <div class="date-filter">
         <div class="filter">
-            <input name="date-filter" type="radio" id="last-login" @change="setDateFilter('lastLogin')" />
+            <input name="date-filter" type="radio" id="last-login" :checked="'Since login' === $store.state.dateFilter ? 'checked' : false" @change="setDateFilter('Since login')" />
             <label for="last-login" name="date-filter"> Since last login</label>
         </div>
         <div class="filter">
-            <input name="date-filter" type="radio" id="last-30" @change="setDateFilter('last30')" />
+            <input name="date-filter" type="radio" id="last-30" :checked="'last30' === $store.state.dateFilter ? 'checked' : false" @change="setDateFilter('last30')" />
             <label for="last-30" name="date-filter"> Last 30 Days</label>
         </div>
         <div class="filter">
-            <input name="date-filter" type="radio" id="last-60" @change="setDateFilter('last60')" />
+            <input name="date-filter" type="radio" id="last-60" :checked="'last60' === $store.state.dateFilter ? 'checked' : false" @change="setDateFilter('last60')" />
             <label for="last-60" name="date-filter"> Last 60 days</label>
         </div>
     </div>
@@ -30,7 +30,7 @@
 
         methods: {
             setDateFilter(value) {
-                console.log("🚀 ~ file: DateFilter.vue ~ line 33 ~ setDateFilter ~ value", value)
+                this.$store.dispatch('set_date_filter', value)
             }
         },
 

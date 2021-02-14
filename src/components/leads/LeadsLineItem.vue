@@ -14,7 +14,7 @@
 
         components: {},
 
-        props: ['_id', '_date', '_type', '_contact', '_dispute_status', '_company_id'],
+        props: ['_id', '_date', '_type', '_contact', '_status', '_company_id'],
 
         data() {
             return {
@@ -24,24 +24,24 @@
                     date: this.$props._date,
                     type: this.$props._type,
                     contact: this.$props._contact,
-                    disputeStatus: this.$props._dispute_status,
+                    status: this.$props._status,
                     companyId: this.$props._company_id,
                 },
+                disputeStates: ['active', 'disputed', 'resolved']
             }
         },
 
         methods: {
             cycleDisputeStatus(id) {
-                const disputeStates = ['undisputed', 'disputed', 'resolved']
                 let num = this.disputeCycleNumber + 1
-                if (num >= disputeStates.length) {
+                if (num >= this.disputeStates.length) {
                     num = 0
                 }
                 this.disputeCycleNumber = num
 
-                this.lead.disputeStatus = disputeStates[this.disputeCycleNumber]
+                this.lead.status = this.disputeStates[this.disputeCycleNumber]
                 
-                this.$store.dispatch('set_disputed', {leadId:id, status:this.disputeStatus})
+                this.$store.dispatch('set_disputed', {leadId:id, status:this.status})
             },
         },
 
@@ -51,13 +51,12 @@
             },
 
             disputeStatus() {
-                const disputeStates = ['undisputed', 'disputed', 'resolved']
-                return disputeStates[this.disputeCycleNumber]
+                return this.disputeStates[this.disputeCycleNumber]
             },
 
             disputeClass() {
                 let selectedClass= 'none'
-                switch (this.lead.disputeStatus) {
+                switch (this.lead.status) {
                     case 'undisputed': selectedClass = 'none'
                     break
 

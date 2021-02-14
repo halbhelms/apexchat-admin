@@ -12,7 +12,7 @@
             :_date="lead.date"
             :_type="lead.type"
             :_contact="lead.contact"
-            :_dispute_status="lead.dispute_status"/>
+            :_status="lead.status"/>
         <Modal @modal-off="noSelectedLead" v-if="selectedLead" :_selectedLead="selectedLead" :_chat="chat" />
     </div>
 </template>
