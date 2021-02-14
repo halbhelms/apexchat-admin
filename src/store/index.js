@@ -520,13 +520,21 @@ export default createStore({
     // this function calls one of three functions based on state.dateFilter
     getLeadsForDateFilterForCompany(state, getters) {
       return (companyId) => {
-        if (state.dateFilter === 'lastLogin') {
-          return getters.getLeadsSinceLastLoginForCompany(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+        console.log('Here in getLeadsForDateFilterForCompany');
+        console.log('state.dateFilter', state.dateFilter);
+        
+        if (state.dateFilter === 'sinceLogin') {
+          console.log('here in getLeadsForDateFilterForCompany: sinceLogin');
+          let leads = getters.getLeadsSinceLastLoginForCompany(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+          console.log("🚀 ~ file: index.js ~ line 529 ~ return ~ leads", leads)
+          return leads
         }
         if (state.dateFilter === 'last30') {
+          console.log('here in getLeadsForDateFilterForCompany: last30');
           return getters.getLeadsLast30ForCompany(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
         }
         if (state.dateFilter === 'last60') {
+          console.log('here in getLeadsForDateFilterForCompany: last60');
           return getters.getLeadsLast60ForCompany(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
         }
       }
@@ -537,7 +545,7 @@ export default createStore({
       return (companyId) => {
         let leads = []
         state.leads.forEach( lead => {
-          if (lead.company_id === companyId && lead.date - state.lastLogin > 0) {
+          if ((lead.company_id == companyId) && (lead.date - state.lastLogin > 0)) {
             leads.push(lead)
           }
         })

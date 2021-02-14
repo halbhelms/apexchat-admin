@@ -61,7 +61,8 @@
         computed: {},
 
         created() {
-            this.leads = this.$store.getters.getLeadsForCompany(this.$route.params.id)
+            // TODO: replace this with Axios call when real leads are ready
+            this.leads = this.$store.getters.getLeadsForDateFilterForCompany(this.$route.params.id)
         }
     }
 </script>
