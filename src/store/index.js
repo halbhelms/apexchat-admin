@@ -518,7 +518,7 @@ export default createStore({
     // date filter leads
 
     // this function calls one of three functions based on state.dateFilter
-    getLeadsForDateFilter(state, getters) {
+    getLeadsForDateFilterForCompany(state, getters) {
       return (companyId) => {
         if (state.dateFilter === 'lastLogin') {
           return getters.getLeadsSinceLastLoginForCompany(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
