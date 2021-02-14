@@ -1,10 +1,11 @@
 <template>
+dateFilter: {{ $store.state.dateFilter }}
     <div class="companies">
         <LeadsHeader />
         <LeadsDataHeader />
         <LeadsLineItem 
             @lead-selected="leadDrilldown"
-            v-for="lead in leads" 
+            v-for="lead in activeLeads" 
             :key="lead.id" 
             :_id="lead.id" 
             :_company_id="lead.company_id" 
@@ -58,11 +59,15 @@
             },
         },
 
-        computed: {},
+        computed: {
+            activeLeads(){
+                return this.$store.getters.getLeadsForDateFilterForCompany(this.$route.params.id)
+            }
+        },
 
-        created() {
+        mounted() {
             // TODO: replace this with Axios call when real leads are ready
-            this.leads = this.$store.getters.getLeadsForDateFilterForCompany(this.$route.params.id)
+            // this.leads = this.$store.getters.getLeadsForDateFilterForCompany(this.$route.params.id)
         }
     }
 </script>

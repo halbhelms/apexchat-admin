@@ -188,7 +188,7 @@ export default createStore({
         id: 6,
         company_id: 1,
         chat_id: 0,
-        date: new Date('1-30-2020'), // last30 but not since lastLogin
+        date: new Date('1-30-2021'), // last30 
         type: 'Sales',
         email: 'grace@yahoo.com',
         contact: 'Grace Gerald',
@@ -201,7 +201,7 @@ export default createStore({
         id: 7,
         company_id: 1,
         chat_id: 0,
-        date: new Date('1-29-2020'),
+        date: new Date('1-29-2021'),
         type: 'Sales',
         email: 'harold@gmail.com',
         contact: 'Harold Handsome',
@@ -214,7 +214,7 @@ export default createStore({
         id: 8,
         company_id: 1,
         chat_id: 0,
-        date: new Date('1-28-2020'),
+        date: new Date('1-28-2021'),
         type: 'Sales',
         email: 'iago@locals.com',
         contact: 'Iago Iverson',
@@ -227,7 +227,7 @@ export default createStore({
         id: 9,
         company_id: 1,
         chat_id: 0,
-        date: new Date('1-27-2020'),
+        date: new Date('12-27-2021'),
         type: 'Sales',
         email: 'joe@gmail.com',
         contact: 'Joe Jones',
@@ -240,7 +240,7 @@ export default createStore({
         id: 10,
         company_id: 1,
         chat_id: 0,
-        date: new Date('1-26-2020'),
+        date: new Date('1-26-2021'),
         type: 'Sales',
         email: 'kelly@locals.com',
         contact: 'Kelly Korvin',
@@ -254,7 +254,7 @@ export default createStore({
         id: 11,
         company_id: 1,
         chat_id: 0,
-        date: new Date('12-26-2020'),
+        date: new Date('12-26-2021'),
         type: 'Sales',
         email: 'kelly@locals.com',
         contact: 'Kelly Korvin',
@@ -267,7 +267,7 @@ export default createStore({
         id: 12,
         company_id: 1,
         chat_id: 0,
-        date: new Date('12-27-2020'),
+        date: new Date('12-27-2021'),
         type: 'Sales',
         email: 'linda@locals.com',
         contact: 'Linda Lessing',
@@ -293,7 +293,7 @@ export default createStore({
         id: 14,
         company_id: 1,
         chat_id: 0,
-        date: new Date('12-30-2020'),
+        date: new Date('12-16-2020'),
         type: 'Sales',
         email: 'nelson@locals.com',
         contact: 'Nelson Nelson',
@@ -306,7 +306,7 @@ export default createStore({
         id: 15,
         company_id: 1,
         chat_id: 0,
-        date: new Date('12-29-2020'),
+        date: new Date('12-17-2020'),
         type: 'Sales',
         email: 'ophelia@locals.com',
         contact: 'Ophelia Orange',
@@ -555,10 +555,12 @@ export default createStore({
 
     // get leads from last 30 days for specific company
     getLeadsLast30ForCompany(state) {
+      console.log('Here in getLeadsLast30ForCompany', state.dateFilter);
+ 
       let leads = []
       return (companyId) => {
         state.leads.forEach( lead => {
-          if ( lead.company_id === companyId && differenceInDays(new Date(), lead.date) < 31) {
+          if ( (lead.company_id == companyId) && (differenceInDays(new Date(), lead.date) < 31)) {
             leads.push(lead)
           }
         })
@@ -568,10 +570,12 @@ export default createStore({
 
     // get leads from last 60 days for specific company
     getLeadsLast60ForCompany(state) {
+      console.log('Here in getLeadsLast60ForCompany', state.dateFilter);
+ 
       let leads = []
       return (companyId) => {
         state.leads.forEach( lead => {
-          if ( lead.company_id === companyId && differenceInDays(new Date(), lead.date) < 61) {
+          if ( (lead.company_id == companyId) && (differenceInDays(new Date(), lead.date) < 61)) {
             leads.push(lead)
           }
         })
