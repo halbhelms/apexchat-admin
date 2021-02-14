@@ -54,7 +54,8 @@
 
 
             <!-- Chat messages -->
-            <div class="chat">
+
+            <div class="chat" v-if="_chat">
                 <!-- should we display only visitor responses? -->
                 <div class="chat-separator">
                     <input @change="visitorMessagesOnly" type="checkbox" id="visitor-only" class="visitor-only" :value="visitorOnly">
@@ -63,6 +64,7 @@
                 <!-- display individual messages -->
                 <ChatLineItem v-for="(message, index) in messages" :key="index" :_message="message"/>
             </div>
+            <div class="chat" v-else>No chat found for this lead.</div>
 
         </div>
    </div>
