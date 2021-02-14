@@ -1,5 +1,4 @@
 <template>
-dateFilter: {{ $store.state.dateFilter }}
     <div class="companies">
         <LeadsHeader />
         <LeadsDataHeader />
@@ -64,11 +63,6 @@ dateFilter: {{ $store.state.dateFilter }}
                 return this.$store.getters.getLeadsForDateFilterForCompany(this.$route.params.id)
             }
         },
-
-        mounted() {
-            // TODO: replace this with Axios call when real leads are ready
-            // this.leads = this.$store.getters.getLeadsForDateFilterForCompany(this.$route.params.id)
-        }
     }
 </script>
 

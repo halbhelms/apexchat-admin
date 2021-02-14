@@ -45,7 +45,7 @@
 
         computed: {
             date() {
-                return format(this.$props._date, 'MM.ee.y')
+                return format(this.$props._date, 'MM.dd.y')
             },
 
             disputeStatus() {

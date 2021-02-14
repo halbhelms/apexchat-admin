@@ -6,7 +6,7 @@ import differenceInDays from 'date-fns/differenceInDays'
 export default createStore({
   state: {
     activeNav: '',
-    lastLogin: new Date('12-03-2020'),
+    lastLogin: new Date('12-31-2020'),
     dateFilter: 'sinceLogin',
     currentUser: {
       firstName: 'Zach',
@@ -122,7 +122,7 @@ export default createStore({
         id: 1,
         chat_id: 1,
         company_id: 1,
-        date: new Date('12-05-2020'), // since lastLogin
+        date: new Date('1-05-2021'), // since lastLogin
         type: 'Sales',
         email: 'eholgren@gmail.com',
         contact: 'Edgar Holdren',
@@ -135,7 +135,7 @@ export default createStore({
         id: 2,
         chat_id: 0,
         company_id: 1,
-        date: new Date('12-06-2020'), // since lastLogin
+        date: new Date('12-26-2020'), // since lastLogin
         type: 'Sales',
         email: 'bob@gmail.com',
         contact: 'Bob Bronson',
@@ -148,7 +148,7 @@ export default createStore({
         id: 3,
         chat_id: 0,
         company_id: 1,
-        date: new Date('12-07-2020'), // since lastLogin
+        date: new Date('12-27-2020'), // since lastLogin
         type: 'Sales',
         email: 'dana@gmail.com',
         contact: 'Dana Davis',
@@ -161,7 +161,7 @@ export default createStore({
         id: 4,
         chat_id: 0,
         company_id: 1,
-        date: new Date('12-08-2020'), // since lastLogin
+        date: new Date('12-28-2020'), // since lastLogin
         type: 'Sales',
         email: 'ellen@gmail.com',
         contact: 'Ellen Edgars',
@@ -174,7 +174,7 @@ export default createStore({
         id: 5,
         chat_id: 0,
         company_id: 1,
-        date: new Date('12-09-2020'), // since lastLogin
+        date: new Date('12-29-2020'), // since lastLogin
         type: 'Sales',
         email: 'frank@gmail.com',
         contact: 'Frank Friend',
@@ -227,7 +227,7 @@ export default createStore({
         id: 9,
         company_id: 1,
         chat_id: 0,
-        date: new Date('12-27-2021'),
+        date: new Date('12-27-2020'),
         type: 'Sales',
         email: 'joe@gmail.com',
         contact: 'Joe Jones',
@@ -240,7 +240,7 @@ export default createStore({
         id: 10,
         company_id: 1,
         chat_id: 0,
-        date: new Date('1-26-2021'),
+        date: new Date('1-26-2020'),
         type: 'Sales',
         email: 'kelly@locals.com',
         contact: 'Kelly Korvin',
@@ -254,7 +254,7 @@ export default createStore({
         id: 11,
         company_id: 1,
         chat_id: 0,
-        date: new Date('12-26-2021'),
+        date: new Date('12-26-2020'),
         type: 'Sales',
         email: 'kelly@locals.com',
         contact: 'Kelly Korvin',
@@ -267,7 +267,7 @@ export default createStore({
         id: 12,
         company_id: 1,
         chat_id: 0,
-        date: new Date('12-27-2021'),
+        date: new Date('12-27-2020'),
         type: 'Sales',
         email: 'linda@locals.com',
         contact: 'Linda Lessing',
@@ -304,7 +304,7 @@ export default createStore({
       },      
       {
         id: 15,
-        company_id: 1,
+        company_id: 2,
         chat_id: 0,
         date: new Date('12-17-2020'),
         type: 'Sales',
@@ -520,21 +520,14 @@ export default createStore({
     // this function calls one of three functions based on state.dateFilter
     getLeadsForDateFilterForCompany(state, getters) {
       return (companyId) => {
-        console.log('Here in getLeadsForDateFilterForCompany');
-        console.log('state.dateFilter', state.dateFilter);
-        
         if (state.dateFilter === 'sinceLogin') {
-          console.log('here in getLeadsForDateFilterForCompany: sinceLogin');
           let leads = getters.getLeadsSinceLastLoginForCompany(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
-          console.log("🚀 ~ file: index.js ~ line 529 ~ return ~ leads", leads)
           return leads
         }
         if (state.dateFilter === 'last30') {
-          console.log('here in getLeadsForDateFilterForCompany: last30');
           return getters.getLeadsLast30ForCompany(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
         }
         if (state.dateFilter === 'last60') {
-          console.log('here in getLeadsForDateFilterForCompany: last60');
           return getters.getLeadsLast60ForCompany(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
         }
       }
@@ -555,8 +548,6 @@ export default createStore({
 
     // get leads from last 30 days for specific company
     getLeadsLast30ForCompany(state) {
-      console.log('Here in getLeadsLast30ForCompany', state.dateFilter);
- 
       let leads = []
       return (companyId) => {
         state.leads.forEach( lead => {
@@ -570,8 +561,6 @@ export default createStore({
 
     // get leads from last 60 days for specific company
     getLeadsLast60ForCompany(state) {
-      console.log('Here in getLeadsLast60ForCompany', state.dateFilter);
- 
       let leads = []
       return (companyId) => {
         state.leads.forEach( lead => {
