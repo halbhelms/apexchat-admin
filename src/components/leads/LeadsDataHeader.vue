@@ -42,6 +42,11 @@
         margin-left: 24px;
     }
 
+    .status {
+        position: relative;
+        left: -16px;
+    }
+
     .type {
         position: relative;
         left: -20px;
