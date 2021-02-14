@@ -3,7 +3,7 @@
         <div @click="$emit('lead-selected', _id)" class="column date">{{ date }}</div>
         <div @click="$emit('lead-selected', _id)" class="column type">{{ lead.type }}</div>
         <div @click="$emit('lead-selected', _id)" class="column contact">{{ lead.contact }}</div>
-        <div @click="cycleDisputeStatus(_id)" :class="[disputeClass, 'column']">{{ lead.status }}</div>
+        <div @click="cycleDisputeStatus(_id)" :class="[disputeClass, 'column', 'dispute-status']">{{ lead.status }}</div>
     </div>
 </template>
 
@@ -78,6 +78,10 @@
     
     .disputed {
         color: red;
+    }
+
+    .leads-line-item {
+        border-bottom: 1px solid #f2f3f5;
     }
 
     .leads-line-item {

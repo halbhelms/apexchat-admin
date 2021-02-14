@@ -7,7 +7,7 @@ export default createStore({
   state: {
     activeNav: '',
     lastLogin: new Date('12-03-2020'),
-    dateFilter: 'Since login',
+    dateFilter: 'sinceLogin',
     currentUser: {
       firstName: 'Zach',
       lastName: 'Lefeistre',
@@ -22,6 +22,8 @@ export default createStore({
     leadsOffset: 0,
     // How many leads should be returned?
     leadsPerPage: 15,
+    // leads to display
+    activeSlice: [],
     companies: [
       {
         id: 1,
@@ -514,22 +516,24 @@ export default createStore({
     },
 
     // date filter leads
+
+    // this function calls one of three functions based on state.dateFilter
     getLeadsForDateFilter(state, getters) {
       return (companyId) => {
         if (state.dateFilter === 'lastLogin') {
-          return getters.getLeadsSinceLastLogin(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+          return getters.getLeadsSinceLastLoginForCompany(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
         }
         if (state.dateFilter === 'last30') {
-          return getters.getLeadsSinceLast30(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+          return getters.getLeadsLast30ForCompany(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
         }
         if (state.dateFilter === 'last60') {
-          return getters.getLeadsSinceLast60(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+          return getters.getLeadsLast60ForCompany(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
         }
       }
     },
 
-
-    getLeadsSinceLastLogin(state) {
+    // get leads since last login for specific company
+    getLeadsSinceLastLoginForCompany(state) {
       return (companyId) => {
         let leads = []
         state.leads.forEach( lead => {
@@ -541,8 +545,9 @@ export default createStore({
       }
     },
 
-  getLeadsLast30(state) {
-    let leads = []
+    // get leads from last 30 days for specific company
+    getLeadsLast30ForCompany(state) {
+      let leads = []
       return (companyId) => {
         state.leads.forEach( lead => {
           if ( lead.company_id === companyId && differenceInDays(new Date(), lead.date) < 31) {
@@ -551,10 +556,11 @@ export default createStore({
         })
       return leads
       }
-   },
+    },
 
-  getLeadsLast60(state) {
-    let leads = []
+    // get leads from last 60 days for specific company
+    getLeadsLast60ForCompany(state) {
+      let leads = []
       return (companyId) => {
         state.leads.forEach( lead => {
           if ( lead.company_id === companyId && differenceInDays(new Date(), lead.date) < 61) {
@@ -563,9 +569,7 @@ export default createStore({
         })
       return leads
       }
-   },
-
-
+    },
 
     getUserById(state) {
       return (id) => {
@@ -674,6 +678,23 @@ export default createStore({
 
     delete_video({ commit }, videoId) {
       commit('DELETE_VIDEO', videoId)
+    },
+
+    // active slices
+    initialize_leads_active_slice_for_company({ commit, getters }, companyId){
+      commit('SET_LEADS_ACTIVE_SLICE', getters.getLeadsForTimeFrameForCompany(companyId))
+    },
+
+    previous_leads_active_slice_for_company({ commit, state, getters }, companyId) {
+      if (state.leadsOffset > 0) {
+        commit('SET_LEADS_OFFSET', state.leadsOffset - state.leadsPerPage)
+        commit('SET_LEADS_ACTIVE_SLICE', getters.getLeadsForTimeFrameForCompany(companyId))
+      }
+    },
+    
+    next_leads_active_slice_for_company({ commit, state, getters }, companyId) {  
+      commit('SET_LEADS_OFFSET', state.leadsOffset + state.leadsPerPage)
+      commit('SET_LEADS_ACTIVE_SLICE', getters.getLeadsForTimeFrame(companyId))
     },
 
     set_active_nav({ commit }, navElement) {

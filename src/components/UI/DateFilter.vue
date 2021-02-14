@@ -2,7 +2,7 @@
 <!-- time filter -->
     <div class="date-filter">
         <div class="filter">
-            <input name="date-filter" type="radio" id="last-login" :checked="'Since login' === $store.state.dateFilter ? 'checked' : false" @change="setDateFilter('Since login')" />
+            <input name="date-filter" type="radio" id="last-login" :checked="'sinceLogin' === $store.state.dateFilter ? 'checked' : false" @change="setDateFilter('sinceLogin')" />
             <label for="last-login" name="date-filter">&nbsp;Since last login</label>
         </div>
         <div class="filter">

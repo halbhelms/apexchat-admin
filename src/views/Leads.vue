@@ -40,14 +40,13 @@
 
         methods: {
             leadDrilldown(leadId) {
+                // clear out any existing from previous requests
                 this.selectedLead = null;
                 this.chat = null;
+                // get new lead and associated chat
                 let selectedLead = this.$store.getters.getLeadById(leadId)
-                console.log("🚀 ~ file: Leads.vue ~ line 44 ~ leadDrilldown ~ selectedLead", selectedLead)
                     if (selectedLead.chat_id) {
                     let chat = this.$store.getters.getChatById(selectedLead.chat_id)
-                    console.log("🚀 ~ file: Leads.vue ~ line 46 ~ leadDrilldown ~ chat", chat)
-                    
                     this.chat = chat
                 }
                 this.selectedLead = selectedLead
@@ -55,6 +54,7 @@
 
             noSelectedLead() {
                 this.selectedLead = null
+                this.chat = null
             },
         },
 
