@@ -71,7 +71,7 @@
             },
 
             hasLessLeads() {
-                return this.$store.state.leadOffset !== 0
+                return this.$store.state.leadsOffset !== 0
             },
 
             hasMoreLeads() {

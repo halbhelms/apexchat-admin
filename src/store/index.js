@@ -794,7 +794,7 @@ export default createStore({
     },
     
     previous_leads({ commit, state }) {
-      commit('SET_LEADS_OFFSET', state.leadsOffset !== 0 ? state.leadsPerPage + state.leadsOffset : 0)
+      commit('SET_LEADS_OFFSET', state.leadsOffset !== 0 ? state.leadsPerPage - state.leadsOffset : 0)
     },
 
   },
