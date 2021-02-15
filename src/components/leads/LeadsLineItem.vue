@@ -3,6 +3,7 @@
         <div @click="$emit('lead-selected', _id)" class="column date">{{ date }}</div>
         <div @click="$emit('lead-selected', _id)" class="column type">{{ lead.type }}</div>
         <div @click="$emit('lead-selected', _id)" class="column contact">{{ lead.contact }}</div>
+        <div @click="$emit('lead-selected', _id)" class="column location">{{ lead.location }}</div>
         <div @click="cycleDisputeStatus(_id)" :class="[disputeClass, 'column', 'dispute-status']">{{ lead.status }}</div>
     </div>
 </template>
@@ -14,7 +15,7 @@
 
         components: {},
 
-        props: ['_id', '_date', '_type', '_contact', '_status', '_company_id'],
+        props: ['_id', '_date', '_type', '_contact', '_status', '_company_id','_location'],
 
         data() {
             return {
@@ -26,6 +27,7 @@
                     contact: this.$props._contact,
                     status: this.$props._status,
                     company_id: this.$props._company_id,
+                    location: this.$props._location
                 },
                 disputeStates: ['active', 'disputed', 'resolved']
             }
@@ -86,7 +88,7 @@
 
     .leads-line-item {
         display: grid;
-        grid-template-columns: 90px 70px 210px 80px;
+        grid-template-columns: 90px 70px 210px 210px 80px;
         font-size: 0.85rem;
         cursor: pointer;
     }

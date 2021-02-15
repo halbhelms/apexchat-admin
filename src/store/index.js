@@ -315,6 +315,58 @@ export default createStore({
         phone: 7415234897,
         status: 'resolved',
       },      
+      {
+        id: 16,
+        company_id: 1,
+        chat_id: 0,
+        date: new Date('12-20-2020'),
+        type: 'Sales',
+        email: 'ophelia@locals.com',
+        contact: 'Peter Parker',
+        location: 'Dallas, TX',
+        address: '',
+        phone: 7415234897,
+        status: 'resolved',
+      },      
+      {
+        id: 17,
+        company_id: 1,
+        chat_id: 0,
+        date: new Date('12-21-2020'),
+        type: 'Sales',
+        email: 'ophelia@locals.com',
+        contact: 'Quince Quest',
+        location: 'Dallas, TX',
+        address: '',
+        phone: 7415234897,
+        status: 'active',
+      },      
+      {
+        id: 18,
+        company_id: 1,
+        chat_id: 0,
+        date: new Date('12-21-2020'),
+        type: 'Sales',
+        email: 'ophelia@locals.com',
+        contact: 'Randall Richards',
+        location: 'Dallas, TX',
+        address: '',
+        phone: 7415234897,
+        status: 'active',
+      },      
+      {
+        id: 19,
+        company_id: 1,
+        chat_id: 0,
+        date: new Date('12-21-2020'),
+        type: 'Sales',
+        email: 'ophelia@locals.com',
+        contact: 'Sarah Sigussi',
+        location: 'Dallas, TX',
+        address: '',
+        phone: 7415234897,
+        status: 'active',
+      },      
     ],
     chats: [
       {
@@ -516,20 +568,27 @@ export default createStore({
     },
 
     // date filter leads
-
     // this function calls one of three functions based on state.dateFilter
+    // get actual leads
     getLeadsForDateFilterForCompany(state, getters) {
       return (companyId) => {
+        let response = {}
         if (state.dateFilter === 'sinceLogin') {
-          let leads = getters.getLeadsSinceLastLoginForCompany(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
-          return leads
+          let leads = getters.getLeadsSinceLastLoginForCompany(companyId)
+          response.leads = leads.slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+          response.total = leads.length
         }
         if (state.dateFilter === 'last30') {
-          return getters.getLeadsLast30ForCompany(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+          let leads = getters.getLeadsLast30ForCompany(companyId)
+          response.leads =leads.slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+          response.total = leads.length
         }
         if (state.dateFilter === 'last60') {
-          return getters.getLeadsLast60ForCompany(companyId).slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+          let leads = getters.getLeadsLast60ForCompany(companyId)
+          response.leads = leads.slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+          response.total = leads.length
         }
+        return response
       }
     },
 
@@ -638,6 +697,10 @@ export default createStore({
       state.leads.splice(index, 1, newLead)    
     },
 
+    SET_LEADS_OFFSET(state, offset) {
+      state.leadsOffset = offset
+    },
+
     UPDATE_COMPANY(state, editedCompany) {
       let index = state.companies.findIndex( company => company.id == editedCompany.id)
       state.companies.splice(index, 1, editedCompany)
@@ -682,6 +745,7 @@ export default createStore({
     },
 
     // active slices
+    // TODO: not sure these are needed any more??
     initialize_leads_active_slice_for_company({ commit, getters }, companyId){
       commit('SET_LEADS_ACTIVE_SLICE', getters.getLeadsForTimeFrameForCompany(companyId))
     },
@@ -723,6 +787,16 @@ export default createStore({
       console.log("🚀 ~ file: index.js ~ line 443 ~ update_user ~ user", user)
       commit('UPDATE_USER', user)
     },
+
+    // changing leadsOffset
+    next_leads({ commit, state }) {
+      commit('SET_LEADS_OFFSET', state.leadsOffset + state.leadsPerPage)
+    },
+    
+    previous_leads({ commit, state }) {
+      commit('SET_LEADS_OFFSET', state.leadsOffset !== 0 ? state.leadsPerPage + state.leadsOffset : 0)
+    },
+
   },
 
   modules: {}

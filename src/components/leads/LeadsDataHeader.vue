@@ -3,6 +3,7 @@
         <div class="name header-column">Date</div>
         <div class="type header-column">Type</div>
         <div class="contact header-column">Contact</div>
+        <div class="location header-column">Location</div>
         <div class="status header-column">Status</div>
     </div>
 </template>
@@ -33,7 +34,7 @@
         color:antiquewhite;
         display: grid;
         padding: 4px 0 4px 0;
-        grid-template-columns: 90px 70px 210px 80px;
+        grid-template-columns: 90px 70px 210px 210px 80px;
         margin-bottom: 8px;
     }
 
