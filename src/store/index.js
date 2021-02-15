@@ -745,22 +745,21 @@ export default createStore({
     },
 
     // active slices
-    // TODO: not sure these are needed any more??
-    initialize_leads_active_slice_for_company({ commit, getters }, companyId){
-      commit('SET_LEADS_ACTIVE_SLICE', getters.getLeadsForTimeFrameForCompany(companyId))
-    },
+    // initialize_leads_active_slice_for_company({ commit, getters }, companyId){
+    //   commit('SET_LEADS_ACTIVE_SLICE', getters.getLeadsForTimeFrameForCompany(companyId))
+    // },
 
-    previous_leads_active_slice_for_company({ commit, state, getters }, companyId) {
-      if (state.leadsOffset > 0) {
-        commit('SET_LEADS_OFFSET', state.leadsOffset - state.leadsPerPage)
-        commit('SET_LEADS_ACTIVE_SLICE', getters.getLeadsForTimeFrameForCompany(companyId))
-      }
-    },
+    // previous_leads_active_slice_for_company({ commit, state, getters }, companyId) {
+    //   if (state.leadsOffset > 0) {
+    //     commit('SET_LEADS_OFFSET', state.leadsOffset - state.leadsPerPage)
+    //     commit('SET_LEADS_ACTIVE_SLICE', getters.getLeadsForTimeFrameForCompany(companyId))
+    //   }
+    // },
     
-    next_leads_active_slice_for_company({ commit, state, getters }, companyId) {  
-      commit('SET_LEADS_OFFSET', state.leadsOffset + state.leadsPerPage)
-      commit('SET_LEADS_ACTIVE_SLICE', getters.getLeadsForTimeFrame(companyId))
-    },
+    // next_leads_active_slice_for_company({ commit, state, getters }, companyId) {  
+    //   commit('SET_LEADS_OFFSET', state.leadsOffset + state.leadsPerPage)
+    //   commit('SET_LEADS_ACTIVE_SLICE', getters.getLeadsForTimeFrame(companyId))
+    // },
 
     set_active_nav({ commit }, navElement) {
       commit('SET_ACTIVE_NAV', navElement)
