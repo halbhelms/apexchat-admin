@@ -1,6 +1,6 @@
 <template>
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
-    <div class="company-user">
+    <div class="company-user pointer" >
         <div :class="[_isAdmin ? 'admin' : '']">
             
         </div>
@@ -81,6 +81,10 @@
         background-image: url('./delete.png');
         background-size: 120%;
         background-position: center;
+        cursor: pointer;
+    }
+
+    .pointer {
         cursor: pointer;
     }
 </style>

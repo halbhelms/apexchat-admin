@@ -3,7 +3,6 @@
     <h3>Existing Users</h3>
     <div class="the-existing-users">
         <company-user 
-            class="pointer" 
             v-for="user in _companyUsers" 
             :key="user.id" 
             :_userId="user.id" 
