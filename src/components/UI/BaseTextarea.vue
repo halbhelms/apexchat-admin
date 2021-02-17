@@ -43,6 +43,11 @@
                 default: 'text'
             },
 
+            _styles: {
+                type: Object,
+                default: ()=>{}
+            },
+
             modelValue: {
                 type: [String, Number],
                 default: '',
@@ -50,12 +55,21 @@
         },
         
         data() {
-            return {}
+            return {
+                defaultStyles: {
+                    fontFamily: 'inherit',
+                    fontSize: 'inherit',
+                }                
+            }  
         },
 
         methods: {},
 
-        computed: {}
+        computed: {
+            style() {
+                return {...this.defaultStyles, ...this.$props._styles}
+            },            
+        }
     }
 </script>
 

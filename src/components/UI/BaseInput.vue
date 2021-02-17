@@ -1,6 +1,6 @@
 <template>
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
-<div class="go-bottom">
+<div class="go-bottom" :style="style">
   <div>
     <input 
       v-bind="$attrs" 
@@ -38,6 +38,11 @@
                 default: 'text'
             },
 
+            _styles: {
+              type: Object,
+              default: ()=>{}
+            },
+
             modelValue: {
                 type: [String, Number],
                 default: '',
@@ -46,13 +51,20 @@
         
         data() {
             return {
-                // modelValue: null,
-            }
+                defaultStyles: {
+                    fontFamily: 'inherit',
+                    fontSize: 'inherit',
+                }                
+            }        
         },
 
         methods: {},
 
-        computed: {}
+        computed: {
+            style() {
+                return {...this.defaultStyles, ...this.$props._styles}
+            },          
+        }
     }
 </script>
 
