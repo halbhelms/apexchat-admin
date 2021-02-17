@@ -5,12 +5,14 @@
             class="breathe" 
             _id="video-title" 
             _label="Title" 
+            ref="title"
             v-model="video.title"></base-input>
         
         <base-textarea 
             class="breathe" 
             _id="video-embed-code" 
             _label="Embed code" 
+            ref="embedCode"
             v-model="video.embed_code">
         </base-textarea>
 
@@ -48,10 +50,17 @@
 
         methods: {
             submitForm() {
-                this.$store.dispatch('add_video', this.video)
+                this.validateField()
+                // this.$store.dispatch('add_video', this.video)
                 // reset video
-                this.video = {company_id: this.$route.params.id}
-            }
+                // this.video = {company_id: this.$route.params.id}
+            },
+
+            validateField() {
+                console.log('this.$refs.title.length', this.$refs.title.length);
+                
+                
+            },
         },
 
         computed: {}

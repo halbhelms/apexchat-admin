@@ -1,6 +1,6 @@
 <template>
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
-    <div :class="base-checkbox" :style="width">
+    <div :class="base-checkbox" :style="style">
         <input :id="_id" type="checkbox" :checked="modelValue" @change="$emit('update:modelValue', $event.target.checked)">
         <label :for="_id">{{ _label }}</label>
     </div>
@@ -28,39 +28,27 @@
                 default: false,
             },
 
-            _display: {
-                type: String,
-                default: 'ib',
-            },
-
-            _width: {
-                type: String,
-                default: '',
-            },
-
-            _left: {
-                type: Number,
-                default: 0,
-            }
+            _styles: {
+                type: Object,
+                default: ()=> {},
+            },            
         },
 
         data() {
-            return {}
+            return {
+                defaultStyles: {
+                    fontFamily: 'inherit',
+                    fontSize: 'inherit',
+                }
+            }
         },
 
         methods: {},
 
         computed: {
-            width() {
-                return {
-                    "width": this.$props._width,
-                    "margin-top": "16px",
-                    "display": 'relative',
-                    "left": this.$props._left,
-                    // "outline": "1px solid red",
-                    "text-align": "left"
-                }
-            }
+            style() {
+                return {...this.defaultStyles, ...this.$props._styles}
+            }            
         }
     }
 </script>

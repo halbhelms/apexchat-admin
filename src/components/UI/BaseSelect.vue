@@ -1,6 +1,6 @@
 <template>
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
-    <div class="base-select" :style="width">
+    <div class="base-select" :style="style">
         <label v-if="_label" :for="_id">{{ _label }}</label>
         <select 
             :name="_name" 
@@ -55,23 +55,26 @@
                 required: true,
             },
 
-            _width: {
-                type: String,
-                required: true,
+            _styles: {
+                type: Object,
+                default: ()=> {},
             },
         },
 
         data() {
-            return {}
+            return {
+                defaultStyles: {
+                    fontFamily: 'inherit',
+                    fontSize: 'inherit',
+                }
+            }
         },
 
         methods: {},
 
         computed: {
-            width() {
-                return {
-                    "width": this.$props._width
-                }
+            style() {
+                return {...this.defaultStyles, ...this.$props._styles}
             }
         }
     }
@@ -82,7 +85,11 @@
         margin-right: 6px;
     }    
 
-    .base-select {
+    select {
+        font-family: inherit;
+    }
+
+    /* .base-select {
         margin-top: 16px;
-    } 
+    }  */
 </style>

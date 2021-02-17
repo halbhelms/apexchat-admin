@@ -5,15 +5,19 @@
         <base-input _label="Company name" _id="company-name" v-model="company.name"></base-input>
         <base-input _label="Website address" _id="website-address" v-model="company.domain"></base-input>
         <base-input _label="Logo url" _id="logo-url" v-model="company.logo_url"></base-input>
-        <base-select _label="Time zone" _width="354px" _id="time-zone" v-model="company.time_zone" :_options="timeZones"></base-select>
+        
+        <base-select _label="Time zone" :_styles="styles.timeZone" _id="time-zone" v-model="company.time_zone" :_options="timeZones"></base-select>
+        
         <base-input _label="Owner" _id="owner" v-model="company.owner"></base-input>
         <base-input _label="Customer since (year)" _id="since" v-model="company.since"></base-input>
         <base-input _label="Email" _type="email" _id="email" v-model="company.email"></base-input>
         <base-input _label="Phone" _type="tel" _id="phone" v-model="company.phone"></base-input>
         <base-input _label="Apex company ID" _id="apex-company-id" v-model="company.apex_company_id"></base-input>
         <base-textarea _label="Apex info" _id="apex-info" v-model="company.apex_info"></base-textarea>
-        <base-checkbox _label="Self manage website?" _width="220px" _id="self-managed-web" v-model="company.self_managed_web"></base-checkbox>
-        <base-select _label="Active status" _id="status" v-model="company.status" :_options="statusOptions" class="select" _width="474px"></base-select>
+
+        <base-checkbox _label="Self manage website?" :_styles="styles.selfManage" _id="self-managed-web" v-model="company.self_managed_web"></base-checkbox>
+
+        <base-select _label="Active status" _id="status" v-model="company.status" :_options="statusOptions" :_styles="styles.activeStatus" class="select"></base-select>
         <base-button _width="w-medium" _radius="r-full" @button-clicked="submitForm">{{ buttonLabel }}</base-button>
     </div>
 </template>
@@ -44,6 +48,25 @@
                 },
                 statusOptions: ['active', 'paused'],
                 timeZones: ['Eastern Time (US & Canada)', 'Central Time (US & Canada)', 'Mountain Time (US & Canada)', 'Pacific Time (US & Canada)', 'Alaska', 'Hawaii'],
+                styles: {
+                    timeZone: {
+                        fontSize: '.8rem',
+                        marginLeft: '-20px',
+                        position: 'relative',
+                        left: '-6px',
+                        marginTop: '16px',
+                    },
+                    activeStatus: {
+                        textAlign: 'right',
+                        marginRight: '80px',
+                        fontSize: '.8rem',
+                    },
+                    selfManage: {
+                        textAlign: 'left',
+                        fontSize: '.8rem',
+                        marginTop: '16px',
+                    }
+                }
             }
         },
 

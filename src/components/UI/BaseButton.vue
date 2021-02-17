@@ -1,9 +1,10 @@
 <template>
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
-    <div :class="['base-button', _display]">
+    <div :class="base-button" :style="style">
         <button 
+            :style="buttonStyle"
             @click="$emit('button-clicked')" 
-            :class="[_mode, _radius, _width]"
+            :class="_mode"
         >
             <slot></slot>
         </button>
@@ -22,31 +23,33 @@
                 default: 'primary'
             },
 
-            _radius: {
-                type: String,
-                default: 'r-small'
+            _styles: {
+                type: Object,
+                default: ()=> {},
             },
-
-            _width: {
-                type: String,
-                default: 'w-float'
-            },
-
-            _display: {
-                type: String,
-                default: 'ib'
-            }
         },
 
         emits: ['button-clicked'],
 
         data() {
-            return {}
+            return {
+                defaultStyles: {
+                    fontFamily: 'inherit',
+                    fontSize: 'inherit',
+                }                
+            }
         },
 
         methods: {},
 
-        computed: {}
+        computed: {
+            style() {
+                return {...this.defaultStyles, ...this.$props._styles.base}
+            },
+            buttonStyle() {
+                return this.$props._styles.button
+            }
+        }
     }
 </script>
 
