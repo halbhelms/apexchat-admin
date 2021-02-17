@@ -1,4 +1,5 @@
 <template>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <h3>Existing Videos</h3>
     <div class="the-existing-videos">
         <company-video 

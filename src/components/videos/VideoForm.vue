@@ -1,4 +1,5 @@
 <template>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="video-form">
         <base-input 
             class="breathe" 
@@ -69,5 +70,6 @@
 
     .video-form {
         width: 400px;
+        margin: 0 auto;
     }
 </style>

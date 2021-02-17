@@ -1,13 +1,15 @@
 <template>
     <div class="header">
-        <div class="title">Edit: {{ _companyName }}</div>
+        <!-- <div class="title">Edit: {{ _companyName }}</div> -->
+        <section-header>{{ _companyName }}</section-header>
     </div>
 </template>
 
 <script>
+import SectionHeader from '../UI/SectionHeader.vue';
     export default {
         name: 'EditHeader',
-        components: {},
+        components: {SectionHeader},
         props: {
             _companyName: {
                 type: String,

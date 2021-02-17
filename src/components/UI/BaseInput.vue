@@ -1,4 +1,5 @@
 <template>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
 <div class="go-bottom">
   <div>
     <input 
@@ -113,6 +114,10 @@ div label {
 div textarea {
   display: block;
   resize: vertical;
+}
+
+div.go-bottom{
+  margin-top: 16px;
 }
 
 div.go-bottom input, div.go-bottom textarea {

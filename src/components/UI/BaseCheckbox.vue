@@ -1,5 +1,6 @@
 <template>
-    <div :class="base-checkbox">
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
+    <div :class="base-checkbox" :style="width">
         <input :id="_id" type="checkbox" :checked="modelValue" @change="$emit('update:modelValue', $event.target.checked)">
         <label :for="_id">{{ _label }}</label>
     </div>
@@ -30,6 +31,16 @@
             _display: {
                 type: String,
                 default: 'ib',
+            },
+
+            _width: {
+                type: String,
+                default: '',
+            },
+
+            _left: {
+                type: Number,
+                default: 0,
             }
         },
 
@@ -39,21 +50,28 @@
 
         methods: {},
 
-        computed: {}
+        computed: {
+            width() {
+                return {
+                    "width": this.$props._width,
+                    "margin-top": "16px",
+                    "display": 'relative',
+                    "left": this.$props._left,
+                    // "outline": "1px solid red",
+                    "text-align": "left"
+                }
+            }
+        }
     }
 </script>
 
 <style scoped>
-    .base-checkbox {
-        /* position: relative; */
-        /* width: 100%; */
-        /* text-align: left; */
-        /* margin-left: 36px; */
-        
-    }
-
     input {
         margin-right: 6px;
         font-family: inherit;
+    }
+
+    .base-checkbox {
+        outline: 1px solid red;
     }
 </style>

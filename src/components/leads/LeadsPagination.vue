@@ -1,4 +1,5 @@
 <template>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <img src="./button_left.png" alt="Prev" v-if="_lessLeads" @click="previousLeads"> <img src="./button_right.png" alt="Next" v-if="_moreLeads" @click="nextLeads">
 </template>
 

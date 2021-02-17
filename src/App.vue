@@ -115,4 +115,10 @@ h1 {
 html, body {
   min-height: 100vh !important;
 }
+
+.inDev {
+  font-weight: 300;
+  font-style: italic;
+  font-size: .5rem;
+}
 </style>

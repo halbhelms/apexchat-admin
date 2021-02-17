@@ -1,4 +1,5 @@
 <template>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="company-data-header">
         <div class="name header-column">Date</div>
         <div class="type header-column">Type</div>

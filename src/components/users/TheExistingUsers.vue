@@ -1,4 +1,5 @@
 <template>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <h3>Existing Users</h3>
     <div class="the-existing-users">
         <company-user 

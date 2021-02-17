@@ -1,7 +1,8 @@
 <template>
     <div class="edit">
         <!-- title -->
-        <EditHeader :_companyName="company.name" />
+        <!-- <EditHeader :_companyName="company.name" /> -->
+        <section-header>{{ company.name }}</section-header>
         <!-- edit form  -->
         <div class="columns-2">
             <CompanyInfoForm :_company="company" />
@@ -14,11 +15,12 @@
     import EditHeader from '../components/edit/EditHeader'
     import CompanyInfoForm from '../components/companies/CompanyInfoForm'
     import UserInputForm from '../components/companies/UserInputForm'
+import SectionHeader from '../components/UI/SectionHeader.vue'
 
     export default {
         name: 'EditCompany',
 
-        components: {EditHeader, CompanyInfoForm, UserInputForm},
+        components: {EditHeader, CompanyInfoForm, UserInputFormSectionHeader},
 
         props: [],
 

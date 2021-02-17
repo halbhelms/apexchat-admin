@@ -1,23 +1,24 @@
 <template>
-<div class="go-bottom">
-  <div>
-    <textarea 
-      v-bind="$attrs" 
-      :id="_id" 
-      :name="_id" 
-      :value="modelValue" 
-      :rows="_rows"
-      @input="$emit('update:modelValue', $event.target.value)"
-      required>
-    </textarea>
-    <label :for="_id">{{ _label }}</label>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
+  <div class="go-bottom">
+    <div>
+      <textarea 
+        v-bind="$attrs" 
+        :id="_id" 
+        :name="_id" 
+        :value="modelValue" 
+        :rows="_rows"
+        @input="$emit('update:modelValue', $event.target.value)"
+        required>
+      </textarea>
+      <label :for="_id">{{ _label }}</label>
+    </div>
   </div>
- </div>
 </template>
 
 <script>
     export default {
-        name: 'BaseInput',
+        name: 'BaseTextarea',
 
         components: {},
 
@@ -116,6 +117,10 @@ div label {
 div textarea {
   display: block;
   resize: vertical;
+}
+
+div.go-bottom {
+  margin-top: 16px;
 }
 
 div.go-bottom input, div.go-bottom textarea {

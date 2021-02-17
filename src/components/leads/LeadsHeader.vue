@@ -1,7 +1,5 @@
 <template>
-    <!-- <div class="header">
-        <div class="title">Leads <span class="title-company"> {{ companyName }}</span></div>
-    </div> -->
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="dashboard-header-container">
         <div class="header">
             <!-- title -->

@@ -1,4 +1,5 @@
 <template>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="leads-line-item" >
         <div @click="$emit('lead-selected', _id)" class="column date">{{ date }}</div>
         <div @click="$emit('lead-selected', _id)" class="column type">{{ lead.type }}</div>

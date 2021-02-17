@@ -1,4 +1,5 @@
 <template>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <!-- inclosing div -->
         <div class="normal-line-item">
         <!-- data columns -->

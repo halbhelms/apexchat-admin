@@ -196,12 +196,18 @@
         font-weight: 900;
     }
 
-   
-
-
     .title {
         text-align: right;
         margin-right: 10px;
         font-weight: 800;
+    }
+
+    /* transition */
+    .fade-enter {
+        opacity: 0;
+    }
+
+    .fade-enter-active {
+        transition: opacity 2s ease-out;
     }
 </style>

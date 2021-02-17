@@ -26,5 +26,7 @@ app.component('base-select', BaseSelect)
 app.component('section-header', SectionHeader)
 app.component('split-columns', SplitColumns)
 
+app.config.globalProperties.inDev = true
+
 app.mount("#app");
   

@@ -1,4 +1,5 @@
 <template>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="split-columns">
         <div class="left">
             <slot name="left"></slot>

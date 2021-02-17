@@ -1,5 +1,6 @@
 <template>
-<!-- time filter -->
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
+<!-- date filter -->
     <div class="date-filter">
         <div class="filter">
             <input name="date-filter" type="radio" id="last-login" :checked="'sinceLogin' === $store.state.dateFilter ? 'checked' : false" @change="setDateFilter('sinceLogin')" />

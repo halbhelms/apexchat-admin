@@ -1,18 +1,19 @@
 <template>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <section-header>Company Info</section-header>
     <div class="company-info-form">
         <base-input _label="Company name" _id="company-name" v-model="company.name"></base-input>
         <base-input _label="Website address" _id="website-address" v-model="company.domain"></base-input>
         <base-input _label="Logo url" _id="logo-url" v-model="company.logo_url"></base-input>
-        <base-select _label="Time zone" _id="time-zone" v-model="company.time_zone" :_options="timeZones"></base-select>
+        <base-select _label="Time zone" _width="354px" _id="time-zone" v-model="company.time_zone" :_options="timeZones"></base-select>
         <base-input _label="Owner" _id="owner" v-model="company.owner"></base-input>
         <base-input _label="Customer since (year)" _id="since" v-model="company.since"></base-input>
         <base-input _label="Email" _type="email" _id="email" v-model="company.email"></base-input>
         <base-input _label="Phone" _type="tel" _id="phone" v-model="company.phone"></base-input>
         <base-input _label="Apex company ID" _id="apex-company-id" v-model="company.apex_company_id"></base-input>
         <base-textarea _label="Apex info" _id="apex-info" v-model="company.apex_info"></base-textarea>
-        <base-checkbox _label="Self manage website?" _id="self-managed-web" v-model="company.self_managed_web"></base-checkbox>
-        <base-select _label="Active status" _id="status" v-model="company.status" :_options="statusOptions" class="select"></base-select>
+        <base-checkbox _label="Self manage website?" _width="220px" _id="self-managed-web" v-model="company.self_managed_web"></base-checkbox>
+        <base-select _label="Active status" _id="status" v-model="company.status" :_options="statusOptions" class="select" _width="474px"></base-select>
         <base-button _width="w-medium" _radius="r-full" @button-clicked="submitForm">{{ buttonLabel }}</base-button>
     </div>
 </template>
@@ -79,6 +80,7 @@
 <style scoped>
     .company-info-form {
         width: 400px;
+        margin: 0 auto;
     }
 
     .company-info-form * {
@@ -90,8 +92,11 @@
         margin-bottom: 24px;
     }
 
-    .select {
+    #time-zone {
         margin: 0 auto;
-        margin-top: 12px;
+        /* margin-top: 12px; */
+        position: relative;
+        left: -62px;
+        outline: 2px dashed red;
     }
 </style>

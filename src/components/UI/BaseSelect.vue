@@ -1,5 +1,6 @@
 <template>
-    <div class="base-select">
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
+    <div class="base-select" :style="width">
         <label v-if="_label" :for="_id">{{ _label }}</label>
         <select 
             :name="_name" 
@@ -52,7 +53,12 @@
             _options: {
                 type: Array,
                 required: true,
-            }
+            },
+
+            _width: {
+                type: String,
+                required: true,
+            },
         },
 
         data() {
@@ -61,17 +67,22 @@
 
         methods: {},
 
-        computed: {}
+        computed: {
+            width() {
+                return {
+                    "width": this.$props._width
+                }
+            }
+        }
     }
 </script>
 
 <style scoped>
-    /* .base-select {
-        position: relative;
-        text-align: left;
-    } */
-
     label{
         margin-right: 6px;
-    }
+    }    
+
+    .base-select {
+        margin-top: 16px;
+    } 
 </style>
