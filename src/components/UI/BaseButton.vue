@@ -52,10 +52,16 @@
 
 <style scoped>
 .base-button {
-    margin-left: 6px;
-    margin-right: 6px;
+    /* margin-left: 6px;
+    margin-right: 6px; */
     margin-top: 18px;
-    text-align: left;
+    text-align: center;
+    /* outline: 1px solid red; */
+    width: 320px;
+    margin: 0 auto;
+    position: relative;
+    left: -40px;
+    top: 12px;
 }
 
 button {
