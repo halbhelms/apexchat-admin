@@ -1,8 +1,8 @@
 <template>
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <section-header>Company Info</section-header>
-    <form @submit.prevent="submitForm">
-        <div class="company-info-form">
+    <!-- <form @submit.prevent="submitForm"> -->
+        <form class="company-info-form" @submit.prevent="validateForm">
             <base-input _label="Company name" _id="company-name" v-model="company.name"></base-input>
             <base-input _label="Website address" _id="website-address" v-model="company.domain"></base-input>
             <base-input _label="Logo url" _id="logo-url" v-model="company.logo_url"></base-input>
@@ -16,9 +16,9 @@
             <base-checkbox _label="Self manage website?" :_styles="styles.selfManage" _id="self-managed-web" v-model="company.self_managed_web"></base-checkbox>
             <base-select _label="Active status" _id="status" v-model="company.status" :_options="statusOptions" :_styles="styles.activeStatus" class="select"></base-select>
 
-            <base-button :_styles="styles.submitButton"  @button-clicked="submitForm">{{ buttonLabel }}</base-button>
-        </div>
-    </form>
+            <base-button :_styles="styles.submitButton" _type="submit" @button-clicked="submitForm">{{ buttonLabel }}</base-button>
+        </form>
+    <!-- </form> -->
 </template>
 
 <script>
@@ -92,7 +92,8 @@
             },
 
             validateForm() {
-                Object.keys
+                console.log('in validateForm');
+                
             }
         },
 
