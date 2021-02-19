@@ -1,29 +1,29 @@
 <template>
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="video-form">
-        <base-input 
-            class="breathe" 
-            _id="video-title" 
-            _label="Title" 
-            ref="title"
-            v-model="video.title"></base-input>
-        
-        <base-textarea 
-            class="breathe" 
-            _id="video-embed-code" 
-            _label="Embed code" 
-            ref="embedCode"
-            v-model="video.embed_code">
-        </base-textarea>
+        <form @submit.prevent="submitForm">
+            <base-input 
+                _id="video-title" 
+                _label="Title" 
+                class="edit"
+                v-model="video.title">
+            </base-input>
+            
+            <base-textarea 
+                class="breathe" 
+                _id="video-embed-code" 
+                _label="Embed code" 
+                ref="embedCode"
+                v-model="video.embed_code">
+            </base-textarea>
 
-        <base-button 
-            class="button" 
-            _radius="r-full" 
-            _width="w-medium" 
-            @button-clicked="submitForm"
-        >
-            <span v-if="_videoId">Update</span><span v-else>Add</span>
-        </base-button>
+            <base-button 
+                class="button" 
+                :_styles="styles.submitButton"
+            >
+                <span v-if="_videoId">Update</span><span v-else>Add</span>
+            </base-button>
+        </form>
     </div>
 </template>
 
@@ -44,22 +44,29 @@
             return {
                 video: {
                     company_id: this.$route.params.id
-                }
+                },
+
+                styles: {
+                    submitButton: {
+                        base: {
+                            marginTop: '12px',
+                            position: 'relative',
+                            left: '-40px'
+                        },
+                        button: {
+                            borderRadius: '20px',
+                            width: '82px',
+                        }
+                    }                      
+                }              
             }
         },
 
         methods: {
             submitForm() {
-                this.validateField()
-                // this.$store.dispatch('add_video', this.video)
+                this.$store.dispatch('add_video', this.video)
                 // reset video
-                // this.video = {company_id: this.$route.params.id}
-            },
-
-            validateField() {
-                console.log('this.$refs.title.length', this.$refs.title.length);
-                
-                
+                this.video = {company_id: this.$route.params.id}
             },
         },
 
@@ -68,15 +75,7 @@
 </script>
 
 <style scoped>
-    .breathe {
-        margin-left: 36px;
-        margin-top: 20px;
-    }
-
-    .button {
-        text-align: center;
-    }
-
+    
     .video-form {
         width: 400px;
         margin: 0 auto;

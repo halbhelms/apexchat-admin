@@ -100,10 +100,6 @@ input {
   font-style: italic;
 } */
 
-/* .base-button{
-    display: inline-block;
-} */
-
 div {
   width: 320px;
   /* margin-left: 20px; */

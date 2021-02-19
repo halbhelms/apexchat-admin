@@ -145,9 +145,7 @@
 
     #time-zone {
         margin: 0 auto;
-        /* margin-top: 12px; */
         position: relative;
         left: -62px;
-        outline: 2px dashed red;
     }
 </style>
