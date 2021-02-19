@@ -58,13 +58,19 @@
                     status: 'active'
                 },
                 statusOptions: ['active', 'paused'],
-                timeZones: ['Eastern Time (US & Canada)', 'Central Time (US & Canada)', 'Mountain Time (US & Canada)', 'Pacific Time (US & Canada)', 'Alaska', 'Hawaii'],
+                timeZones: [
+                    'Eastern Time (US & Canada)', 
+                    'Central Time (US & Canada)', 
+                    'Mountain Time (US & Canada)', 
+                    'Pacific Time (US & Canada)', 
+                    'Alaska', 
+                    'Hawaii'],
                 styles: {
                     timeZone: {
                         fontSize: '.8rem',
-                        marginLeft: '-20px',
+                        // marginLeft: '-19px',
                         position: 'relative',
-                        left: '-6px',
+                        left: '-17px',
                         marginTop: '16px',
                     },
                     activeStatus: {
