@@ -5,6 +5,7 @@
             :style="buttonStyle"
             @click="$emit('button-clicked')" 
             :class="_mode"
+            :type="_type"
         >
             <slot></slot>
         </button>
@@ -21,6 +22,11 @@
             _mode: {
                 type: String,
                 default: 'primary'
+            },
+
+            _type: {
+                type: String,
+                default: 'text',
             },
 
             _styles: {

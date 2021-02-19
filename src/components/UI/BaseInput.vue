@@ -10,7 +10,7 @@
             :type="_type" 
             :value="modelValue" 
             @input="$emit('update:modelValue', $event.target.value)" 
-            required
+            :required="_optional ? false : true"
           >
           <label :for="_id">{{ _label }}</label>
         </div>
@@ -41,6 +41,11 @@
             _type: {
                 type: String,
                 default: 'text'
+            },
+
+            _optional: {
+                type: Boolean,
+                default: false,
             },
 
             _styles: {
@@ -87,7 +92,11 @@ input {
   font-family: inherit;
 }
 
-.wrapper {
+.edit {
+
+}
+
+/* .wrapper {
     width: 600px;
 }
 
@@ -101,7 +110,7 @@ input {
   font-size: .7rem;
   text-align: left;
   font-style: italic;
-}
+} */
 
 /* .base-button{
     display: inline-block;
@@ -118,6 +127,11 @@ div > div {
   position: relative;
   overflow: hidden;
 }
+
+div input[class='edit'] {
+    background: white;
+}
+
 div input, div textarea {
   width: 100%;
   border: 1px solid silver;
@@ -129,9 +143,9 @@ div input, div textarea {
   padding: 8px 12px;
   outline: 0;
 }
-div input:valid, div textarea:valid {
+/* div input:valid, div textarea:valid {
   background: white;
-}
+} */
 div input:focus, div textarea:focus {
   border-color: #0080E6;
 }
