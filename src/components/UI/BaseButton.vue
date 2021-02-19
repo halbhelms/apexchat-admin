@@ -26,7 +26,7 @@
 
             _type: {
                 type: String,
-                default: 'text'
+                default: 'text',
             },
 
             _styles: {

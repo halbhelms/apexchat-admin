@@ -1,7 +1,7 @@
 <template>
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div :class="base-checkbox" :style="style">
-        <input :id="_id" type="checkbox" :checked="modelValue" @change="$emit('update:modelValue', $event.target.checked)">
+        <input :id="_id" type="checkbox" :checked="modelValue" @change="$emit('update:modelValue', $event.target.checked)" :required="_optional ? false : true">
         <label :for="_id">{{ _label }}</label>
     </div>
 </template>
@@ -21,6 +21,11 @@
             _label: {
                 type: String,
                 required: true,
+            },
+
+            _optional: {
+                type: Boolean,
+                default: true,
             },
 
             modelValue: {

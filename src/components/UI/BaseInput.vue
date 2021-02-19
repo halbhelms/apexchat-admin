@@ -1,18 +1,23 @@
 <template>
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
-<div class="go-bottom" :style="style">
-  <div>
-    <input 
-      v-bind="$attrs" 
-      :id="_id" 
-      :name="_id" 
-      :type="_type" 
-      :value="modelValue" 
-      @input="$emit('update:modelValue', $event.target.value)" 
-      required
-    >
-    <label :for="_id">{{ _label }}</label>
-  </div>
+    <div class="wrapper">
+      <div class="go-bottom" :style="style">
+        <div>
+          <input 
+            v-bind="$attrs" 
+            :id="_id" 
+            :name="_id" 
+            :type="_type" 
+            :value="modelValue" 
+            @input="$emit('update:modelValue', $event.target.value)" 
+            :required="_optional ? false : true"
+          >
+          <label :for="_id">{{ _label }}</label>
+        </div>
+      </div>
+      <div class="errors" v-if="_errors.length">
+        Field cannot be empty
+      </div>
  </div>
 </template>
 
@@ -38,9 +43,19 @@
                 default: 'text'
             },
 
+            _optional: {
+                type: Boolean,
+                default: false,
+            },
+
             _styles: {
               type: Object,
               default: ()=>{}
+            },
+
+            _errors: {
+              type: Array,
+              default: ()=>[],
             },
 
             modelValue: {
@@ -77,6 +92,26 @@ input {
   font-family: inherit;
 }
 
+.edit {
+
+}
+
+/* .wrapper {
+    width: 600px;
+}
+
+.errors {
+  width: 220px;
+  border: 1px solid red;
+  position: relative;
+  top: -42px;
+  left: 340px;
+  color: red;
+  font-size: .7rem;
+  text-align: left;
+  font-style: italic;
+} */
+
 /* .base-button{
     display: inline-block;
 } */
@@ -92,6 +127,11 @@ div > div {
   position: relative;
   overflow: hidden;
 }
+
+div input[class='edit'] {
+    background: white;
+}
+
 div input, div textarea {
   width: 100%;
   border: 1px solid silver;
@@ -103,9 +143,9 @@ div input, div textarea {
   padding: 8px 12px;
   outline: 0;
 }
-div input:valid, div textarea:valid {
+/* div input:valid, div textarea:valid {
   background: white;
-}
+} */
 div input:focus, div textarea:focus {
   border-color: #0080E6;
 }
