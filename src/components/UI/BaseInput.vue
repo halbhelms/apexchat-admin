@@ -1,18 +1,23 @@
 <template>
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
-<div class="go-bottom" :style="style">
-  <div>
-    <input 
-      v-bind="$attrs" 
-      :id="_id" 
-      :name="_id" 
-      :type="_type" 
-      :value="modelValue" 
-      @input="$emit('update:modelValue', $event.target.value)" 
-      required
-    >
-    <label :for="_id">{{ _label }}</label>
-  </div>
+    <div class="wrapper">
+      <div class="go-bottom" :style="style">
+        <div>
+          <input 
+            v-bind="$attrs" 
+            :id="_id" 
+            :name="_id" 
+            :type="_type" 
+            :value="modelValue" 
+            @input="$emit('update:modelValue', $event.target.value)" 
+            required
+          >
+          <label :for="_id">{{ _label }}</label>
+        </div>
+      </div>
+      <div class="errors" v-if="_errors.length">
+        Field cannot be empty
+      </div>
  </div>
 </template>
 
@@ -41,6 +46,11 @@
             _styles: {
               type: Object,
               default: ()=>{}
+            },
+
+            _errors: {
+              type: Array,
+              default: ()=>[],
             },
 
             modelValue: {
@@ -75,6 +85,22 @@
 
 input {
   font-family: inherit;
+}
+
+.wrapper {
+    width: 600px;
+}
+
+.errors {
+  width: 220px;
+  border: 1px solid red;
+  position: relative;
+  top: -42px;
+  left: 340px;
+  color: red;
+  font-size: .7rem;
+  text-align: left;
+  font-style: italic;
 }
 
 /* .base-button{
