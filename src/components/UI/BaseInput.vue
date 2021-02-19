@@ -92,10 +92,6 @@ input {
   font-family: inherit;
 }
 
-.edit {
-
-}
-
 /* .wrapper {
     width: 600px;
 }
