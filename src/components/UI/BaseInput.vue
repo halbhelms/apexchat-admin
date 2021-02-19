@@ -15,10 +15,7 @@
           <label :for="_id">{{ _label }}</label>
         </div>
       </div>
-      <div class="errors" v-if="_errors.length">
-        Field cannot be empty
-      </div>
- </div>
+  </div>
 </template>
 
 <script>
@@ -51,11 +48,6 @@
             _styles: {
               type: Object,
               default: ()=>{}
-            },
-
-            _errors: {
-              type: Array,
-              default: ()=>[],
             },
 
             modelValue: {

@@ -57,7 +57,6 @@
                     since: null,
                     status: 'active'
                 },
-                errors: {},
                 statusOptions: ['active', 'paused'],
                 timeZones: ['Eastern Time (US & Canada)', 'Central Time (US & Canada)', 'Mountain Time (US & Canada)', 'Pacific Time (US & Canada)', 'Alaska', 'Hawaii'],
                 styles: {
