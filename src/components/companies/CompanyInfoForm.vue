@@ -67,7 +67,9 @@
                     },
                     submitButton: {
                         base: {
-
+                            marginTop: '12px',
+                            position: 'relative',
+                            left: '-40px',
                         },
                         button: {
                             borderRadius: '20px',
