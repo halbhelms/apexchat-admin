@@ -112,6 +112,10 @@ div > div {
   overflow: hidden;
 }
 
+div input:valid {
+  background: white;
+}
+
 div input[class='edit'] {
     background: white;
 }

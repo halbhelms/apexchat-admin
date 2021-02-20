@@ -5,9 +5,9 @@
       <textarea 
         v-bind="$attrs" 
         :id="_id" 
-        :name="_id" 
+        :name="_id"
+        :style="style"
         :value="modelValue" 
-        :rows="_rows"
         @input="$emit('update:modelValue', $event.target.value)"
         required>
       </textarea>

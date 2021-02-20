@@ -1,5 +1,8 @@
 <template>
-  <div class="outer-wrapper">
+  <login-form v-if="!loggedIn">
+
+  </login-form>
+  <div class="outer-wrapper" v-else>
     <Header />
     <div class="inner-wrapper">
       <div class="sidenav">
@@ -14,16 +17,6 @@
             <Leads />
           </router-link>
         </div>
-        <!-- <div class="sidebar-element">
-          <router-link :to="{name: 'Videos'}">
-            <Videos />
-          </router-link>
-        </div> -->
-        <!-- <div class="sidebar-element">
-          <router-link :to="{name: 'Support'}">
-            <Support />
-          </router-link>
-        </div> -->
       </div>
       <main>
           <router-view/>
@@ -35,16 +28,23 @@
 <script>
 import Companies from './components/sidenav/Companies'
 import Leads from './components/sidenav/Leads'
-// import Videos from './components/sidenav/Videos'
 import Header from './components/site/Header'
+
+import LoginForm from './views/LoginForm.vue'
   
   export default {
     name: 'App',
     components: {
       Companies,
       Leads,
-      // Videos,
-      Header
+      LoginForm,
+      Header,
+    },
+
+    computed: {
+      loggedIn() {
+        return window.sessionStorage.getItem('loggedIn')
+      }
     },
 
     provide: {

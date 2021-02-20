@@ -2,18 +2,18 @@
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="video-form">
         <form @submit.prevent="submitForm">
-            <base-input 
+            <base-textarea 
                 _id="video-title" 
                 _label="Title" 
-                class="edit"
+                :_styles="styles.title"
                 v-model="video.title">
-            </base-input>
+            </base-textarea>
             
             <base-textarea 
                 class="breathe" 
                 _id="video-embed-code" 
                 _label="Embed code" 
-                ref="embedCode"
+                :_styles="styles.embedCode"
                 v-model="video.embed_code">
             </base-textarea>
 
@@ -51,13 +51,22 @@
                         base: {
                             marginTop: '12px',
                             position: 'relative',
-                            left: '-40px'
+                            left: '-42px'
                         },
                         button: {
                             borderRadius: '20px',
                             width: '82px',
                         }
-                    }                      
+                    },
+                    
+                    title: {
+                        height: '48px',
+                        overflow: 'hidden'
+                    },
+
+                    embedCode: {
+                        height: '112px'
+                    }
                 }              
             }
         },
@@ -75,7 +84,6 @@
 </script>
 
 <style scoped>
-    
     .video-form {
         width: 400px;
         margin: 0 auto;
