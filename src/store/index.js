@@ -811,7 +811,7 @@ export default createStore({
       })
         .then(commit('UPDATE_COMPANY', company))
         .then(console.log('updating API company info'))
-        // .then(router.push({ name: 'Companies' }))
+        .then(router.push({ name: 'Companies' }))
         .catch(err => console.log('err', err))
     },    
 
