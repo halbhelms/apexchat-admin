@@ -101,7 +101,7 @@
         methods: {
             submitForm() {
                 // if $route.params.id, we're in editing mode
-                if (this.$route.params.id) {
+                if (this.$route.params.id && this.company.name) {
                     this.$store.dispatch('update_company', this.company)
                 // otherwise, we're adding a company
                 } else {
