@@ -9,7 +9,15 @@ import Temp from '../views/Temp.vue'
 import AddUser from '../views/AddUser.vue'
 import CompanyUsers from '../views/CompanyUsers.vue'
 
+import Login from '../views/LoginForm.vue'
+
 const routes = [
+  {
+    path: "/login",
+    name: "Login",
+    component: Login
+  },
+
   {
     path: "/",
     name: "Companies",

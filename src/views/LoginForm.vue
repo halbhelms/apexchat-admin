@@ -12,6 +12,7 @@
     // import axios from 'axios'
     import BaseInput from '../components/UI/BaseInput'
     import BaseButton from '../components/UI/BaseButton'
+    import axios from 'axios'
     export default {
         name: 'LoginForm',
 
@@ -45,17 +46,21 @@
         methods: {
             loginUser() {
                 
-                // axios.post('https://codelifepro.herokuapp.com/', {
-                //     headers: {
-                //         'apex-company': 'MogerMedia',
-                //         'apex-username': 'Admin',
-                //         'apex-password': 20171220,
-                //         Authorization: 'Basic aGFsLmhlbG1zQGdtYWlsLmNvbTpwYXNzd29yZA=='
-                //     }
-                // })
-                //     .then( response => console.log(response))  
-                //     .catch(err => console.log(err))    
-                sessionStorage.setItem('loggedIn', true)
+                axios.get('https://codelifepro.herokuapp.com/users/me', {
+                    headers: {
+                        // 'apex-company': 'MogerMedia',
+                        // 'apex-username': 'Admin',
+                        // 'apex-password': 20171220,
+                        Authorization: `Basic ${btoa(this.login.userName +':' + this.login.password)}` 
+                    }
+                })
+                    .then( response => {
+                        sessionStorage.setItem('authToken', response.data.authentication_token)
+                    })
+                    .then(sessionStorage.setItem('loggedIn', true))
+                    .then(sessionStorage.setItem('userName', this.login.userName))  
+                    .catch(err => console.log(err))    
+                    sessionStorage.setItem('loggedIn', true)
             },
         },
 

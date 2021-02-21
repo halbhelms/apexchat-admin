@@ -800,15 +800,18 @@ export default createStore({
 
     update_company({ commit }, company) {
       console.log("🚀 ~ file: index.js ~ line 802 ~ update_company ~ company", company)
-      axios.patch(`https://codelifepro.herokuapp.com/companies/${company.id}`, {
+      axios({
+        method: 'patch',
+        url: 'https://codelifepro.herokuapp.com/companies/' + company.id,
+        data: company,
         headers: {
           'X-User-Email': 'hal.helms@gmail.com',
-          'X-User-Token': 'v8hDDSeYYQx2x52dynPk'          
+          'X-User-Token': 'v8hDDSeYYQx2x52dynPk' 
         }
-      }, company)
+      })
         .then(commit('UPDATE_COMPANY', company))
         .then(console.log('updating API company info'))
-        .then(router.push({ name: 'Companies' }))
+        // .then(router.push({ name: 'Companies' }))
         .catch(err => console.log('err', err))
     },    
 
