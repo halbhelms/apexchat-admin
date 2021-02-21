@@ -100,6 +100,9 @@
 
         methods: {
             submitForm() {
+                // make sure phone is all-numeric
+                this.company.phone = this.company.phone.replace(/\D/g, '');
+                console.log("🚀 ~ file: CompanyInfoForm.vue ~ line 105 ~ submitForm ~ this.company.phone", this.company.phone)
                 // if $route.params.id, we're in editing mode
                 if (this.$route.params.id && this.company.name) {
                     this.$store.dispatch('update_company', this.company)
