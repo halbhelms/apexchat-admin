@@ -1,25 +1,27 @@
 <template>
+    {{ focused }}
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
-  <div class="go-bottom">
-    <div>
-      <textarea 
-        v-bind="$attrs" 
-        :id="_id" 
-        :name="_id"
-        :style="style"
-        :value="modelValue" 
-        @input="$emit('update:modelValue', $event.target.value)"
-        :required="_optional ? false : true"
-      >
-      </textarea>
-      <label :for="_id">{{ _label }}</label>
-    </div>
+    <div class="wrapper">
+      <div class="go-bottom" :style="style">
+        <div>
+          <input 
+            v-bind="$attrs" 
+            :id="_id" 
+            :name="_id" 
+            :type="_type" 
+            :value="modelValue" 
+            @input="$emit('update:modelValue', $event.target.value)" 
+            :required="_optional ? false : true"
+          >
+          <label :for="_id">{{ _label }}</label>
+        </div>
+      </div>
   </div>
 </template>
 
 <script>
     export default {
-        name: 'BaseTextarea',
+        name: 'BaseInput',
 
         components: {},
 
@@ -34,24 +36,19 @@
                 required: true
             },
 
-            _rows: {
-              type: Number,
-              default: 5
-            },
-
             _type: {
                 type: String,
                 default: 'text'
             },
 
             _optional: {
-              type: Boolean,
-              required: false,
+                type: Boolean,
+                default: false,
             },
 
             _styles: {
-                type: Object,
-                default: ()=>{}
+              type: Object,
+              default: ()=>{}
             },
 
             modelValue: {
@@ -66,7 +63,7 @@
                     fontFamily: 'inherit',
                     fontSize: 'inherit',
                 }                
-            }  
+            }        
         },
 
         methods: {},
@@ -74,7 +71,7 @@
         computed: {
             style() {
                 return {...this.defaultStyles, ...this.$props._styles}
-            },            
+            },          
         }
     }
 </script>
@@ -84,13 +81,25 @@
   box-sizing: border-box;
 }
 
-textarea {
+input {
   font-family: inherit;
 }
 
-.base-textarea{
-    display: inline-block;
+/* .wrapper {
+    width: 600px;
 }
+
+.errors {
+  width: 220px;
+  border: 1px solid red;
+  position: relative;
+  top: -42px;
+  left: 340px;
+  color: red;
+  font-size: .7rem;
+  text-align: left;
+  font-style: italic;
+} */
 
 div {
   width: 320px;
@@ -103,6 +112,15 @@ div > div {
   position: relative;
   overflow: hidden;
 }
+
+div input:valid {
+  background: white;
+}
+
+div input[class='edit'] {
+    background: white;
+}
+
 div input, div textarea {
   width: 100%;
   border: 1px solid silver;
@@ -114,15 +132,9 @@ div input, div textarea {
   padding: 8px 12px;
   outline: 0;
 }
-
-div > div {
-  position: relative;
-  overflow: hidden;
-}
-
-div input:valid, div textarea:valid {
+/* div input:valid, div textarea:valid {
   background: white;
-}
+} */
 div input:focus, div textarea:focus {
   border-color: #0080E6;
 }
@@ -145,7 +157,7 @@ div textarea {
   resize: vertical;
 }
 
-div.go-bottom {
+div.go-bottom{
   margin-top: 16px;
 }
 

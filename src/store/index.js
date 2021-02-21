@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 import router from '../router/index';
 
 import differenceInDays from 'date-fns/differenceInDays'
+import axios from 'axios'
 
 export default createStore({
   state: {
@@ -24,7 +25,7 @@ export default createStore({
     leadsPerPage: 15,
     // leads to display
     activeSlice: [],
-    companies: [
+    __companies: [
       {
         id: 1,
         name: 'CJS Heating and Air',
@@ -679,6 +680,10 @@ export default createStore({
       state.activeNave = navElement
     },
 
+    SET_COMPANIES(state, companies) {
+      state.companies = companies
+    },
+
     SET_CURRENT_COMPANY(state, companyId) {
       state.currentCompany = companyId
     },
@@ -761,6 +766,22 @@ export default createStore({
     //   commit('SET_LEADS_ACTIVE_SLICE', getters.getLeadsForTimeFrame(companyId))
     // },
 
+    initialize_companies({ commit }) {
+      axios.get('https://codelifepro.herokuapp.com/companies', {
+        headers: {
+          'X-User-Email': 'hal.helms@gmail.com',
+          'X-User-Token': 'v8hDDSeYYQx2x52dynPk'
+        }
+      })
+        .then (response => {
+        console.log("🚀 ~ file: index.js ~ line 773 ~ initialize_companies ~ response", response)
+          commit('SET_COMPANIES', response.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+
     set_active_nav({ commit }, navElement) {
       commit('SET_ACTIVE_NAV', navElement)
     },
@@ -778,8 +799,17 @@ export default createStore({
     },
 
     update_company({ commit }, company) {
-      commit('UPDATE_COMPANY', company)
-      router.push({name: 'Companies'})
+      console.log("🚀 ~ file: index.js ~ line 802 ~ update_company ~ company", company)
+      axios.patch(`https://codelifepro.herokuapp.com/companies/${company.id}`, {
+        headers: {
+          'X-User-Email': 'hal.helms@gmail.com',
+          'X-User-Token': 'v8hDDSeYYQx2x52dynPk'          
+        }
+      }, company)
+        .then(commit('UPDATE_COMPANY', company))
+        .then(console.log('updating API company info'))
+        .then(router.push({ name: 'Companies' }))
+        .catch(err => console.log('err', err))
     },    
 
     update_user({ commit }, user) {

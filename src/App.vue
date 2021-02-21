@@ -57,7 +57,11 @@ import LoginForm from './views/LoginForm.vue'
         }
         return result;
       },
-    }
+    },
+
+    mounted() {
+      this.$store.dispatch('initialize_companies')
+    },
   }
 </script>
 

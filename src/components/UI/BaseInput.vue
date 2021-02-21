@@ -1,9 +1,11 @@
 <template>
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="wrapper">
-      <div class="go-bottom" :style="style">
-        <div>
+      <div :style="style">
+        <div class="form-control">
           <input 
+            @focus="hideLabel"
+            @focusout="showLabel"
             v-bind="$attrs" 
             :id="_id" 
             :name="_id" 
@@ -12,7 +14,7 @@
             @input="$emit('update:modelValue', $event.target.value)" 
             :required="_optional ? false : true"
           >
-          <label :for="_id">{{ _label }}</label>
+          <label :for="_id" :class="[focused ? 'off' : 'on']">{{ _label }}</label>
         </div>
       </div>
   </div>
@@ -61,11 +63,23 @@
                 defaultStyles: {
                     fontFamily: 'inherit',
                     fontSize: 'inherit',
-                }                
+                },
+                focused: false,               
             }        
         },
 
-        methods: {},
+        methods: {
+          hideLabel() {
+            console.log('hideLabel')
+            this.focused = true
+          
+          },
+
+          showLabel() {
+            console.log('showLabel')
+            this.focused = false
+          },
+        },
 
         computed: {
             style() {
@@ -76,6 +90,35 @@
 </script>
 
 <style scoped>
+
+.form-control {
+  margin-top: 18px;
+}
+
+label.on {
+  border-color: #0080E6;
+  background: #0080E6;
+  color: white;
+  font-size: .6rem;
+  position: relative;
+  text-align: left;
+  margin-left: 0;
+  display:block;
+  transition: all .4s;
+}
+
+label.off {
+  border-color: white;
+  background: white;
+  color: white;
+  font-size: .6rem;
+  position: relative;
+  text-align: left;
+  margin-left: 0;
+  display:block;  
+  transition: all .4s;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -112,18 +155,18 @@ div > div {
   overflow: hidden;
 }
 
-div input:valid {
+/* div input:valid {
   background: white;
-}
+} */
 
-div input[class='edit'] {
+/* div input[class='edit'] {
     background: white;
-}
+} */
 
 div input, div textarea {
   width: 100%;
   border: 1px solid silver;
-  background: none;
+  /* background: none; */
   position: relative;
   top: 0;
   left: 0;
@@ -137,19 +180,23 @@ div input, div textarea {
 div input:focus, div textarea:focus {
   border-color: #0080E6;
 }
-div input:focus + label, div textarea:focus + label {
-  background: #0080E6;
+
+
+/* div input:focus + label, div textarea:focus + label {
+  /* background: #0080E6;
   color: white;
   font-size: 70%;
   padding: 1px 6px;
-  z-index: 2;
-}
+  z-index: 2; 
+} 
+*/
 div label {
-  transition: background 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s;
-  position: absolute;
+  /* transition: background 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s; */
+  /* position: absolute; */
+  /* position: relative;
   color: #999;
   padding: 7px 6px;
-  text-align: left;
+  text-align: left; */
 }
 div textarea {
   display: block;
@@ -163,19 +210,19 @@ div.go-bottom{
 div.go-bottom input, div.go-bottom textarea {
   padding: 12px 12px 12px 12px;
 }
-div.go-bottom label {
+/* div.go-bottom label {
   top: 0;
   bottom: 0;
   left: 0;
   width: 100%;
-}
-div.go-bottom input:focus, div.go-bottom textarea:focus {
+} */
+/* div.go-bottom input:focus, div.go-bottom textarea:focus {
   padding: 4px 6px 20px 6px;
-}
-div.go-bottom input:focus + label, div.go-bottom textarea:focus + label {
+} */
+/* div.go-bottom input:focus + label, div.go-bottom textarea:focus + label {
   top: 100%;
   margin-top: -16px;
-}
+} */
 
 div.go-right label {
   top: 2px;
