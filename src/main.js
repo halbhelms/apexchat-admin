@@ -1,7 +1,7 @@
-import { createApp } from "vue"
-import App from "./App.vue"
-import router from "./router"
-import store from "./store"
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+import store from './store'
 import BaseButton from './components/UI/BaseButton.vue'
 import BaseInput from './components/UI/BaseInput.vue'
 import BaseCheckbox from './components/UI/BaseCheckbox.vue'
