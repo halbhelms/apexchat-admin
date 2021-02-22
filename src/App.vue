@@ -43,7 +43,7 @@ import LoginForm from './views/LoginForm.vue'
 
     computed: {
       loggedIn() {
-        return window.sessionStorage.getItem('loggedIn')
+        return sessionStorage.getItem('currentUser')
       }
     },
 

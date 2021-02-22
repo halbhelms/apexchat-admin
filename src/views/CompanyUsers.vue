@@ -37,11 +37,12 @@
             return {
                 user: {
                     id: null,
-                    company_id: this.$route.params.id,
+                    company_id: null,
                     is_admin: false,
                     first_name: null,
                     last_name: null,
                     email: null,
+                    temp_password: null,
                 },
                 companyName: null,
                 styles: {
@@ -72,20 +73,24 @@
                 this.$store.dispatch('delete_company_user', userId)
             },
 
-            submitForm() {
+            async submitForm() {
+                let result = null;
+                const _user = {...this.user, company_id: this.$route.params.id}
                 // if we have a user.id, we must be in edit mode
                 if (this.user.id) {
-                    this.$store.dispatch('update_user', this.user)
+                    result = await this.$store.dispatch('update_user', _user)
                 } else {
                 // otherwise, we must be adding a user and need to provide the company_id
-                    this.user.company_id 
-                    this.$store.dispatch('add_user', this.user)
+                    result = await this.$store.dispatch('add_user', _user)
                 }
-                this.user = {}
-                // this.company_id = this.$route.params.id
-                this.user.company_id = this.$route.params.id
+                if (result.success) {
+                    this.user = {}
+                    // this.company_id = this.$route.params.id
+                    this.user.company_id = this.$route.params.id
+                } else {
+                    console.log('error', result.payload)
+                }
             }
-
         },
 
         computed: {
@@ -95,7 +100,6 @@
         },
 
         created() {
-            
             this.companyName = this.$store.getters.getCompanyNameById(this.$route.params.id)
         }
     }

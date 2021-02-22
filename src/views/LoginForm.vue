@@ -2,7 +2,7 @@
     <div v-if='inDev' class='inDev'>{{ options.name}}</div>
     <section-header>Login</section-header>
     <form class="login-form" @submit.prevent="loginUser">
-        <base-input _label="User name" v-model="login.userName" _id="user-name"></base-input>
+        <base-input _label="Email" v-model="login.email" _id="email"></base-input>
         <base-input _label="Password" _type="password" v-model="login.password" _id="password"></base-input>
         <base-button :_styles="styles.submitButton" _type="submit">Login</base-button>
     </form>
@@ -23,7 +23,7 @@
         data() {
             return {
                 login: {
-                    userName: null,
+                    email: null,
                     password: null
                 },
 
@@ -44,23 +44,23 @@
         },
 
         methods: {
-            loginUser() {
-                
-                axios.get('https://codelifepro.herokuapp.com/users/me', {
-                    headers: {
-                        // 'apex-company': 'MogerMedia',
-                        // 'apex-username': 'Admin',
-                        // 'apex-password': 20171220,
-                        Authorization: `Basic ${btoa(this.login.userName +':' + this.login.password)}` 
-                    }
-                })
-                    .then( response => {
-                        sessionStorage.setItem('authToken', response.data.authentication_token)
+            async loginUser() {
+                try {
+                    // attempt a login
+                    let login = await axios.get('https://codelifepro.herokuapp.com/users/me', {
+                        headers: {
+                            Authorization: `Basic ${btoa(this.login.email +':' + this.login.password)}` 
+                        }
                     })
-                    .then(sessionStorage.setItem('loggedIn', true))
-                    .then(sessionStorage.setItem('userName', this.login.userName))  
-                    .catch(err => console.log(err))    
-                    sessionStorage.setItem('loggedIn', true)
+
+                    console.log('login', login);
+                    
+                    // set successfully logged-in user as currentUser in Vuex
+                    this.$store.dispatch('set_current_user', login.payload)
+                    sessionStorage.setItem('currentUser', login.payload)
+                } catch (err) {
+                    console.log('Login error', err);
+                }
             },
         },
 

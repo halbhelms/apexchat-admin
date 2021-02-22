@@ -9,114 +9,13 @@ export default createStore({
     activeNav: '',
     lastLogin: new Date('12-31-2020'),
     dateFilter: 'sinceLogin',
-    currentUser: {
-      firstName: 'Zach',
-      lastName: 'Lefeistre',
-      email: 'zlefeistre',
-      logoUrl: 'http://logos.com',
-      authentication_token: 'apexforever',
-      phone: '555.555.5555',
-      company: null,
-      time_zone: 'EST'
-    },
+    currentUser: null,
     // where do we start in the leads array?
     leadsOffset: 0,
     // How many leads should be returned?
     leadsPerPage: 15,
     // leads to display
-    activeSlice: [],
-    __companies: [
-      {
-        id: 1,
-        name: 'CJS Heating and Air',
-        since: '2012',
-        owner: 'Richard Davis',
-        status: 'active',
-        email: 'person@company.com',
-        logo_url: 'http://logos.com',
-        phone: '555.555.5555',
-        apexInfo: 'Lorem ipsum',
-        self_managed_web: false,
-      },
-      {
-        id: 2,
-        name: 'Westside Plumbing',
-        since: '2008',
-        owner: 'John Kwartow',
-        status:'active',
-        email: 'person@company.com',
-        logo_url: 'http://logos.com',
-        phone: '555.555.5555',
-        apexInfo: 'Lorem ipsum',
-        self_managed_web: false,
-        time_zone: 'Hawaii'
-      },
-      {
-        id: 3,
-        name: 'Houston HVAC',
-        since: '2016',
-        owner: 'Max Eberschnaut',
-        status:'active',
-        email: 'person@company.com',
-        logo_url: 'http://logos.com',
-        phone: '555.555.5555',
-        apexInfo: 'Lorem ipsum',
-        self_managed_web: true,
-        time_zone: 'Hawaii'
-      },
-      {
-        id: 4,
-        name: "RB's Home Services",
-        since: '2008',
-        owner: 'Richard Bullworth',
-        status:'active',
-        email: 'person@company.com',
-        logo_url: 'http://logos.com',
-        phone: '555.555.5555',
-        apexInfo: 'Lorem ipsum',
-        self_managed_web: false,
-        time_zone: 'Hawaii'
-      },
-      {
-        id: 5,
-        name: 'RWB Plumbing',
-        since: '2002',
-        owner: 'Rene Bellagio',
-        status:'active',
-        email: 'person@company.com',
-        logo_url: 'http://logos.com',
-        phone: '555.555.5555',
-        apexInfo: 'Lorem ipsum',
-        self_managed_web: true,
-        time_zone: 'Hawaii'
-      },
-      {
-        id: 6,
-        name: 'Davis & Sons',
-        since: '1994',
-        owner: 'Alicia Davis',
-        status: 'active',
-        email: 'person@company.com',
-        logo_url: 'http://logos.com',
-        phone: '555.555.5555',
-        apexInfo: 'Lorem ipsum',
-        self_managed_web: false,
-        time_zone: 'Hawaii'
-      },
-      {
-        id: 7,
-        name: 'Hoserson Electric',
-        since: '2009',
-        owner: 'Hosey Hoserson',
-        status:'active',
-        email: 'person@company.com',
-        logo_url: 'http://logos.com',
-        phone: '555.555.5555',
-        apexInfo: 'Lorem ipsum',
-        self_managed_web: true,
-        time_zone: 'Hawaii'
-      },
-    ],
+    // activeSlice: [],
     leads: [
       // since last login
       {
@@ -549,6 +448,10 @@ export default createStore({
       }
     },
 
+    getCurrentUser() {
+      return sessionStorage.getItem('currentUser')
+    },
+
     getDisputedStatusById(state) {
       return (id) => {
         let lead =  state.leads.find( lead => lead.id == id)
@@ -728,9 +631,29 @@ export default createStore({
       router.push({name: 'Companies'})
     },
 
-    add_user({ commit, state }, user) {
-      user.id = state.companyUsers.length + 1
-      commit('ADD_USER', user)
+    async add_user({ commit }, user) {
+      try {
+        const response = await axios({
+          method: 'post',
+          url: 'https://codelifepro.herokuapp.com/users/',
+          data: user,
+          headers: {
+            'X-User-Email': sessionStorage.getItem('email'),
+            'X-User-Token': sessionStorage.getItem('authToken')
+          }
+        })
+        commit('ADD_USER', response.data)
+        return {
+          success: true,
+          payload: response.data,
+        }
+      } catch(err) {
+        console.log('error', err)
+        return {
+          success: false,
+          payload: err,
+        }
+      }
     },
 
     add_video({ commit, state }, video) {
@@ -788,6 +711,10 @@ export default createStore({
 
     set_current_company({ commit }, id) {
       commit('SET_CURRENT_COMPANY', id)
+    },
+
+    set_current_user({ commit }, user) {
+      commit('SET_CURRENT_USER', user)
     },
 
     set_date_filter({ commit }, filter) {

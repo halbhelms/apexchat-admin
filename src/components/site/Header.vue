@@ -9,7 +9,7 @@
         <div class="account-area" @click="toggleAccountForm">
             <img class="account-logo" src="./account-gear.png" alt="" width="32">
             <span class="account-name">
-                {{ $store.state.currentUser.firstName }} {{ $store.state.currentUser.lastName }}
+                {{  }} {{  }}
             </span>
         </div>
     </div>
@@ -18,8 +18,8 @@
         <form @submit.prevent="changeAccountInfo" class="account-form">
             <!-- username -->
             <div class="form-control">
-                <label for="username">Username</label>
-                <input type="text" id="username" :placeholder="accountInfo.username" v-model="accountInfo.username">
+                <label for="email">Email</label>
+                <input type="email" id="email" :placeholder="accountInfo.username" v-model="accountInfo.username">
             </div>
             <!-- password -->
             <div class="form-control">
@@ -46,10 +46,10 @@
         data() {
             return {
                 accountEditMode: false,
-                accountInfo: {
-                    username: this.$store.state.currentUser.username,
-                    password: this.$store.state.currentUser.password
-                }
+                // accountInfo: {
+                //     username: this.$store.state.currentUser.username,
+                //     password: this.$store.state.currentUser.password
+                // }
             }
         },
         
