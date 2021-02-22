@@ -2,7 +2,7 @@
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <section-header>Company Info</section-header>
     <form @submit.prevent="submitForm">
-        <div class="company-info-form">
+        <div class="company-info-form" v-if="company">
             <base-input _label="Company name" _id="company-name"  v-model="company.name"></base-input>
             
             <base-input _optional="true" _label="Website address" _id="domain" v-model="company.domain" _type="url" ></base-input>
@@ -42,21 +42,6 @@
 
         data() {
             return {
-                company: {
-                    id: null,
-                    apex_company_id: null,
-                    domain: null,
-                    apex_info: null,
-                    self_managed_web: false,
-                    email: null,
-                    logo_url: null,
-                    phone: null,
-                    name: null,
-                    owner: null,
-                    time_zone: null,
-                    since: null,
-                    status: 'active'
-                },
                 statusOptions: ['active', 'paused'],
                 timeZones: [
                     'Eastern Time (US & Canada)', 
@@ -119,15 +104,12 @@
                     return 'Update'
                 }
                 return 'Add'
+            },
+
+            company() {
+                return this.$store.getters.getCompanyById(this.$route.params.id)
             }
         },
-
-        mounted() {
-            // if $route.params.id, use that company
-            if (this.$route.params.id) {
-                this.company = this.$store.getters.getCompanyById(this.$route.params.id)
-            }
-        }
     }
 </script>
 

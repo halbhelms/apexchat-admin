@@ -6,268 +6,16 @@ import axios from 'axios'
 
 export default createStore({
   state: {
+    // loading: false,
     activeNav: '',
     lastLogin: new Date('12-31-2020'),
     dateFilter: 'sinceLogin',
-    currentUser: null,
-    // where do we start in the leads array?
     leadsOffset: 0,
     // How many leads should be returned?
     leadsPerPage: 15,
     // leads to display
     // activeSlice: [],
-    leads: [
-      // since last login
-      {
-        id: 1,
-        chat_id: 1,
-        company_id: 1,
-        date: new Date('1-05-2021'), // since lastLogin
-        type: 'Sales',
-        email: 'eholgren@gmail.com',
-        contact: 'Edgar Holdren',
-        location: 'Capital City, TX',
-        address: '2071 Broad St. Capital City, TX',
-        phone: 7413695442,
-        status: 'disputed',
-      },
-      {
-        id: 2,
-        chat_id: 0,
-        company_id: 1,
-        date: new Date('12-26-2020'), // since lastLogin
-        type: 'Sales',
-        email: 'bob@gmail.com',
-        contact: 'Bob Bronson',
-        location: 'Dallas, TX',
-        address: '',
-        phone: 7413695442,
-        status: 'active',
-      },
-      {
-        id: 3,
-        chat_id: 0,
-        company_id: 1,
-        date: new Date('12-27-2020'), // since lastLogin
-        type: 'Sales',
-        email: 'dana@gmail.com',
-        contact: 'Dana Davis',
-        location: 'Dallas, TX',
-        address: '',
-        phone: 7413695442,
-        status: 'active',
-      },
-      {
-        id: 4,
-        chat_id: 0,
-        company_id: 1,
-        date: new Date('12-28-2020'), // since lastLogin
-        type: 'Sales',
-        email: 'ellen@gmail.com',
-        contact: 'Ellen Edgars',
-        location: 'Fort Worth, TX',
-        address: '',
-        phone: 7413695442,
-        status: 'resolved',
-      },
-      {
-        id: 5,
-        chat_id: 0,
-        company_id: 1,
-        date: new Date('12-29-2020'), // since lastLogin
-        type: 'Sales',
-        email: 'frank@gmail.com',
-        contact: 'Frank Friend',
-        location: 'Irvine, TX',
-        address: '2071 Broad St. Capital City, TX',
-        phone: 7413695442,
-        status: 'active',
-      },
-      // last 30
-      {
-        id: 6,
-        company_id: 1,
-        chat_id: 0,
-        date: new Date('1-30-2021'), // last30 
-        type: 'Sales',
-        email: 'grace@yahoo.com',
-        contact: 'Grace Gerald',
-        location: 'Allen, TX',
-        address: '',
-        phone: 7418592541,
-        status: 'disputed',
-      },
-      {
-        id: 7,
-        company_id: 1,
-        chat_id: 0,
-        date: new Date('1-29-2021'),
-        type: 'Sales',
-        email: 'harold@gmail.com',
-        contact: 'Harold Handsome',
-        location: 'Fairview, TX',
-        address: '',
-        phone: 7415684529,
-        status: 'active',
-      },
-      {
-        id: 8,
-        company_id: 1,
-        chat_id: 0,
-        date: new Date('1-28-2021'),
-        type: 'Sales',
-        email: 'iago@locals.com',
-        contact: 'Iago Iverson',
-        location: 'Fairview, TX',
-        address: '',
-        phone: 7415234897,
-        status: 'active',
-      },
-      {
-        id: 9,
-        company_id: 1,
-        chat_id: 0,
-        date: new Date('12-27-2020'),
-        type: 'Sales',
-        email: 'joe@gmail.com',
-        contact: 'Joe Jones',
-        location: 'Dallas, TX',
-        address: '',
-        phone: 7415234897,
-        status: 'active',
-      },
-      {
-        id: 10,
-        company_id: 1,
-        chat_id: 0,
-        date: new Date('1-26-2020'),
-        type: 'Sales',
-        email: 'kelly@locals.com',
-        contact: 'Kelly Korvin',
-        location: 'Irvine, TX',
-        address: '',
-        phone: 7415234897,
-        status: 'active',
-      },
-      // last60
-      {
-        id: 11,
-        company_id: 1,
-        chat_id: 0,
-        date: new Date('12-26-2020'),
-        type: 'Sales',
-        email: 'kelly@locals.com',
-        contact: 'Kelly Korvin',
-        location: 'Irvine, TX',
-        address: '',
-        phone: 7415234897,
-        status: 'active',
-      },      
-      {
-        id: 12,
-        company_id: 1,
-        chat_id: 0,
-        date: new Date('12-27-2020'),
-        type: 'Sales',
-        email: 'linda@locals.com',
-        contact: 'Linda Lessing',
-        location: 'Ft. Worth, TX',
-        address: '',
-        phone: 7415234897,
-        status: 'active',
-      },      
-      {
-        id: 13,
-        company_id: 1,
-        chat_id: 0,
-        date: new Date('12-28-2020'),
-        type: 'Sales',
-        email: 'megan@gmail.com',
-        contact: 'Megan Michaels',
-        location: 'Dallas, TX',
-        address: '',
-        phone: 7415234897,
-        status: 'active',
-      },      
-      {
-        id: 14,
-        company_id: 1,
-        chat_id: 0,
-        date: new Date('12-16-2020'),
-        type: 'Sales',
-        email: 'nelson@locals.com',
-        contact: 'Nelson Nelson',
-        location: 'Fairview, TX',
-        address: '',
-        phone: 7415234897,
-        status: 'disputed',
-      },      
-      {
-        id: 15,
-        company_id: 2,
-        chat_id: 0,
-        date: new Date('12-17-2020'),
-        type: 'Sales',
-        email: 'ophelia@locals.com',
-        contact: 'Ophelia Orange',
-        location: 'Dallas, TX',
-        address: '',
-        phone: 7415234897,
-        status: 'resolved',
-      },      
-      {
-        id: 16,
-        company_id: 1,
-        chat_id: 0,
-        date: new Date('12-20-2020'),
-        type: 'Sales',
-        email: 'ophelia@locals.com',
-        contact: 'Peter Parker',
-        location: 'Dallas, TX',
-        address: '',
-        phone: 7415234897,
-        status: 'resolved',
-      },      
-      {
-        id: 17,
-        company_id: 1,
-        chat_id: 0,
-        date: new Date('12-21-2020'),
-        type: 'Sales',
-        email: 'ophelia@locals.com',
-        contact: 'Quince Quest',
-        location: 'Dallas, TX',
-        address: '',
-        phone: 7415234897,
-        status: 'active',
-      },      
-      {
-        id: 18,
-        company_id: 1,
-        chat_id: 0,
-        date: new Date('12-21-2020'),
-        type: 'Sales',
-        email: 'ophelia@locals.com',
-        contact: 'Randall Richards',
-        location: 'Dallas, TX',
-        address: '',
-        phone: 7415234897,
-        status: 'active',
-      },      
-      {
-        id: 19,
-        company_id: 1,
-        chat_id: 0,
-        date: new Date('12-21-2020'),
-        type: 'Sales',
-        email: 'ophelia@locals.com',
-        contact: 'Sarah Sigussi',
-        location: 'Dallas, TX',
-        address: '',
-        phone: 7415234897,
-        status: 'active',
-      },      
-    ],
+    leads: [],
     chats: [
       {
         id: 1,
@@ -414,7 +162,8 @@ export default createStore({
         email: 'mmantle@cps.com',
         phone: '702554863'
       },
-    ]
+    ],
+    companies: []
   },
   
   getters: {
@@ -688,21 +437,15 @@ export default createStore({
     //   commit('SET_LEADS_OFFSET', state.leadsOffset + state.leadsPerPage)
     //   commit('SET_LEADS_ACTIVE_SLICE', getters.getLeadsForTimeFrame(companyId))
     // },
-
-    initialize_companies({ commit }) {
-      axios.get('https://codelifepro.herokuapp.com/companies', {
+   
+    async initialize_companies({ commit }) {
+      const response = await axios.get('https://codelifepro.herokuapp.com/companies', {
         headers: {
           'X-User-Email': 'hal.helms@gmail.com',
           'X-User-Token': 'v8hDDSeYYQx2x52dynPk'
         }
       })
-        .then (response => {
-        console.log("🚀 ~ file: index.js ~ line 773 ~ initialize_companies ~ response", response)
-          commit('SET_COMPANIES', response.data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      commit('SET_COMPANIES', response.data)
     },
 
     set_active_nav({ commit }, navElement) {
@@ -726,7 +469,6 @@ export default createStore({
     },
 
     update_company({ commit }, company) {
-      console.log("🚀 ~ file: index.js ~ line 802 ~ update_company ~ company", company)
       axios({
         method: 'patch',
         url: 'https://codelifepro.herokuapp.com/companies/' + company.id,

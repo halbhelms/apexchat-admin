@@ -49,6 +49,7 @@ import LoginForm from './views/LoginForm.vue'
 
     created() {
       this.$store.dispatch('initialize_companies')
+      console.log('this.$store.state.companies', this.$store.state.companies);
     },
   }
 </script>
