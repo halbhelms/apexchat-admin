@@ -9,7 +9,7 @@
         <div class="account-area" @click="toggleAccountForm">
             <img class="account-logo" src="./account-gear.png" alt="" width="32">
             <span class="account-name">
-                {{  }} {{  }}
+                {{ accountInfo.first_name }} {{ accountInfo.last_name }}
             </span>
         </div>
     </div>
@@ -72,7 +72,13 @@
             }
         },
         
-        computed: {}
+        computed: {
+            accountInfo() {
+                // return this.$store.getters.getCurrentUser()
+                console.log('currentUser', sessionStorage.getItem('currentUser'))
+                return JSON.parse(sessionStorage.getItem('currentUser'))
+            }
+        }
     }
 </script>
 

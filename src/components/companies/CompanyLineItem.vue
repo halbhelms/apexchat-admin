@@ -46,9 +46,9 @@
         },
 
         methods: {
-            setCurrentCompany(id) {
-                this.$store.dispatch('set_current_company', id)
-            }
+            // setCurrentCompany(id) {
+            //     this.$store.dispatch('set_current_company', id)
+            // }
         },
 
         computed: {}

@@ -1,7 +1,5 @@
 <template>
-  <login-form v-if="!loggedIn">
-
-  </login-form>
+  <login-form v-if="!loggedIn"></login-form>
   <div class="outer-wrapper" v-else>
     <Header />
     <div class="inner-wrapper">
@@ -43,23 +41,13 @@ import LoginForm from './views/LoginForm.vue'
 
     computed: {
       loggedIn() {
-        return sessionStorage.getItem('currentUser')
+        console.log('sessionStorage.getItem("currentUser)', sessionStorage.getItem("currentUser"))
+        
+        return sessionStorage.getItem('currentUser') !== null
       }
     },
 
-    provide: {
-      __randomId: function(length) {
-        let result           = ''
-        let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let charactersLength = length;
-        for ( let i = 0; i < length; i++ ) {
-            result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        return result;
-      },
-    },
-
-    mounted() {
+    created() {
       this.$store.dispatch('initialize_companies')
     },
   }

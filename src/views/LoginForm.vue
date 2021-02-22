@@ -9,9 +9,7 @@
 </template>
 
 <script>
-    // import axios from 'axios'
-    import BaseInput from '../components/UI/BaseInput'
-    import BaseButton from '../components/UI/BaseButton'
+    import {BaseButton, BaseInput} from '../components/UI'
     import axios from 'axios'
     export default {
         name: 'LoginForm',
@@ -52,12 +50,10 @@
                             Authorization: `Basic ${btoa(this.login.email +':' + this.login.password)}` 
                         }
                     })
-
-                    console.log('login', login);
                     
-                    // set successfully logged-in user as currentUser in Vuex
-                    this.$store.dispatch('set_current_user', login.payload)
-                    sessionStorage.setItem('currentUser', login.payload)
+                    // set successfully logged-in user as currentUser in sessionStorage
+                    sessionStorage.setItem('currentUser', JSON.stringify(login.data))
+                    location.replace('/')
                 } catch (err) {
                     console.log('Login error', err);
                 }
