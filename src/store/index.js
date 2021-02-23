@@ -8,7 +8,7 @@ export default createStore({
   state: {
     leadsLoaded: false,
     activeNav: '',
-    lastLogin: new Date('12-31-2020'),
+    lastLogin: new Date('1-28-2021'),
     dateFilter: 'sinceLogin',
     leadsOffset: 0,
     // How many leads should be returned?
@@ -431,7 +431,7 @@ export default createStore({
     },
     
     previous_leads({ commit, state }) {
-      commit('SET_LEADS_OFFSET', state.leadsOffset !== 0 ? state.leadsPerPage - state.leadsOffset : 0)
+      commit('SET_LEADS_OFFSET', state.leadsOffset !== 0 ? state.leadsOffset - state.leadsPerPage  : 0)
     },
 
   },

@@ -1,5 +1,6 @@
 <template>
-activeLeads: {{ activeLeads.total }}
+activeLeads: {{ activeLeadsTotal}}
+offset: {{ $store.state.leadsOffset }}
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="companies">
         <LeadsHeader />
@@ -20,6 +21,7 @@ activeLeads: {{ activeLeads.total }}
         <LeadsPagination :_lessLeads="hasLessLeads" :_moreLeads="hasMoreLeads" />
         <Modal @modal-off="noSelectedLead" v-if="selectedLead" :_selectedLead="selectedLead" :_chat="chat" />
     </div>
+    {{ hasMoreLeads }} {{ leadsRetrieved }}
 </template>
 
 <script>
@@ -69,6 +71,10 @@ activeLeads: {{ activeLeads.total }}
                 return this.$store.getters.getLeadsForDateFilter.leads
             },
 
+            activeLeadsTotal() {
+                return this.$store.getters.getLeadsForDateFilter.total
+            },
+
             totalLeads() {
                 if (this.$store.state.leadsLoaded) {
                     return this.$store.getters.getLeadsForDateFilter.leads.total
@@ -80,10 +86,13 @@ activeLeads: {{ activeLeads.total }}
                 return this.$store.state.leadsOffset !== 0
             },
 
+            leadsRetrieved() {
+                return this.$store.state.leadsOffset + this.$store.getters.getLeadsForDateFilter.leads.length
+            },
+
             hasMoreLeads() {
-                let totalLeads = this.$store.getters.getLeadsForDateFilter.leads.total
-                    let leadsRetrieved = this.$store.state.leadsOffset + this.$store.state.leads.length 
-                    return totalLeads > leadsRetrieved
+                let totalLeads = this.$store.getters.getLeadsForDateFilter.total
+                return totalLeads > this.leadsRetrieved
             },
         },
 

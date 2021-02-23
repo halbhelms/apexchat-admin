@@ -4,7 +4,7 @@
         <div @click="$emit('lead-selected', _id)" class="column date">{{ date }}</div>
         <div @click="$emit('lead-selected', _id)" class="column type">{{ type }}</div>
         <div @click="$emit('lead-selected', _id)" class="column contact">{{ _contact }}</div>
-        <div @click="$emit('lead-selected', _id)" class="column location">{{ _city }} {{ _state }}</div>
+        <div @click="$emit('lead-selected', _id)" class="column location">{{ location }}</div>
         <div @click="cycleDisputeStatus(_id)" :class="[disputeClass, 'column', 'dispute-status']">{{ lead.status }}</div>
     </div>
 </template>
@@ -18,7 +18,7 @@
 
         emits: ['lead_selected'],
 
-        props: ['_id', '_date', '_type', '_contact', '_status', '_company_id','_location', '_chat_id'],
+        props: ['_id', '_date', '_type', '_contact', '_status', '_company_id', '_chat_id', '_city', '_state'],
 
         data() {
             return {
@@ -55,6 +55,15 @@
                     // return format('2021-01-10T18:24:10.000Z', 'MM.dd.y')
                 } catch {
                     return ''
+                }
+            },
+
+            location() {
+                let location = `${this.$props._city} ${this.$props._state}`
+                if (location.replace(/\s/g, '').length) {
+                    return location
+                } else {
+                    return "Unknown"
                 }
             },
 
