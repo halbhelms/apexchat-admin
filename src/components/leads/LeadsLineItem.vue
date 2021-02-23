@@ -2,9 +2,9 @@
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="leads-line-item" >
         <div @click="$emit('lead-selected', _id)" class="column date">{{ date }}</div>
-        <div @click="$emit('lead-selected', _id)" class="column type">{{ lead.type }}</div>
-        <div @click="$emit('lead-selected', _id)" class="column contact">{{ lead.contact }}</div>
-        <div @click="$emit('lead-selected', _id)" class="column location">{{ lead.location }}</div>
+        <div @click="$emit('lead-selected', _id)" class="column type">{{ type }}</div>
+        <div @click="$emit('lead-selected', _id)" class="column contact">{{ _contact }}</div>
+        <div @click="$emit('lead-selected', _id)" class="column location">{{ _city }} {{ _state }}</div>
         <div @click="cycleDisputeStatus(_id)" :class="[disputeClass, 'column', 'dispute-status']">{{ lead.status }}</div>
     </div>
 </template>
@@ -16,7 +16,9 @@
 
         components: {},
 
-        props: ['_id', '_date', '_type', '_contact', '_status', '_company_id','_location'],
+        emits: ['lead_selected'],
+
+        props: ['_id', '_date', '_type', '_contact', '_status', '_company_id','_location', '_chat_id'],
 
         data() {
             return {
@@ -48,7 +50,20 @@
 
         computed: {
             date() {
-                return format(this.$props._date, 'MM.dd.y')
+                try {
+                    return format(new Date(this.$props._date), 'MM.dd.y')
+                    // return format('2021-01-10T18:24:10.000Z', 'MM.dd.y')
+                } catch {
+                    return ''
+                }
+            },
+
+            type(){
+                if (this.$props._type == "sales") {
+                    return "Sales"
+                } else {
+                    return "Service"
+                }
             },
 
             disputeStatus() {

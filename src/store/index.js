@@ -6,7 +6,7 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    // loading: false,
+    leadsLoaded: false,
     activeNav: '',
     lastLogin: new Date('12-31-2020'),
     dateFilter: 'sinceLogin',
@@ -16,88 +16,7 @@ export default createStore({
     // leads to display
     // activeSlice: [],
     leads: [],
-    chats: [
-      {
-        id: 1,
-        texts: [
-          {
-            participantDisplayName: 'Zach',
-            text: "Welcome to CJS Heating & Air! A live, real person is available to talk at no obligation. How can we help you?"
-          },
-          { participantDisplayName: 'Visitor',
-            text: "i have a leak in my roof that is leaking thru my bedroom ceiling"
-          },
-          {
-            participantDisplayName: 'Zach',
-            text: "I would be happy to help you. What zip code is the job site located in?"
-          },     
-          { participantDisplayName: 'Visitor',
-            text: "98388"
-          }, 
-          {
-            participantDisplayName: 'Zach',
-            text: " Great! May I have your name please?"
-          },                        
-          { participantDisplayName: 'Visitor',
-            text: "kathy walker"
-          },          
-          {
-            participantDisplayName: 'Zach',
-            text: "Thanks, Kathy. May I have your phone number and email in case we need to contact you later?"
-          },    
-          { participantDisplayName: 'Visitor',
-            text: " 253-468-1596 kwalker0926@comcast.net"
-          },  
-          {
-            participantDisplayName: 'Zach',
-            text: "Thanks. Can I ask how you heard about us?"
-          },                        
-          { participantDisplayName: 'Visitor',
-            text: "online"
-          },          
-          {
-            participantDisplayName: 'Zach',
-            text: "Okay. Are you a new or an existing customer?"
-          },          
-          {
-            participantDisplayName: 'Visitor',
-            text: "new customer"
-          },          
-          {
-            participantDisplayName: 'Zach',
-            text: "Alright. How soon are you looking to utilize our services?"
-          },          
-          {
-            participantDisplayName: 'Visitor',
-            text: "I have a leak. I would say that tomorrow would be great"
-          },          
-          {
-            participantDisplayName: 'Zach',
-            text: "Alright. Would you like to set up a consultation with one of our specialists who can answer your specific questions in detail?"
-          },          
-          {
-            participantDisplayName: 'Visitor',
-            text: "Yes"
-          },          
-          {
-            participantDisplayName: 'Zach',
-            text: "Okay. I have forwarded your information to our office and you will be contacted as soon as possible. Is there anything else I can help you with?"
-          },          
-          {
-            participantDisplayName: 'Visitor',
-            text: "no thank you"
-          },          
-          {
-            participantDisplayName: 'Zach',
-            text: "Thank you for contacting CJS Heating & Air."
-          },          
-          {
-            participantDisplayName: 'System',
-            text: "The chat session has ended"
-          },          
-        ]
-      }
-    ],
+    chats: null,
     videos: [
       {
         id: 1,
@@ -214,74 +133,87 @@ export default createStore({
       }
     },
 // do we need this since we also need to filter by dateFilter?
-    getLeadsForCompany(state) {
-      return (id) => {
-        return state.leads.filter( lead => lead.company_id == id)
+    _getLeadsForCompany() {
+      return async (id) => {
+        const result = await axios({
+          method: 'get',
+          url: 'https://codelifepro.herokuapp.com/leads?company_id=' + id,
+          data: {
+            company_id: id,
+          },
+          headers: {
+            'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+            'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
+          }
+        })
+
+        return result.data
       }
     },
 
     // date filter leads
     // this function calls one of three functions based on state.dateFilter
     // get actual leads
-    getLeadsForDateFilterForCompany(state, getters) {
-      return (companyId) => {
+    getLeadsForDateFilter(state, getters) {
+      console.log('in getLeadsForDateFilter')
+      
         let response = {}
         if (state.dateFilter === 'sinceLogin') {
-          let leads = getters.getLeadsSinceLastLoginForCompany(companyId)
+          let leads = getters.getLeadsSinceLastLogin
           response.leads = leads.slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
           response.total = leads.length
         }
         if (state.dateFilter === 'last30') {
-          let leads = getters.getLeadsLast30ForCompany(companyId)
+          let leads = getters.getLeadsLast30
           response.leads =leads.slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
           response.total = leads.length
         }
         if (state.dateFilter === 'last60') {
-          let leads = getters.getLeadsLast60ForCompany(companyId)
+          let leads = getters.getLeadsLast60
           response.leads = leads.slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
           response.total = leads.length
         }
         return response
-      }
     },
 
-    // get leads since last login for specific company
-    getLeadsSinceLastLoginForCompany(state) {
-      return (companyId) => {
+    // get leads since last login
+    getLeadsSinceLastLogin(state) {
+      console.log('sinceLastLogin')
+      
         let leads = []
         state.leads.forEach( lead => {
-          if ((lead.company_id == companyId) && (lead.date - state.lastLogin > 0)) {
+          if (new Date(lead.generated_at) - state.lastLogin > 0) {
             leads.push(lead)
           }
         })
+        console.log("🚀 ~ file: index.js ~ line 191 ~ getLeadsSinceLastLogin ~ leads", leads)
         return leads
-      }
     },
 
     // get leads from last 30 days for specific company
-    getLeadsLast30ForCompany(state) {
+    getLeadsLast30(state) {
+      console.log('sinceLast30')
       let leads = []
-      return (companyId) => {
         state.leads.forEach( lead => {
-          if ( (lead.company_id == companyId) && (differenceInDays(new Date(), lead.date) < 31)) {
+          if ( differenceInDays(new Date(), new Date(lead.generated_at)) < 31) {
             leads.push(lead)
           }
         })
+        console.log("🚀 ~ file: index.js ~ line 204 ~ getLeadsLast30 ~ leads", leads)
       return leads
-      }
     },
 
     // get leads from last 60 days for specific company
-    getLeadsLast60ForCompany(state) {
+    getLeadsLast60(state) {
+      console.log('sinceLast90')
       let leads = []
-      return (companyId) => {
         state.leads.forEach( lead => {
-          if ( (lead.company_id == companyId) && (differenceInDays(new Date(), lead.date) < 61)) {
+          if ( differenceInDays(new Date(), new Date(lead.generated_at)) < 61) {
             leads.push(lead)
           }
         })
+        console.log("🚀 ~ file: index.js ~ line 217 ~ getLeadsLast60 ~ leads", leads)
       return leads
-      }
     },
 
     getUserById(state) {
@@ -342,6 +274,10 @@ export default createStore({
 
     SET_DATE_FILTER(state, filter) {
       state.dateFilter = filter
+    },
+
+    SET_LEADS(state, leads) {
+      state.leads = leads
     },
 
     SET_DISPUTED(state, {leadId, status}) {
@@ -420,32 +356,32 @@ export default createStore({
     delete_video({ commit }, videoId) {
       commit('DELETE_VIDEO', videoId)
     },
-
-    // active slices
-    // initialize_leads_active_slice_for_company({ commit, getters }, companyId){
-    //   commit('SET_LEADS_ACTIVE_SLICE', getters.getLeadsForTimeFrameForCompany(companyId))
-    // },
-
-    // previous_leads_active_slice_for_company({ commit, state, getters }, companyId) {
-    //   if (state.leadsOffset > 0) {
-    //     commit('SET_LEADS_OFFSET', state.leadsOffset - state.leadsPerPage)
-    //     commit('SET_LEADS_ACTIVE_SLICE', getters.getLeadsForTimeFrameForCompany(companyId))
-    //   }
-    // },
-    
-    // next_leads_active_slice_for_company({ commit, state, getters }, companyId) {  
-    //   commit('SET_LEADS_OFFSET', state.leadsOffset + state.leadsPerPage)
-    //   commit('SET_LEADS_ACTIVE_SLICE', getters.getLeadsForTimeFrame(companyId))
-    // },
    
-    async initialize_companies({ commit }) {
+    async initialize_companies({ commit}) {
       const response = await axios.get('https://codelifepro.herokuapp.com/companies', {
         headers: {
-          'X-User-Email': 'hal.helms@gmail.com',
-          'X-User-Token': 'v8hDDSeYYQx2x52dynPk'
+          'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
         }
       })
       commit('SET_COMPANIES', response.data)
+    },
+
+    async initialize_leads_for_company_id({ commit, state }, id) {
+      console.log('in initialize_leads...')
+      
+        const result = await axios({
+          method: 'get',
+          url: 'https://codelifepro.herokuapp.com/leads?company_id=' + id,
+          headers: {
+            'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+            'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
+          }
+        })
+        state.leadsLoaded = true
+        
+        commit('SET_LEADS', result.data)
+        console.log('state.leads.length', state.leads.length);
     },
 
     set_active_nav({ commit }, navElement) {

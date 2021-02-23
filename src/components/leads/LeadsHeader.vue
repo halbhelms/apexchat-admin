@@ -3,7 +3,7 @@
     <div class="dashboard-header-container">
         <div class="header">
             <!-- title -->
-            <div class="title">Leads: <span class="title-company"> {{ companyName }}</span></div>
+            <div class="title">Leads: <span class="title-company"> {{  }}</span></div>
             <DateFilter />
         </div>
     </div>
@@ -21,12 +21,9 @@
         methods: {},
         computed: {
             companyName() {
-                if (this.$route.params.id) {
-                    return this.$store.getters.getCompanyById(this.$route.params.id).name} else {
-                        return ''
-                    }
+                return this.$store.getters.getCompanyById(this.$route.params.id).name
             }
-        }
+        },
     }
 </script>
 

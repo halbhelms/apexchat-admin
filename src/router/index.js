@@ -24,16 +24,9 @@ const routes = [
     component: Companies
   },
   {
-    path: "/leads",
-    name: "Leads",
-    component: Leads,
-    children: [
-      {
-        path: "/companies/:id/leads",
-        name: "CompanyLeads",
-        component: Leads
-      }
-    ]
+    path: "/companies/:id/leads",
+    name: "CompanyLeads",
+    component: Leads
   },
   {
     path: "/companies/:id/videos",

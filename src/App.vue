@@ -10,11 +10,11 @@
             <Companies />
           </router-link>
         </div>
-        <div class="sidebar-element">
+        <!-- <div class="sidebar-element">
           <router-link :to="{name: 'Leads'}">
             <Leads />
           </router-link>
-        </div>
+        </div> -->
       </div>
       <main>
           <router-view/>
@@ -25,7 +25,7 @@
 
 <script>
 import Companies from './components/sidenav/Companies'
-import Leads from './components/sidenav/Leads'
+// import Leads from './components/sidenav/Leads'
 import Header from './components/site/Header'
 
 import LoginForm from './views/LoginForm.vue'
@@ -34,22 +34,19 @@ import LoginForm from './views/LoginForm.vue'
     name: 'App',
     components: {
       Companies,
-      Leads,
+      // Leads,
       LoginForm,
       Header,
     },
 
     computed: {
       loggedIn() {
-        console.log('sessionStorage.getItem("currentUser)', sessionStorage.getItem("currentUser"))
-        
         return sessionStorage.getItem('currentUser') !== null
       }
     },
 
     created() {
       this.$store.dispatch('initialize_companies')
-      console.log('this.$store.state.companies', this.$store.state.companies);
     },
   }
 </script>

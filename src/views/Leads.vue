@@ -1,4 +1,5 @@
 <template>
+activeLeads: {{ activeLeads.total }}
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="companies">
         <LeadsHeader />
@@ -9,11 +10,12 @@
             :key="lead.id" 
             :_id="lead.id" 
             :_company_id="lead.company_id" 
-            :_chatId="lead.chatId"
-            :_date="lead.date"
-            :_type="lead.type"
-            :_contact="lead.contact"
-            :_location="lead.location"
+            :_chatId="lead.chat_id"
+            :_date="lead.generated_at"
+            :_type="lead.lead_type"
+            :_contact="lead.raw_data.name"
+            :_city="lead.city"
+            :_state="lead.state"
             :_status="lead.status"/>
         <LeadsPagination :_lessLeads="hasLessLeads" :_moreLeads="hasMoreLeads" />
         <Modal @modal-off="noSelectedLead" v-if="selectedLead" :_selectedLead="selectedLead" :_chat="chat" />
@@ -28,7 +30,7 @@
     import LeadsPagination from '../components/leads/LeadsPagination'
 
     export default {
-        name: 'Companies',
+        name: 'Leads',
 
         components: { LeadsHeader, LeadsDataHeader, LeadsLineItem, Modal, LeadsPagination },
 
@@ -64,11 +66,14 @@
 
         computed: {
             activeLeads(){
-                return this.$store.getters.getLeadsForDateFilterForCompany(this.$route.params.id).leads
+                return this.$store.getters.getLeadsForDateFilter.leads
             },
 
             totalLeads() {
-                return this.$store.getters.getLeadsForDateFilterForCompany(this.$route.params.id).total
+                if (this.$store.state.leadsLoaded) {
+                    return this.$store.getters.getLeadsForDateFilter.leads.total
+                }
+                return 0
             },
 
             hasLessLeads() {
@@ -76,11 +81,15 @@
             },
 
             hasMoreLeads() {
-                let totalLeads = this.$store.getters.getLeadsForDateFilterForCompany(this.$route.params.id).total
-                let leadsRetrieved = this.$store.state.leadsOffset + this.$store.getters.getLeadsForDateFilterForCompany(this.$route.params.id).leads.length 
-                return totalLeads > leadsRetrieved
+                let totalLeads = this.$store.getters.getLeadsForDateFilter.leads.total
+                    let leadsRetrieved = this.$store.state.leadsOffset + this.$store.state.leads.length 
+                    return totalLeads > leadsRetrieved
             },
         },
+
+        created() {
+            this.$store.dispatch('initialize_leads_for_company_id', this.$route.params.id)
+        }
     }
 </script>
 
