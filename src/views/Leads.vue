@@ -10,7 +10,7 @@
             :key="lead.id" 
             :_id="lead.id" 
             :_company_id="lead.company_id" 
-            :_chatId="lead.chat_id"
+            :_chat_id="lead.chat_id"
             :_date="lead.generated_at"
             :_type="lead.lead_type"
             :_contact="lead.raw_data.name"

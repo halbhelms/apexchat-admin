@@ -21,7 +21,11 @@
         methods: {},
         computed: {
             companyName() {
-                return this.$store.getters.getCompanyById(this.$route.params.id).name
+                try {
+                    return this.$store.getters.getCompanyById(this.$route.params.id).name
+                } catch(err) {
+                    return ''
+                }
             }
         },
     }

@@ -16,7 +16,7 @@ export default createStore({
     // leads to display
     // activeSlice: [],
     leads: [],
-    chats: null,
+    chats: {},
     videos: [
       {
         id: 1,
@@ -335,6 +335,23 @@ export default createStore({
         }
       })
       commit('SET_COMPANIES', response.data)
+    },
+
+    load_chat_for_lead_id({ commit }) {
+      return async (id) => {
+        const response = await axios({
+          method: 'get',
+          url: `https://codelifepro.herokuapp.com/chats/${id}`,
+          headers: {
+            'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+            'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,
+          }
+        })
+
+        commit('ADD_CHAT', response.data)
+
+        return response.data
+      }
     },
 
     async initialize_leads_for_company_id({ commit, state }, id) {
