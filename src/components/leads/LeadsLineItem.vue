@@ -63,7 +63,7 @@
                 if (location.replace(/\s/g, '').length) {
                     return location
                 } else {
-                    return "Unknown"
+                    return "Missing"
                 }
             },
 

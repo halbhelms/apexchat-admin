@@ -1,7 +1,6 @@
 <template>
     <div class="outer modal-on">
         <div class="modal-content">
-<!-- {{ _selectedLead }} -->
             <div class="modal-header">
                 <!-- header for lead -->
                 <img v-if="_selectedLead.disputed" id="disputed-icon" src="../site/disputed.png" width="36"/>
@@ -12,42 +11,42 @@
             <!-- contact information (1st column)-->
             <div class="contact-info">
                 <!-- date and contact name -->
-                <div class="contact-general">
-                    <div class="contact-date contact-box">
-                        <div class="contact-date-title title">Date</div>
-                        <div class="contact-date-data data">{{ date }}</div>
+                <div class="contact-general la">
+                    <div class="contact-date contact-box date la">
+                        <div class="contact-date-title title la">Date</div>
+                        <div class="contact-date-data data la">{{ date }}</div>
                     </div>
                     
-                    <div class="contact-name contact-box">
-                        <div class="contact-name-title title">Name</div>
-                        <div class="contact-name-data data">{{ _selectedLead.raw_data.name }}</div>
+                    <div class="contact-name contact-box name">
+                        <div class="contact-name-title title la">Name</div>
+                        <div class="contact-name-data data la">{{ _selectedLead.raw_data.name }}</div>
                     </div>
                 </div>
                 
                 <!-- address (2d column) -->
                 <div class="contact-address">
-                    <div class="contact-location contact-box location">
-                        <div class="contact-location-title title">Location</div>
-                        <div class="contact-location-data data">{{ location }}</div>
+                    <div class="contact-location location la">
+                        <div class="contact-location-title location-title la">Location</div>
+                        <div class="contact-location-data data la">{{ location }}</div>
                     </div>
                 </div>
                 
                 <!-- how to reach contact (3d column) -->
                 <div class="contact-communication">
                     <div class="contact-phone contact-box">
-                        <div class="contact-phone-title title">
+                        <div class="contact-phone-title title la">
                             Phone
                         </div>
-                        <div class="contact-phone-data data">
+                        <div class="contact-phone-data data la">
                             {{ phone }}
                         </div>
                     </div>
                     <div class="contact-email contact-box">
-                        <div class="contact-email-title title">
+                        <div class="contact-email-title title la">
                             Email
                         </div>
-                        <div class="contact-email-data data">
-                            {{ _selectedLead.email }}
+                        <div class="contact-email-data data la">
+                            {{ email }}
                         </div>
                     </div>
                 </div>
@@ -65,7 +64,7 @@
                 <!-- display individual messages -->
                 <ChatLineItem v-for="(message, index) in messages" :key="index" :_message="message"/>
             </div>
-            <div class="chat" v-else>No chat found for this lead.</div>
+            <div class="chat missing" v-else>No chat found for this lead.</div>
 
         </div>
    </div>
@@ -100,7 +99,7 @@
 
         computed: {
             date() {
-                return format(new Date(this._selectedLead.generated_at), 'MM.dd.y  :  h:m aaa')
+                return format(new Date(this._selectedLead.generated_at), 'MM.dd.y  h:m aaa')
             },
 
             phone() {
@@ -115,6 +114,14 @@
             location() {
                 if (this.$props._selectedLead.state || this.$props._selectedLead.state) {
                     return `${this.$props_selectedLead.city} ${this.$props._selectedLead.state}`
+                } else {
+                    return "Missing"
+                }
+            },
+
+            email() {
+                if (this.$props._selectedLead.email) {
+                    return this.$props._selectedLead.email
                 } else {
                     return "Missing"
                 }
@@ -152,13 +159,21 @@
     }
 
     .location {
-        border-right: 1px solid silver;
-        border-left: 1px solid silver;
+        /* border-right: 1px solid silver;
+        border-left: 1px solid silver; */
     }
 
     .contact-info {
         display: grid;
         grid-template-columns: auto auto auto;
+    }
+/* left-align header info */
+    .la {
+        text-align: left;
+    }
+
+    .missing {
+        margin-top: 22px;
     }
 
     .modal-content {
@@ -212,6 +227,11 @@
     .title {
         text-align: right;
         margin-right: 10px;
+        font-weight: 800;
+    }
+
+    .location-title {
+        text-align: left;
         font-weight: 800;
     }
 
