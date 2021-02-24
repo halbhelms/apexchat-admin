@@ -59,10 +59,10 @@
                 <!-- should we display only visitor responses? -->
                 <div class="chat-separator">
                     <input @change="visitorMessagesOnly" type="checkbox" id="visitor-only" class="visitor-only" :value="visitorOnly">
-                    <label for="visitor-only">Display visitor messages only</label>
+                    <label for="visitor-only" class="visitor-only-label">Display visitor messages only</label>
                 </div>
                 <!-- display individual messages -->
-                <ChatLineItem v-for="(message, index) in _chat" :key="index" :_message="message"/>
+                <ChatLineItem v-for="(message, index) in messages" :key="index" :_message="message"/>
             </div>
             <div class="chat missing" v-else>No chat found for this lead.</div>
 
@@ -130,7 +130,7 @@
             messages() {
                 // if we only want to show visitor messages
                 if (this.visitorOnly) {
-                    return this.$props._chat.filter( message => message.participantDisplayName == 'Visitor')
+                    return this.$props._chat.filter( message => message.display_name == 'Visitor')
                 // or we want to display all messages
                 } else {
                     return this.$props._chat
@@ -154,7 +154,7 @@
     }
     .contact-box {
         display: grid;
-        grid-template-columns: 30% auto 30%;
+        grid-template-columns: 30% auto 1%;
         text-align: left;
     }
 
@@ -242,6 +242,13 @@
 
     .visitor-only {
         font-size: .85rem;
+    }
+
+    .visitor-only-label {
+        font-size: .8rem;
+        margin-left: 4px;
+        position: relative;
+        top: -1px;
     }
 
     /* transition */

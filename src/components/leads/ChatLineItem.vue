@@ -46,7 +46,7 @@
 
     .message {
         display: grid;
-        grid-template-columns: 90px 65%;
+        grid-template-columns: 90px 100%;
         font-size: .75rem;
         margin-bottom: 4px;
     }
