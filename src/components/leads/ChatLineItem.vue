@@ -41,6 +41,7 @@
 
     .visitor {
         color: rgb(0, 138, 230);
+        font-weight: 600;
     }
 
     .message {
