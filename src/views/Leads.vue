@@ -1,5 +1,4 @@
 <template>
-number of chats: {{ Object.keys($store.state.chats).length }}
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="companies">
         <LeadsHeader />
