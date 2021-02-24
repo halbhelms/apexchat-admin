@@ -1,10 +1,9 @@
 <template>
-activeLeads: {{ activeLeadsTotal}}
-offset: {{ $store.state.leadsOffset }}
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="companies">
         <LeadsHeader />
         <LeadsDataHeader />
+        <div class="line-item-wrapper" v-if="activeLeads.length">
         <LeadsLineItem 
             @lead-selected="leadDrilldown"
             v-for="lead in activeLeads" 
@@ -18,10 +17,13 @@ offset: {{ $store.state.leadsOffset }}
             :_city="lead.city"
             :_state="lead.state"
             :_status="lead.status"/>
+        </div>
+        <div class="no-results" v-else>
+            No results found. Try a different date filter.
+        </div>
         <LeadsPagination :_lessLeads="hasLessLeads" :_moreLeads="hasMoreLeads" />
         <Modal @modal-off="noSelectedLead" v-if="selectedLead" :_selectedLead="selectedLead" :_chat="chat" />
     </div>
-    {{ hasMoreLeads }} {{ leadsRetrieved }}
 </template>
 
 <script>
@@ -53,10 +55,10 @@ offset: {{ $store.state.leadsOffset }}
                 this.chat = null;
                 // get new lead and associated chat
                 let selectedLead = this.$store.getters.getLeadById(leadId)
-                    if (selectedLead.chat_id) {
-                    let chat = this.$store.getters.getChatById(selectedLead.chat_id)
-                    this.chat = chat
-                }
+                // if (selectedLead.chat_id) {
+                // let chat = this.$store.getters.getChatById(selectedLead.chat_id)
+                // this.chat = chat
+                // }
                 this.selectedLead = selectedLead
             },
 

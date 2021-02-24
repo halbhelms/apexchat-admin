@@ -8,7 +8,7 @@ export default createStore({
   state: {
     leadsLoaded: false,
     activeNav: '',
-    lastLogin: new Date('1-28-2021'),
+    lastLogin: new Date('1-18-2021'),
     dateFilter: 'sinceLogin',
     leadsOffset: 0,
     // How many leads should be returned?
@@ -49,39 +49,7 @@ export default createStore({
         embed_code: '`<div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_290f8sbgm7 videoFoam=true" style="height:100%;position:relative;width:100%"><div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/290f8sbgm7/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" aria-hidden="true" onload="this.parentNode.style.opacity=1;" /></div></div></div></div>`'
       },
     ],
-    companyUsers: [
-      {
-        id: 1,
-        company_id: 1,
-        type: 'Basic',
-        user_name: 'jwatts',
-        first_name: "James",
-        last_name: 'Watts',
-        email: 'jwatts@cps.com',
-        phone: '6416589554',
-        time_zone: '',
-      },
-      {
-        id: 2,
-        company_id: 1,
-        is_admin: false,
-        user_name: 'hhoserson',
-        first_name: "Hosey",
-        last_name: 'Hoserson',
-        email: 'hhoserson@cps.com',
-        phone: '7024563998'
-      },
-      {
-        id: 3,
-        company_id: 2,
-        is_admin: true,
-        user_name: 'mmantile',
-        first_name: "Mickey",
-        last_name: 'Mantle',
-        email: 'mmantle@cps.com',
-        phone: '702554863'
-      },
-    ],
+    companyUsers: null,
     companies: []
   },
   
@@ -129,7 +97,9 @@ export default createStore({
 
     getLeadById(state) {
       return (id) => {
-        return state.leads.find( lead => lead.id == id)
+        let lead = state.leads.find( lead => lead.id == id)
+        console.log("🚀 ~ file: index.js ~ line 101 ~ return ~ lead", lead)
+        return lead
       }
     },
 // do we need this since we also need to filter by dateFilter?

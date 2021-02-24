@@ -1,10 +1,11 @@
 <template>
     <div class="outer modal-on">
         <div class="modal-content">
+<!-- {{ _selectedLead }} -->
             <div class="modal-header">
                 <!-- header for lead -->
                 <img v-if="_selectedLead.disputed" id="disputed-icon" src="../site/disputed.png" width="36"/>
-                <span class="header-text">Details for Lead No. {{ _selectedLead.id }} </span>
+                <span class="header-text">Details for Lead No. {{ _selectedLead.apex_lead_id }} </span>
                 <!-- button to dismiss modal -->
                 <img @click="modalOff" class="modal-exit" src="../site/modal-exit.png" width="36" />
             </div>
@@ -19,7 +20,7 @@
                     
                     <div class="contact-name contact-box">
                         <div class="contact-name-title title">Name</div>
-                        <div class="contact-name-data data">{{ _selectedLead.contact }}</div>
+                        <div class="contact-name-data data">{{ _selectedLead.raw_data.name }}</div>
                     </div>
                 </div>
                 
@@ -27,7 +28,7 @@
                 <div class="contact-address">
                     <div class="contact-location contact-box location">
                         <div class="contact-location-title title">Location</div>
-                        <div class="contact-location-data data">{{ _selectedLead.location }}</div>
+                        <div class="contact-location-data data">{{ location }}</div>
                     </div>
                 </div>
                 
@@ -99,12 +100,24 @@
 
         computed: {
             date() {
-                return format(this._selectedLead.date, 'M.d.y  :  h:m aaa')
+                return format(new Date(this._selectedLead.generated_at), 'MM.dd.y  :  h:m aaa')
             },
 
             phone() {
-                let p = this._selectedLead.phone.toString()
-                return `${p.substring(0,3)}.${p.substring(3,6)}.${p.substring(6,10)}`
+                if (this._selectedLead.phone){
+                    let p = this._selectedLead.phone.toString()
+                    return `${p.substring(0,3)}.${p.substring(3,6)}.${p.substring(6,10)}`
+                } else {
+                    return "Missing"
+                }
+            },
+
+            location() {
+                if (this.$props._selectedLead.state || this.$props._selectedLead.state) {
+                    return `${this.$props_selectedLead.city} ${this.$props._selectedLead.state}`
+                } else {
+                    return "Missing"
+                }
             },
 
             messages() {

@@ -3,7 +3,7 @@
     <div class="dashboard-header-container">
         <div class="header">
             <!-- title -->
-            <div class="title">Leads: <span class="title-company"> {{  }}</span></div>
+            <div class="title">Leads: <span class="title-company"> {{ companyName }}</span></div>
             <DateFilter />
         </div>
     </div>
