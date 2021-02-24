@@ -22,7 +22,11 @@
             No results found. Try a different date filter.
         </div>
         <LeadsPagination :_lessLeads="hasLessLeads" :_moreLeads="hasMoreLeads" />
-        <Modal @modal-off="noSelectedLead" v-if="selectedLead" :_selectedLead="selectedLead" :_chat="chat" />
+        <Modal 
+            @modal-off="noSelectedLead" 
+            v-if="selectedLead" 
+            :_selectedLead="selectedLead" 
+            :_chat="activeChat" />
     </div>
 </template>
 
@@ -50,16 +54,18 @@
 
         methods: {
             leadDrilldown(leadId) {
+                console.log("🚀 ~ file: Leads.vue ~ line 53 ~ leadDrilldown ~ leadId", leadId)
                 // clear out any existing from previous requests
-                this.selectedLead = null;
-                this.chat = null;
+                this.selectedLeadId = leadId
+                // this.chatId = null;
                 // get new lead and associated chat
-                let selectedLead = this.$store.getters.getLeadById(leadId)
-                // if (selectedLead.chat_id) {
-                // let chat = this.$store.getters.getChatById(selectedLead.chat_id)
-                // this.chat = chat
-                // }
-                this.selectedLead = selectedLead
+                this.selectedLead = this.$store.getters.getLeadById(leadId)
+                
+                if (this.selectedLead.chat_id) {
+                    console.log("🚀 ~ file: Leads.vue ~ line 59 ~ leadDrilldown ~ this.selectedLead.chat_id", this.selectedLead.chat_id)
+                    this.$store.dispatch('load_and_set_active_chat_by_id', this.selectedLead.chat_id)
+                    console.log("🚀 ~ file: Leads.vue ~ line 62 ~ leadDrilldown ~ this.chat", this.chat)
+                }
             },
 
             noSelectedLead() {
@@ -75,6 +81,14 @@
 
             activeLeadsTotal() {
                 return this.$store.getters.getLeadsForDateFilter.total
+            },
+
+            activeChat() {
+                try {
+                    return this.$store.state.activeChat.chat_messages
+                } catch (err) {
+                    return []
+                }
             },
 
             totalLeads() {
@@ -105,5 +119,9 @@
 </script>
 
 <style scoped>
-
+    .no-results {
+        font-style: italic;
+        font-weight: 600;
+        margin-top: 16px;
+    }
 </style>

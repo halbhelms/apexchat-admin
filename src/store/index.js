@@ -6,8 +6,8 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    leadsLoaded: false,
     activeNav: '',
+    activeChat: null,
     lastLogin: new Date('1-18-2021'),
     dateFilter: 'sinceLogin',
     leadsOffset: 0,
@@ -206,6 +206,12 @@ export default createStore({
   },
   
   mutations: {
+    SET_ACTIVE_CHAT(state, chat) {
+      state.chats[chat.id] = chat
+      state.activeChat = chat
+      console.log("🚀 ~ file: index.js ~ line 211 ~ ADD_CHAT ~ state.chats", state.chats)
+    },
+
     ADD_COMPANY(state, newCompany) {
       newCompany.id = state.companies.length + 1;
       state.companies.push(newCompany)
@@ -337,8 +343,12 @@ export default createStore({
       commit('SET_COMPANIES', response.data)
     },
 
-    load_chat_for_lead_id({ commit }) {
-      return async (id) => {
+    async load_and_set_active_chat_by_id({ commit, state }, id) {
+      // if we already have the chat, make that the activeChat...
+      if (state.chats[id]) {
+        commit('SET_ACTIVE_CHAT', state.chats[id])
+      } else {
+        // ...otherwise fetch the chat and make that the activeChat
         const response = await axios({
           method: 'get',
           url: `https://codelifepro.herokuapp.com/chats/${id}`,
@@ -348,9 +358,7 @@ export default createStore({
           }
         })
 
-        commit('ADD_CHAT', response.data)
-
-        return response.data
+        commit('SET_ACTIVE_CHAT', response.data)
       }
     },
 

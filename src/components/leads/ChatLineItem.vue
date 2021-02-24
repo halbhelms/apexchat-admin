@@ -1,9 +1,9 @@
 <template>
-    <div class="chat-line-item" :class="[ _message.participantDisplayName == 'Visitor' ? 'visitor' : 'agent' ]" >
+    <div class="chat-line-item" :class="[ _message.display_name == 'Visitor' ? 'visitor' : 'agent' ]" >
         <!-- a message from a chat -->
         <div class="message">
             <!-- who was texting -->
-            <div class="participant">{{ _message.participantDisplayName }}</div>
+            <div class="participant">{{ _message.display_name }}</div>
             <!-- what did they say? -->
             <div class="text">{{_message.text}}</div>
         </div>
@@ -30,7 +30,7 @@
 
 <style scoped>
     .agent {
-
+        text-align: right;
     }
 
     .chat-line-item {
@@ -45,6 +45,13 @@
 
     .message {
         display: grid;
-        grid-template-columns: 140px auto;
+        grid-template-columns: 90px 65%;
+        font-size: .75rem;
+        margin-bottom: 4px;
+    }
+
+    .participant {
+        text-align: right;
+        margin-right: 24px;
     }
 </style>

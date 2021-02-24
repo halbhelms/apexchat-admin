@@ -16,7 +16,7 @@
 
         components: {},
 
-        emits: ['lead_selected'],
+        emits: ['lead-selected'],
 
         props: ['_id', '_date', '_type', '_contact', '_status', '_company_id', '_chat_id', '_city', '_state'],
 

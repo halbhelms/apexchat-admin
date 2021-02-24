@@ -62,7 +62,7 @@
                     <label for="visitor-only">Display visitor messages only</label>
                 </div>
                 <!-- display individual messages -->
-                <ChatLineItem v-for="(message, index) in messages" :key="index" :_message="message"/>
+                <ChatLineItem v-for="(message, index) in _chat" :key="index" :_message="message"/>
             </div>
             <div class="chat missing" v-else>No chat found for this lead.</div>
 
@@ -148,7 +148,7 @@
     }
     .contact-box {
         display: grid;
-        grid-template-columns: 30% auto;
+        grid-template-columns: 30% auto 30%;
         text-align: left;
     }
 
@@ -158,14 +158,10 @@
         top: -4px;
     }
 
-    .location {
-        /* border-right: 1px solid silver;
-        border-left: 1px solid silver; */
-    }
-
     .contact-info {
         display: grid;
-        grid-template-columns: auto auto auto;
+        grid-template-columns: 35% 25% 30%;
+        font-size: .85rem;
     }
 /* left-align header info */
     .la {
@@ -213,7 +209,9 @@
     }
 
     .modal-exit {
-        float: right;
+        position: relative;
+        top: 10px;
+        left: 30px;
         cursor: pointer;
     }
 
@@ -233,6 +231,10 @@
     .location-title {
         text-align: left;
         font-weight: 800;
+    }
+
+    .visitor-only {
+        font-size: .75rem;
     }
 
     /* transition */
