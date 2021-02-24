@@ -20,6 +20,7 @@
             <base-button 
                 class="button" 
                 :_styles="styles.submitButton"
+                @button-clicked="addVideo"
             >
                 <span v-if="_videoId">Update</span><span v-else>Add</span>
             </base-button>
@@ -72,7 +73,7 @@
         },
 
         methods: {
-            submitForm() {
+            addVideo() {
                 this.$store.dispatch('add_video', this.video)
                 // reset video
                 this.video = {company_id: this.$route.params.id}

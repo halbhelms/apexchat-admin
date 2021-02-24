@@ -39,11 +39,11 @@
 
         computed: {
             companyVideos() {
-                return this.$store.getters.getVideosForCompany(this.$route.params.id)
+                return this.$store.state.videos
             }
         },
 
-        created() {}
+        
     }
 </script>
 

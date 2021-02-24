@@ -17,38 +17,7 @@ export default createStore({
     // activeSlice: [],
     leads: [],
     chats: {},
-    videos: [
-      {
-        id: 1,
-        company_id: 1,
-        title: 'Top 10 Plumbing Tips',
-        embed_code: '`<div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><iframe src="https://fast.wistia.net/embed/iframe/67hkx0ob00?videoFoam=true" title="FAQ_Disposal Care Video" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen width="100%" height="100%"></iframe></div></div>`'
-      },
-      {
-        id: 2,
-        company_id: 1,
-        title: 'What To Do if Your Water Heater Leaks',
-        embed_code: '`<div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_hib29wm9h6 videoFoam=true" style="height:100%;position:relative;width:100%"><div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/hib29wm9h6/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" aria-hidden="true" onload="this.parentNode.style.opacity=1;" /></div></div></div></div>`'
-      },
-      {
-        id: 3,
-        company_id: 1,
-        title: 'Preparing for Cold Weather',
-        embed_code: '`<div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_lxtll40z2a videoFoam=true" style="height:100%;position:relative;width:100%"><div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/lxtll40z2a/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" aria-hidden="true" onload="this.parentNode.style.opacity=1;" /></div></div></div></div>`'
-      },
-      {
-        id: 4,
-        company_id: 1,
-        title: 'Causes for Low Water Pressure',
-        embed_code: '`<div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_290f8sbgm7 videoFoam=true" style="height:100%;position:relative;width:100%"><div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/290f8sbgm7/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" aria-hidden="true" onload="this.parentNode.style.opacity=1;" /></div></div></div></div>`'
-      },
-      {
-        id: 5,
-        company_id: 1,
-        title: 'Should You Buy a Tankless Hot Water Heater?',
-        embed_code: '`<div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_290f8sbgm7 videoFoam=true" style="height:100%;position:relative;width:100%"><div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/290f8sbgm7/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" aria-hidden="true" onload="this.parentNode.style.opacity=1;" /></div></div></div></div>`'
-      },
-    ],
+    videos: [],
     companyUsers: null,
     companies: []
   },
@@ -270,6 +239,10 @@ export default createStore({
       state.leadsOffset = offset
     },
 
+    SET_VIDEOS(state, videos) {
+      state.videos = videos
+    },
+
     UPDATE_COMPANY(state, editedCompany) {
       let index = state.companies.findIndex( company => company.id == editedCompany.id)
       state.companies.splice(index, 1, editedCompany)
@@ -317,19 +290,36 @@ export default createStore({
       }
     },
 
-    add_video({ commit, state }, video) {
-      // adding id only for testing. Real videos will get id from API
-      if( !video.id ) {
-        video.id = state.videos.length + 1
-      }
-      commit('ADD_VIDEO', video)
+    async add_video({ commit }, video) {
+    console.log("🚀 ~ file: index.js ~ line 294 ~ add_video ~ video", video)
+      
+      let result = await axios({
+        method: 'post',
+        url: 'https://codelifepro.herokuapp.com/videos',
+        data: video,
+        headers: {
+          'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,          
+        }
+      })
+      
+      commit('ADD_VIDEO', result.data)
     },
 
     delete_company_user({ commit }, userId) {
       commit('DELETE_COMPANY_USER', userId)
     },
 
-    delete_video({ commit }, videoId) {
+    async delete_video({ commit }, videoId) {
+      await axios({
+        method: 'delete',
+        url: 'https://codelifepro.herokuapp.com/videos/' + videoId,
+        headers: {
+          'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,
+        }        
+      })
+      
       commit('DELETE_VIDEO', videoId)
     },
    
@@ -377,6 +367,19 @@ export default createStore({
         
         commit('SET_LEADS', result.data)
         console.log('state.leads.length', state.leads.length);
+    },
+
+    async initialize_videos_for_company_id({ commit }, id) {
+      let result = await axios({
+        method: 'get',
+        url: 'https://codelifepro.herokuapp.com/videos?company_id=' + id,
+        headers: {
+          'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,          
+        }
+      })
+
+      commit('SET_VIDEOS', result.data)
     },
 
     set_active_nav({ commit }, navElement) {

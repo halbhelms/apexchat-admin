@@ -7,7 +7,7 @@
        <split-columns>
            <!-- add video form -->
            <template v-slot:left>
-               <video-form @button-clicked="alert('Button clicked')"></video-form>
+               <video-form></video-form>
            </template>
 
            <!-- existing videos -->
@@ -37,17 +37,17 @@
         methods: {},
 
         computed: {
-            selectedVideos() {
-                return this.$store.getters.getVideosForCompany(this.$route.params.id)
-            },
-
             selectedCompanyName() {
-                return this.$store.getters.getCompanyById(this.$route.params.id).name
+                try {
+                    return this.$store.getters.getCompanyById(this.$route.params.id).name
+                } catch(err) {
+                    return ''
+                }
             },
         },
 
         created() {
-
+            this.$store.dispatch('initialize_videos_for_company_id', this.$route.params.id)
         }
     }
 </script>
@@ -55,7 +55,8 @@
 <style scoped>
 
     
-    .videos {
-
+    .video-form {
+        position: relative;
+        left: 16px;
     }
 </style>

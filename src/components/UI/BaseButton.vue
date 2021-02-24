@@ -18,6 +18,8 @@
 
         components: {},
 
+        emits: ['button-clicked'],
+
         props: {
             _mode: {
                 type: String,
@@ -34,8 +36,6 @@
                 default: ()=> {},
             },
         },
-
-        emits: ['button-clicked'],
 
         data() {
             return {
