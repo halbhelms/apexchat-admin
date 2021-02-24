@@ -62,7 +62,7 @@
                     <label for="visitor-only" class="visitor-only-label">Display visitor messages only</label>
                 </div>
                 <!-- display individual messages -->
-                <ChatLineItem v-for="(message, index) in messages" :key="index" :_message="message"/>
+                <ChatLineItem v-for="message in messages" :key="message" :_message="message"/>
             </div>
             <div class="chat missing" v-else>No chat found for this lead.</div>
 
