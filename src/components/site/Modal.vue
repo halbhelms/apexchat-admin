@@ -141,10 +141,16 @@
 </script>
 
 <style scoped>
+    div.chat {
+        width: 87%;
+    }
+
+      
     .chat-separator {
         border-bottom: 1px solid silver;
         border-top: 1px solid silver;
         margin-bottom: 12px;
+        width: 87%;
     }
     .contact-box {
         display: grid;
@@ -178,6 +184,7 @@
 
     .modal-header {
         position: relative;
+        width: 87%;
     }
 
     .modal-on {
@@ -234,15 +241,15 @@
     }
 
     .visitor-only {
-        font-size: .75rem;
+        font-size: .85rem;
     }
 
     /* transition */
-    .fade-enter {
+    /* .fade-enter {
         opacity: 0;
     }
 
     .fade-enter-active {
         transition: opacity 2s ease-out;
-    }
+    } */
 </style>
