@@ -13,6 +13,7 @@
             :value="modelValue" 
             @input="$emit('update:modelValue', $event.target.value)" 
             :required="_optional ? false : true"
+            :minlength="_minlength"
           >
           <label :for="_id" :class="[focused ? 'off' : 'on']">{{ _label }}</label>
         </div>
@@ -52,6 +53,11 @@
               default: ()=>{}
             },
 
+            _minlength: {
+              type: Number,
+              default: 0,
+            },
+
             modelValue: {
                 type: [String, Number],
                 default: '',
@@ -70,13 +76,11 @@
 
         methods: {
           hideLabel() {
-            console.log('hideLabel')
             this.focused = true
           
           },
 
           showLabel() {
-            console.log('showLabel')
             this.focused = false
           },
         },

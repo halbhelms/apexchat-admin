@@ -1,7 +1,7 @@
 <template>
-    user: {{ user }}
-    <br />
-    users: {{ $store.state.users }}
+    <!-- user: {{ user }}
+    <br /> -->
+    users: {{ $store.state.users.length }}
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <section-header>Users: {{ companyName }} </section-header>
     <div class="layout">
@@ -9,7 +9,7 @@
             <base-input _id="email" _label="Email" _type="email" v-model="user.email"></base-input>
             <base-input _id="first-name" _label="First name" v-model="user.first_name"></base-input>
             <base-input _id="last-name" _label="Last name" v-model="user.last_name"></base-input>
-            <base-input _id="temp-password" _label="Temporary password"  v-model="user.temp_password" v-if="!user.id"></base-input>
+            <base-input _id="temp-password" _minlength="6" _label="Temporary password"  v-model="user.password" v-if="!user.id"></base-input>
             <base-checkbox _id="is-admin" :_styles="styles.admin" _label="User an Admin?" v-model="user.is_admin" _display="bk"></base-checkbox>
             <div class="submit-button">
                 <base-button 
@@ -50,7 +50,7 @@
                     first_name: null,
                     last_name: null,
                     email: null,
-                    temp_password: null,
+                    password: null,
                     status: 'active'
                 },
                 styles: {
@@ -78,12 +78,11 @@
             },
 
             deleteUser(userId) {
-                this.$store.dispatch('delete_company_user', userId)
+                const payload = {userId, companyId: this.$route.params.id}
+                this.$store.dispatch('delete_user', payload)
             },
 
             submitForm() {
-                console.log('here in CompanyUsers submitForm')
-                
                 if( this.user.is_admin ) {
                     this.user.type = 'Admin'
                 }
@@ -94,14 +93,11 @@
                 // otherwise, we must be adding a user
                     this.$store.dispatch('add_user', this.user)
                 }
-
+                // reset the user in data
                 this.user = {}
-                // this.company_id = this.$route.params.id
                 this.user.company_id = this.$route.params.id
                 this.user.is_admin = false
                 this.user.type = 'Basic'
-                this.user.fizz = 'Buzz'
-                
             }
         },
 

@@ -72,23 +72,23 @@ export default createStore({
       }
     },
 // do we need this since we also need to filter by dateFilter?
-    _getLeadsForCompany() {
-      return async (id) => {
-        const result = await axios({
-          method: 'get',
-          url: 'https://codelifepro.herokuapp.com/leads?company_id=' + id,
-          data: {
-            company_id: id,
-          },
-          headers: {
-            'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
-            'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
-          }
-        })
+    // _getLeadsForCompany() {
+    //   return async (id) => {
+    //     const result = await axios({
+    //       method: 'get',
+    //       url: 'https://codelifepro.herokuapp.com/leads?company_id=' + id,
+    //       data: {
+    //         company_id: id,
+    //       },
+    //       headers: {
+    //         'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+    //         'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
+    //       }
+    //     })
 
-        return result.data
-      }
-    },
+    //     return result.data
+    //   }
+    // },
 
     // date filter leads
     // this function calls one of three functions based on state.dateFilter
@@ -157,7 +157,7 @@ export default createStore({
 
     getUserById(state) {
       return (id) => {
-        return state.companyUsers.find( user => user.id == id)
+        return state.users.find( user => user.id == id)
       }
     },
 
@@ -280,7 +280,7 @@ export default createStore({
             'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
           }        })
         // reload the users
-        dispatch('initialize_users_for_company_id', addedUser.company_id)
+        dispatch('initialize_users_for_company_id', addedUser.data.company_id)
       } catch(err) {
         console.log('error', err)
       }
@@ -300,8 +300,17 @@ export default createStore({
       commit('ADD_VIDEO', result.data)
     },
 
-    delete_company_user({ commit }, userId) {
-      commit('DELETE_COMPANY_USER', userId)
+    async delete_user({ dispatch }, payload) {
+      await axios({
+        method: 'delete',
+        url: 'https://codelifepro.herokuapp.com/users/' + payload.userId,
+        headers: {
+          'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token          
+        }
+      })
+
+      dispatch('initialize_users_for_company_id', payload.companyId)
     },
 
     async delete_video({ commit }, videoId) {
@@ -346,7 +355,7 @@ export default createStore({
       }
     },
 
-    async initialize_leads_for_company_id({ commit, state }, id) {
+    async initialize_leads_for_company_id({ commit }, id) {
       console.log('in initialize_leads...')
       
         const result = await axios({
@@ -357,13 +366,14 @@ export default createStore({
             'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
           }
         })
-        state.leadsLoaded = true
+        // state.leadsLoaded = true
         
         commit('SET_LEADS', result.data)
-        console.log('state.leads.length', state.leads.length);
     },
 
     async initialize_users_for_company_id({ commit }, id) {
+    console.log("🚀 ~ file: index.js ~ line 367 ~ initialize_users_for_company_id ~ id", id)
+      
       let result = await axios({
         method: 'get',
         url: 'https://codelifepro.herokuapp.com/users?company_id=' + id,
@@ -372,7 +382,8 @@ export default createStore({
           'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,          
         }
       })
-
+      console.log('result.data', result.data);
+      
       commit ('SET_USERS', result.data)
     },
 
@@ -425,7 +436,7 @@ export default createStore({
     },    
 
     async update_user({ dispatch }, user) {
-      let updatedUser = await axios({
+      await axios({
         method: 'patch',
         url: 'https://codelifepro.herokuapp.com/users/' + user.id,
         headers: {
@@ -435,7 +446,7 @@ export default createStore({
         data: user,
       })
       // reload store's users
-      dispatch('initialize_users_for_company_id', updatedUser.company_id)
+      dispatch('initialize_users_for_company_id', user.company_id)
     },
 
     // changing leadsOffset
