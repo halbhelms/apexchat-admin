@@ -291,8 +291,6 @@ export default createStore({
     },
 
     async add_video({ commit }, video) {
-    console.log("🚀 ~ file: index.js ~ line 294 ~ add_video ~ video", video)
-      
       let result = await axios({
         method: 'post',
         url: 'https://codelifepro.herokuapp.com/videos',
@@ -319,7 +317,7 @@ export default createStore({
           'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,
         }        
       })
-      
+
       commit('DELETE_VIDEO', videoId)
     },
    
