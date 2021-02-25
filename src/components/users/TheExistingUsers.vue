@@ -3,7 +3,7 @@
     <h3>Existing Users</h3>
     <div class="the-existing-users">
         <company-user 
-            v-for="user in _companyUsers" 
+            v-for="user in users" 
             :key="user.id" 
             :_userId="user.id" 
             :_firstName="user.first_name" 
@@ -36,15 +36,13 @@
             }
         },
 
-        data() {
-            return {
-                users: [],
-            }
-        },
-
         methods: {},
 
-        computed: {},
+        computed: {
+            users() {
+                return this.$store.state.users
+            }
+        },
 
         created() {
             // this.users = this.$store.state.companyUsers

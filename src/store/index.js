@@ -18,7 +18,7 @@ export default createStore({
     leads: [],
     chats: {},
     videos: [],
-    companyUsers: null,
+    users: [],
     companies: []
   },
   
@@ -41,11 +41,11 @@ export default createStore({
       }
     },
 
-    getCompanyUsersForCompany(state) {
-      return (id) => {
-        return state.companyUsers.filter( companyUser => companyUser.company_id == id)
-      }
-    },
+    // getCompanyUsersForCompany(state) {
+    //   return (id) => {
+    //     return state.companyUsers.filter( companyUser => companyUser.company_id == id)
+    //   }
+    // },
 
     getCurrentCompany(state) {
       return (id) => {
@@ -187,8 +187,7 @@ export default createStore({
     },
 
     ADD_USER(state, user) {
-      console.log("🚀 ~ file: index.js ~ line 384 ~ ADD_USER ~ user", user)
-      state.companyUsers.push(user)
+      state.users.push(user)
     },
 
     ADD_VIDEO(state, video) {
@@ -239,6 +238,10 @@ export default createStore({
       state.leadsOffset = offset
     },
 
+    SET_USERS(state, users) {
+      state.users = users
+    },
+
     SET_VIDEOS(state, videos) {
       state.videos = videos
     },
@@ -265,28 +268,21 @@ export default createStore({
       router.push({name: 'Companies'})
     },
 
-    async add_user({ commit }, user) {
+    async add_user({ dispatch }, user) {
+      console.log("🚀 ~ file: index.js ~ line 272 ~ add_user ~ user", user)
       try {
-        const response = await axios({
+        let addedUser = await axios({
           method: 'post',
           url: 'https://codelifepro.herokuapp.com/users/',
           data: user,
           headers: {
-            'X-User-Email': sessionStorage.getItem('email'),
-            'X-User-Token': sessionStorage.getItem('authToken')
-          }
-        })
-        commit('ADD_USER', response.data)
-        return {
-          success: true,
-          payload: response.data,
-        }
+            'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+            'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
+          }        })
+        // reload the users
+        dispatch('initialize_users_for_company_id', addedUser.company_id)
       } catch(err) {
         console.log('error', err)
-        return {
-          success: false,
-          payload: err,
-        }
       }
     },
 
@@ -367,6 +363,19 @@ export default createStore({
         console.log('state.leads.length', state.leads.length);
     },
 
+    async initialize_users_for_company_id({ commit }, id) {
+      let result = await axios({
+        method: 'get',
+        url: 'https://codelifepro.herokuapp.com/users?company_id=' + id,
+        headers: {
+          'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,          
+        }
+      })
+
+      commit ('SET_USERS', result.data)
+    },
+
     async initialize_videos_for_company_id({ commit }, id) {
       let result = await axios({
         method: 'get',
@@ -411,14 +420,22 @@ export default createStore({
         }
       })
         .then(commit('UPDATE_COMPANY', company))
-        .then(console.log('updating API company info'))
         .then(router.push({ name: 'Companies' }))
         .catch(err => console.log('err', err))
     },    
 
-    update_user({ commit }, user) {
-      console.log("🚀 ~ file: index.js ~ line 443 ~ update_user ~ user", user)
-      commit('UPDATE_USER', user)
+    async update_user({ dispatch }, user) {
+      let updatedUser = await axios({
+        method: 'patch',
+        url: 'https://codelifepro.herokuapp.com/users/' + user.id,
+        headers: {
+          'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,          
+        },
+        data: user,
+      })
+      // reload store's users
+      dispatch('initialize_users_for_company_id', updatedUser.company_id)
     },
 
     // changing leadsOffset

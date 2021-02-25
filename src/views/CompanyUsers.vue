@@ -1,4 +1,7 @@
 <template>
+    user: {{ user }}
+    <br />
+    users: {{ $store.state.users }}
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <section-header>Users: {{ companyName }} </section-header>
     <div class="layout">
@@ -9,16 +12,20 @@
             <base-input _id="temp-password" _label="Temporary password"  v-model="user.temp_password" v-if="!user.id"></base-input>
             <base-checkbox _id="is-admin" :_styles="styles.admin" _label="User an Admin?" v-model="user.is_admin" _display="bk"></base-checkbox>
             <div class="submit-button">
-                
-                <base-button _mode="primary" :_styles="styles.submit" @button-clicked="submitForm"><span v-if="!user.id">Add</span><span v-else>Update</span></base-button>
-            
+                <base-button 
+                    _mode="primary" 
+                    :_styles="styles.submit" 
+                    _type="submit">
+                        <span v-if="!user.id">Add</span>
+                        <span v-else>Update</span>
+                 </base-button>
             </div>
         </form>
         <div class="existing-users">
             <the-existing-users 
                 @edit-user="editUser"
                 @delete-user="deleteUser"
-                :_companyUsers="companyUsers">
+                :_companyUsers="users">
             </the-existing-users>
         </div>
     </div>
@@ -37,14 +44,15 @@
             return {
                 user: {
                     id: null,
-                    company_id: null,
+                    company_id: this.$route.params.id,
+                    type: 'Basic',
                     is_admin: false,
                     first_name: null,
                     last_name: null,
                     email: null,
                     temp_password: null,
+                    status: 'active'
                 },
-                companyName: null,
                 styles: {
                     admin: {
                         textAlign: 'left',
@@ -73,34 +81,46 @@
                 this.$store.dispatch('delete_company_user', userId)
             },
 
-            async submitForm() {
-                let result = null;
-                const _user = {...this.user, company_id: this.$route.params.id}
+            submitForm() {
+                console.log('here in CompanyUsers submitForm')
+                
+                if( this.user.is_admin ) {
+                    this.user.type = 'Admin'
+                }
                 // if we have a user.id, we must be in edit mode
                 if (this.user.id) {
-                    result = await this.$store.dispatch('update_user', _user)
+                    this.$store.dispatch('update_user', this.user)
                 } else {
-                // otherwise, we must be adding a user and need to provide the company_id
-                    result = await this.$store.dispatch('add_user', _user)
+                // otherwise, we must be adding a user
+                    this.$store.dispatch('add_user', this.user)
                 }
-                if (result.success) {
-                    this.user = {}
-                    // this.company_id = this.$route.params.id
-                    this.user.company_id = this.$route.params.id
-                } else {
-                    console.log('error', result.payload)
-                }
+
+                this.user = {}
+                // this.company_id = this.$route.params.id
+                this.user.company_id = this.$route.params.id
+                this.user.is_admin = false
+                this.user.type = 'Basic'
+                this.user.fizz = 'Buzz'
+                
             }
         },
 
         computed: {
-            companyUsers() {
-                return this.$store.getters.getUsersForCompany(this.$route.params.id)
+            companyName() {
+                try {
+                    return this.$store.getters.getCompanyById(this.$route.params.id).name
+                } catch(err) {
+                    return ''
+                }
+            },
+
+            users() {
+                return this.$store.state.users
             }
         },
 
         created() {
-            this.companyName = this.$store.getters.getCompanyNameById(this.$route.params.id)
+            this.$store.dispatch('initialize_users_for_company_id', this.$route.params.id)
         }
     }
 </script>
