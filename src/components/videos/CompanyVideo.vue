@@ -1,10 +1,10 @@
 <template>
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="company-video">
+        <div class="delete-action" @click="$emit('delete-video', _id)" />
         <div class="name">
             {{ _title }}
         </div>
-        <div class="delete-action" @click="$emit('delete-video', _id)" />
     </div>
 </template>
 
@@ -52,7 +52,7 @@
         text-align: left;
         padding-left: 10px;
         display: grid;
-        grid-template-columns: 300px 20px;
+        grid-template-columns: 20px 100%;
         grid-gap: 0;
     }
 
