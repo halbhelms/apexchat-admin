@@ -41,7 +41,7 @@
 
     .header {
         display: grid;
-        grid-template-columns: 472px 308px;
+        grid-template-columns: 372px 308px;
         text-align: left;
         border: 1px solid silver;
     }
