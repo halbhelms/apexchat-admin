@@ -41,12 +41,6 @@ export default createStore({
       }
     },
 
-    // getCompanyUsersForCompany(state) {
-    //   return (id) => {
-    //     return state.companyUsers.filter( companyUser => companyUser.company_id == id)
-    //   }
-    // },
-
     getCurrentCompany(state) {
       return (id) => {
         return state.companies.find( company => company.id == id)
@@ -71,24 +65,6 @@ export default createStore({
         return lead
       }
     },
-// do we need this since we also need to filter by dateFilter?
-    // _getLeadsForCompany() {
-    //   return async (id) => {
-    //     const result = await axios({
-    //       method: 'get',
-    //       url: 'https://codelifepro.herokuapp.com/leads?company_id=' + id,
-    //       data: {
-    //         company_id: id,
-    //       },
-    //       headers: {
-    //         'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
-    //         'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
-    //       }
-    //     })
-
-    //     return result.data
-    //   }
-    // },
 
     // date filter leads
     // this function calls one of three functions based on state.dateFilter
