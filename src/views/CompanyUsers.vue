@@ -1,7 +1,6 @@
 <template>
     <!-- user: {{ user }}
     <br /> -->
-    users: {{ $store.state.users.length }}
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <section-header>Users: {{ companyName }} </section-header>
     <div class="layout">

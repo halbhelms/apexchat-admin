@@ -21,7 +21,7 @@
             
             <base-input _label="Apex company ID" _id="apex-company-id" v-model="company.apex_company_id" ></base-input>
             
-            <base-textarea _optional="true" _label="Apex info" _id="apex-info" v-model="company.apex_info" ></base-textarea>
+            <base-textarea :_optional="true" _label="Apex info" _id="apex-info" v-model="company.apex_info" ></base-textarea>
             
             <base-checkbox _label="Self manage website?" :_styles="styles.selfManage" _id="self-managed-web" v-model="company.self_managed_web"></base-checkbox>
             
@@ -43,6 +43,7 @@
         data() {
             return {
                 statusOptions: ['active', 'paused'],
+
                 timeZones: [
                     'Eastern Time (US & Canada)', 
                     'Central Time (US & Canada)', 
@@ -86,8 +87,9 @@
         methods: {
             submitForm() {
                 // make sure phone is all-numeric
-                this.company.phone = this.company.phone.replace(/\D/g, '');
-                console.log("🚀 ~ file: CompanyInfoForm.vue ~ line 105 ~ submitForm ~ this.company.phone", this.company.phone)
+                if (this.company.phone) {
+                    this.company.phone = this.company.phone.replace(/\D/g, '');
+                }
                 // if $route.params.id, we're in editing mode
                 if (this.$route.params.id && this.company.name) {
                     this.$store.dispatch('update_company', this.company)
@@ -107,7 +109,11 @@
             },
 
             company() {
-                return this.$store.getters.getCompanyById(this.$route.params.id)
+                if (this.$route.params.id) {
+                    return this.$store.getters.getCompanyById(this.$route.params.id)
+                } else {
+                    return {status: 'active'}
+                }
             }
         },
     }

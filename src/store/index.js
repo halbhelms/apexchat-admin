@@ -181,10 +181,10 @@ export default createStore({
       console.log("🚀 ~ file: index.js ~ line 211 ~ ADD_CHAT ~ state.chats", state.chats)
     },
 
-    ADD_COMPANY(state, newCompany) {
-      newCompany.id = state.companies.length + 1;
-      state.companies.push(newCompany)
-    },
+    // ADD_COMPANY(state, newCompany) {
+    //   newCompany.id = state.companies.length + 1;
+    //   state.companies.push(newCompany)
+    // },
 
     ADD_USER(state, user) {
       state.users.push(user)
@@ -251,20 +251,26 @@ export default createStore({
       state.companies.splice(index, 1, editedCompany)
     },    
 
-    UPDATE_USER(state, editedUser) {
-      console.log("🚀 ~ file: index.js ~ line 409 ~ UPDATE_USER ~ editedUser", editedUser)
-      const index = state.companyUsers.findIndex(companyUser => editedUser.id == companyUser.id)
-      state.companyUsers.splice(index, 1, editedUser)
-    },
+    // UPDATE_USER(state, editedUser) {
+    //   console.log("🚀 ~ file: index.js ~ line 409 ~ UPDATE_USER ~ editedUser", editedUser)
+    //   const index = state.companyUsers.findIndex(companyUser => editedUser.id == companyUser.id)
+    //   state.companyUsers.splice(index, 1, editedUser)
+    // },
   },
   
   actions: {
-    add_company({ commit, state }, company) {
-     // adding id only for testing. Real companies will get id from API
-      if( !company.id ) {
-        company.id = state.companies.length + 1
-      }      
-      commit('ADD_COMPANY', company)
+    async add_company({ dispatch }, company) {
+      await axios({
+        method: 'POST',
+        url: 'https://codelifepro.herokuapp.com/companies',
+        headers: {
+          'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token          
+        },
+        data: company
+      })
+      // load companies and reroute
+      dispatch('initialize_companies')
       router.push({name: 'Companies'})
     },
 
@@ -327,12 +333,15 @@ export default createStore({
     },
    
     async initialize_companies({ commit}) {
-      const response = await axios.get('https://codelifepro.herokuapp.com/companies', {
+      let response = await axios({
+        method: 'get',
+        url: 'https://codelifepro.herokuapp.com/companies',
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
-          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token          
         }
       })
+  
       commit('SET_COMPANIES', response.data)
     },
 

@@ -77,7 +77,6 @@
         methods: {
           hideLabel() {
             this.focused = true
-          
           },
 
           showLabel() {
@@ -99,6 +98,10 @@
   margin-top: 18px;
 }
 
+label {
+  padding-left: 6px;
+}
+
 label.on {
   border-color: #0080E6;
   background: #0080E6;
@@ -112,7 +115,7 @@ label.on {
 }
 
 label.off {
-  border-color: white;
+  border-color: silver;
   background: white;
   color: white;
   font-size: .6rem;
@@ -194,14 +197,7 @@ div input:focus, div textarea:focus {
   z-index: 2; 
 } 
 */
-div label {
-  /* transition: background 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s; */
-  /* position: absolute; */
-  /* position: relative;
-  color: #999;
-  padding: 7px 6px;
-  text-align: left; */
-}
+
 div textarea {
   display: block;
   resize: vertical;

@@ -4,6 +4,8 @@
     <div>
       <textarea 
         v-bind="$attrs" 
+        @focus="hideLabel"
+        @focusout="showLabel"              
         :id="_id" 
         :name="_id"
         :style="style"
@@ -12,7 +14,7 @@
         :required="_optional ? false : true"
       >
       </textarea>
-      <label :for="_id">{{ _label }}</label>
+      <label :for="_id" :class="[focused ? 'off' : 'on']">{{ _label }}</label>
     </div>
   </div>
 </template>
@@ -65,11 +67,20 @@
                 defaultStyles: {
                     fontFamily: 'inherit',
                     fontSize: 'inherit',
-                }                
-            }  
+                },
+                focused: false
+            }
         },
 
-        methods: {},
+        methods: {
+          hideLabel() {
+            this.focused = true
+          },
+
+          showLabel() {
+            this.focused = false
+          },
+        },
 
         computed: {
             style() {
@@ -82,6 +93,31 @@
 <style scoped>
 * {
   box-sizing: border-box;
+}
+
+label.on {
+  border-color: #0080E6;
+  background: #0080E6;
+  color: white;
+  font-size: .6rem;
+  position: relative;
+  text-align: left;
+  margin-left: 0;
+  display:block;
+  transition: all .4s;
+}
+
+label.off {
+  border-color: white;
+  background: white;
+  color: white;
+  font-size: .6rem;
+  position: relative;
+  text-align: left;
+  margin-left: 0;
+  display:block;  
+  
+  transition: all .4s;
 }
 
 textarea {
@@ -120,7 +156,7 @@ div > div {
   overflow: hidden;
 }
 
-div input:valid, div textarea:valid {
+/* div input:valid, div textarea:valid {
   background: white;
 }
 div input:focus, div textarea:focus {
@@ -132,13 +168,16 @@ div input:focus + label, div textarea:focus + label {
   font-size: 70%;
   padding: 1px 6px;
   z-index: 2;
-}
+} */
 div label {
-  transition: background 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s;
+  /* transition: background 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s; */
   position: absolute;
   color: #999;
-  padding: 7px 6px;
+  /* padding: 7px 6px; */
   text-align: left;
+  height: 14px;
+  line-height: 14px;
+  padding-left: 6px;
 }
 div textarea {
   display: block;
