@@ -1,5 +1,4 @@
 <template>
-    user: {{ user }}
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <section-header>Users: {{ companyName }} </section-header>
     <div class="layout">
