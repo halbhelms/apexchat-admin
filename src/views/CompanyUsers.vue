@@ -1,6 +1,5 @@
 <template>
-    <!-- user: {{ user }}
-    <br /> -->
+    user: {{ user }}
     <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <section-header>Users: {{ companyName }} </section-header>
     <div class="layout">
@@ -82,6 +81,8 @@
             },
 
             submitForm() {
+                console.log('this.user', this.user);
+                
                 if( this.user.is_admin ) {
                     this.user.type = 'Admin'
                 }

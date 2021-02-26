@@ -36,7 +36,7 @@
                     firstName: null,
                     lastName: null,
                     email: null,
-                    tempPassword: null,
+                    password: null,
                     isAdmin: false,
                 }
             }
