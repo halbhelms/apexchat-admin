@@ -54,7 +54,6 @@
 
         methods: {
             leadDrilldown(leadId) {
-                console.log("🚀 ~ file: Leads.vue ~ line 53 ~ leadDrilldown ~ leadId", leadId)
                 // clear out any existing from previous requests
                 this.selectedLeadId = leadId
                 // this.chatId = null;
@@ -62,9 +61,7 @@
                 this.selectedLead = this.$store.getters.getLeadById(leadId)
                 
                 if (this.selectedLead.chat_id) {
-                    console.log("🚀 ~ file: Leads.vue ~ line 59 ~ leadDrilldown ~ this.selectedLead.chat_id", this.selectedLead.chat_id)
                     this.$store.dispatch('load_and_set_active_chat_by_id', this.selectedLead.chat_id)
-                    console.log("🚀 ~ file: Leads.vue ~ line 62 ~ leadDrilldown ~ this.chat", this.chat)
                 }
             },
 
