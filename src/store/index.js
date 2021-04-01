@@ -19,7 +19,8 @@ export default createStore({
     chats: {},
     videos: [],
     users: [],
-    companies: []
+    companies: [],
+    ApiBase: process.env.VUE_APP_API_BASE,
   },
   
   getters: {
@@ -61,7 +62,6 @@ export default createStore({
     getLeadById(state) {
       return (id) => {
         let lead = state.leads.find( lead => lead.id == id)
-        console.log("🚀 ~ file: index.js ~ line 101 ~ return ~ lead", lead)
         return lead
       }
     },
@@ -70,8 +70,6 @@ export default createStore({
     // this function calls one of three functions based on state.dateFilter
     // get actual leads
     getLeadsForDateFilter(state, getters) {
-      console.log('in getLeadsForDateFilter')
-      
         let response = {}
         if (state.dateFilter === 'sinceLogin') {
           let leads = getters.getLeadsSinceLastLogin
@@ -93,41 +91,34 @@ export default createStore({
 
     // get leads since last login
     getLeadsSinceLastLogin(state) {
-      console.log('sinceLastLogin')
-      
         let leads = []
         state.leads.forEach( lead => {
           if (new Date(lead.generated_at) - state.lastLogin > 0) {
             leads.push(lead)
           }
         })
-        console.log("🚀 ~ file: index.js ~ line 191 ~ getLeadsSinceLastLogin ~ leads", leads)
         return leads
     },
 
     // get leads from last 30 days for specific company
     getLeadsLast30(state) {
-      console.log('sinceLast30')
       let leads = []
         state.leads.forEach( lead => {
           if ( differenceInDays(new Date(), new Date(lead.generated_at)) < 31) {
             leads.push(lead)
           }
         })
-        console.log("🚀 ~ file: index.js ~ line 204 ~ getLeadsLast30 ~ leads", leads)
       return leads
     },
 
     // get leads from last 60 days for specific company
     getLeadsLast60(state) {
-      console.log('sinceLast90')
       let leads = []
         state.leads.forEach( lead => {
           if ( differenceInDays(new Date(), new Date(lead.generated_at)) < 61) {
             leads.push(lead)
           }
         })
-        console.log("🚀 ~ file: index.js ~ line 217 ~ getLeadsLast60 ~ leads", leads)
       return leads
     },
 
@@ -154,7 +145,6 @@ export default createStore({
     SET_ACTIVE_CHAT(state, chat) {
       state.chats[chat.id] = chat
       state.activeChat = chat
-      console.log("🚀 ~ file: index.js ~ line 211 ~ ADD_CHAT ~ state.chats", state.chats)
     },
 
     // ADD_COMPANY(state, newCompany) {
@@ -205,8 +195,6 @@ export default createStore({
       let lead = state.leads[index]
       let disputed = {status: status}
       let newLead = {...lead, ...disputed}
-      console.log("🚀 ~ file: index.js ~ line 422 ~ SET_DISPUTED ~ newLead", newLead)
-      
       state.leads.splice(index, 1, newLead)    
     },
 
@@ -225,20 +213,14 @@ export default createStore({
     UPDATE_COMPANY(state, editedCompany) {
       let index = state.companies.findIndex( company => company.id == editedCompany.id)
       state.companies.splice(index, 1, editedCompany)
-    },    
-
-    // UPDATE_USER(state, editedUser) {
-    //   console.log("🚀 ~ file: index.js ~ line 409 ~ UPDATE_USER ~ editedUser", editedUser)
-    //   const index = state.companyUsers.findIndex(companyUser => editedUser.id == companyUser.id)
-    //   state.companyUsers.splice(index, 1, editedUser)
-    // },
+    }
   },
   
   actions: {
-    async add_company({ dispatch }, company) {
+    async add_company({ dispatch, state }, company) {
       await axios({
         method: 'POST',
-        url: 'https://codelifepro.herokuapp.com/companies',
+        url: `https://${state.ApiBase}/companies`,
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
           'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token          
@@ -250,12 +232,11 @@ export default createStore({
       router.push({name: 'Companies'})
     },
 
-    async add_user({ dispatch }, user) {
-      console.log("🚀 ~ file: index.js ~ line 272 ~ add_user ~ user", user)
+    async add_user({ dispatch, state }, user) {
       try {
         let addedUser = await axios({
           method: 'post',
-          url: 'https://codelifepro.herokuapp.com/users/',
+          url: `https://${state.ApiBase}/users/`,
           data: user,
           headers: {
             'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
@@ -268,10 +249,10 @@ export default createStore({
       }
     },
 
-    async add_video({ commit }, video) {
+    async add_video({ commit, state }, video) {
       let result = await axios({
         method: 'post',
-        url: 'https://codelifepro.herokuapp.com/videos',
+        url: `https://${state.ApiBase}/videos`,
         data: video,
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
@@ -282,10 +263,10 @@ export default createStore({
       commit('ADD_VIDEO', result.data)
     },
 
-    async delete_user({ dispatch }, payload) {
+    async delete_user({ dispatch, state }, payload) {
       await axios({
         method: 'delete',
-        url: 'https://codelifepro.herokuapp.com/users/' + payload.userId,
+        url: `https://${state.ApiBase}/users/` + payload.userId,
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
           'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token          
@@ -295,10 +276,10 @@ export default createStore({
       dispatch('initialize_users_for_company_id', payload.companyId)
     },
 
-    async delete_video({ commit }, videoId) {
+    async delete_video({ commit, state }, videoId) {
       await axios({
         method: 'delete',
-        url: 'https://codelifepro.herokuapp.com/videos/' + videoId,
+        url: `https://${state.ApiBase}/videos/` + videoId,
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
           'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,
@@ -308,10 +289,10 @@ export default createStore({
       commit('DELETE_VIDEO', videoId)
     },
    
-    async initialize_companies({ commit}) {
+    async initialize_companies({ commit, state }) {
       let response = await axios({
         method: 'get',
-        url: 'https://codelifepro.herokuapp.com/companies',
+        url: `https://${state.ApiBase}/companies`,
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
           'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token          
@@ -329,7 +310,7 @@ export default createStore({
         // ...otherwise fetch the chat and make that the activeChat
         const response = await axios({
           method: 'get',
-          url: `https://codelifepro.herokuapp.com/chats/${id}`,
+          url: `https://${state.ApiBase}/chats/${id}`,
           headers: {
             'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
             'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,
@@ -340,12 +321,12 @@ export default createStore({
       }
     },
 
-    async initialize_leads_for_company_id({ commit }, id) {
+    async initialize_leads_for_company_id({ commit, state }, id) {
       console.log('in initialize_leads...')
       
         const result = await axios({
           method: 'get',
-          url: 'https://codelifepro.herokuapp.com/leads?company_id=' + id,
+          url: `https://${state.ApiBase}/leads?company_id=` + id,
           headers: {
             'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
             'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
@@ -356,26 +337,22 @@ export default createStore({
         commit('SET_LEADS', result.data)
     },
 
-    async initialize_users_for_company_id({ commit }, id) {
-    console.log("🚀 ~ file: index.js ~ line 367 ~ initialize_users_for_company_id ~ id", id)
-      
+    async initialize_users_for_company_id({ commit, state }, id) {
       let result = await axios({
         method: 'get',
-        url: 'https://codelifepro.herokuapp.com/users?company_id=' + id,
+        url: `https://${state.ApiBase}/users?company_id=` + id,
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
           'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,          
         }
       })
-      console.log('result.data', result.data);
-      
       commit ('SET_USERS', result.data)
     },
 
-    async initialize_videos_for_company_id({ commit }, id) {
+    async initialize_videos_for_company_id({ commit, state }, id) {
       let result = await axios({
         method: 'get',
-        url: 'https://codelifepro.herokuapp.com/videos?company_id=' + id,
+        url: `https://${state.ApiBase}/videos?company_id=` + id,
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
           'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,          
@@ -405,10 +382,10 @@ export default createStore({
       commit('SET_DISPUTED', options)
     },
 
-    update_company({ commit }, company) {
+    update_company({ commit, state }, company) {
       axios({
         method: 'patch',
-        url: 'https://codelifepro.herokuapp.com/companies/' + company.id,
+        url: `https://${state.ApiBase}/companies/` + company.id,
         data: company,
         headers: {
           'X-User-Email': 'hal.helms@gmail.com',
@@ -420,10 +397,10 @@ export default createStore({
         .catch(err => console.log('err', err))
     },    
 
-    async update_user({ dispatch }, user) {
+    async update_user({ dispatch, state }, user) {
       await axios({
         method: 'patch',
-        url: 'https://codelifepro.herokuapp.com/users/' + user.id,
+        url: `https://${state.ApiBase}/users/` + user.id,
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
           'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,          

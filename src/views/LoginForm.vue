@@ -45,7 +45,7 @@
             async loginUser() {
                 try {
                     // attempt a login
-                    let login = await axios.get('https://codelifepro.herokuapp.com/users/me', {
+                    let login = await axios.get(`https://${this.$store.state.ApiBase}/users/me`, {
                         headers: {
                             Authorization: `Basic ${btoa(this.login.email +':' + this.login.password)}` 
                         }
