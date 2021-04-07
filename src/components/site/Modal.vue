@@ -89,6 +89,7 @@
 
         methods: {
             modalOff() {
+                this.$store.dispatch('remove_active_chat')
                 this.$emit('modal-off')
             },
 
