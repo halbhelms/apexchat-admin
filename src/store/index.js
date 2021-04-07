@@ -22,29 +22,29 @@ export default createStore({
     companies: [],
     ApiBase: process.env.VUE_APP_API_BASE,
   },
-  
+
   getters: {
     getChatById(state) {
       return (id) => {
-        return state.chats.find( chat => chat.id == id).texts
+        return state.chats.find(chat => chat.id == id).texts
       }
     },
 
     getCompanyById(state) {
       return (id) => {
-        return state.companies.find( company => company.id == id)
+        return state.companies.find(company => company.id == id)
       }
     },
 
     getCompanyNameById(state) {
       return (id) => {
-        return state.companies.find( company => company.id == id).name
+        return state.companies.find(company => company.id == id).name
       }
     },
 
     getCurrentCompany(state) {
       return (id) => {
-        return state.companies.find( company => company.id == id)
+        return state.companies.find(company => company.id == id)
       }
     },
 
@@ -54,14 +54,14 @@ export default createStore({
 
     getDisputedStatusById(state) {
       return (id) => {
-        let lead =  state.leads.find( lead => lead.id == id)
+        let lead = state.leads.find(lead => lead.id == id)
         return lead.disputed
       }
     },
 
     getLeadById(state) {
       return (id) => {
-        let lead = state.leads.find( lead => lead.id == id)
+        let lead = state.leads.find(lead => lead.id == id)
         return lead
       }
     },
@@ -70,87 +70,86 @@ export default createStore({
     // this function calls one of three functions based on state.dateFilter
     // get actual leads
     getLeadsForDateFilter(state, getters) {
-        let response = {}
-        if (state.dateFilter === 'sinceLogin') {
-          let leads = getters.getLeadsSinceLastLogin
-          response.leads = leads.slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
-          response.total = leads.length
-        }
-        if (state.dateFilter === 'last30') {
-          let leads = getters.getLeadsLast30
-          response.leads =leads.slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
-          response.total = leads.length
-        }
-        if (state.dateFilter === 'last60') {
-          let leads = getters.getLeadsLast60
-          response.leads = leads.slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
-          response.total = leads.length
-        }
-        return response
+      let response = {}
+      if (state.dateFilter === 'sinceLogin') {
+        let leads = getters.getLeadsSinceLastLogin
+        response.leads = leads.slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+        response.total = leads.length
+      }
+      if (state.dateFilter === 'last30') {
+        let leads = getters.getLeadsLast30
+        response.leads = leads.slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+        response.total = leads.length
+      }
+      if (state.dateFilter === 'last60') {
+        let leads = getters.getLeadsLast60
+        response.leads = leads.slice(state.leadsOffset, state.leadsOffset + state.leadsPerPage)
+        response.total = leads.length
+      }
+      return response
     },
 
     // get leads since last login
     getLeadsSinceLastLogin(state) {
-        let leads = []
-        state.leads.forEach( lead => {
-          if (new Date(lead.generated_at) - state.lastLogin > 0) {
-            leads.push(lead)
-          }
-        })
-        return leads
+      let leads = []
+      state.leads.forEach(lead => {
+        if (new Date(lead.generated_at) - state.lastLogin > 0) {
+          leads.push(lead)
+        }
+      })
+      return leads
     },
 
     // get leads from last 30 days for specific company
     getLeadsLast30(state) {
       let leads = []
-        state.leads.forEach( lead => {
-          if ( differenceInDays(new Date(), new Date(lead.generated_at)) < 31) {
-            leads.push(lead)
-          }
-        })
+      state.leads.forEach(lead => {
+        if (differenceInDays(new Date(), new Date(lead.generated_at)) < 31) {
+          leads.push(lead)
+        }
+      })
       return leads
     },
 
     // get leads from last 60 days for specific company
     getLeadsLast60(state) {
       let leads = []
-        state.leads.forEach( lead => {
-          if ( differenceInDays(new Date(), new Date(lead.generated_at)) < 61) {
-            leads.push(lead)
-          }
-        })
+      state.leads.forEach(lead => {
+        if (differenceInDays(new Date(), new Date(lead.generated_at)) < 61) {
+          leads.push(lead)
+        }
+      })
       return leads
     },
 
     getUserById(state) {
       return (id) => {
-        return state.users.find( user => user.id == id)
+        return state.users.find(user => user.id == id)
       }
     },
 
     getUsersForCompany(state) {
       return (id) => {
-        return state.companyUsers.filter( user => user.company_id == id)
+        return state.companyUsers.filter(user => user.company_id == id)
       }
     },
 
     getVideosForCompany(state) {
       return (id) => {
-        return state.videos.filter( video => video.company_id == id)
+        return state.videos.filter(video => video.company_id == id)
       }
     }
   },
-  
+
   mutations: {
     SET_ACTIVE_CHAT(state, chat) {
       state.chats[chat.id] = chat
       state.activeChat = chat
     },
 
-    // ADD_COMPANY(state, newCompany) {
-    //   newCompany.id = state.companies.length + 1;
-    //   state.companies.push(newCompany)
-    // },
+    REMOVE_ACTIVE_CHAT(state) {
+      state.activeChat = null
+    },
 
     ADD_USER(state, user) {
       state.users.push(user)
@@ -161,13 +160,13 @@ export default createStore({
     },
 
     DELETE_COMPANY_USER(state, userId) {
-      const index = state.companyUsers.findIndex( user => user.id == userId)
+      const index = state.companyUsers.findIndex(user => user.id == userId)
       state.companyUsers.splice(index, 1)
     },
 
     DELETE_VIDEO(state, videoId) {
-      const index = state.videos.findIndex( video => video.id == videoId)
-      state.videos.splice(index, 1)      
+      const index = state.videos.findIndex(video => video.id == videoId)
+      state.videos.splice(index, 1)
     },
 
     SET_ACTIVE_NAV(state, navElement) {
@@ -190,12 +189,12 @@ export default createStore({
       state.leads = leads
     },
 
-    SET_DISPUTED(state, {leadId, status}) {
-      let index = state.leads.findIndex( lead => lead.id == leadId)
+    SET_DISPUTED(state, { leadId, status }) {
+      let index = state.leads.findIndex(lead => lead.id == leadId)
       let lead = state.leads[index]
-      let disputed = {status: status}
-      let newLead = {...lead, ...disputed}
-      state.leads.splice(index, 1, newLead)    
+      let disputed = { status: status }
+      let newLead = { ...lead, ...disputed }
+      state.leads.splice(index, 1, newLead)
     },
 
     SET_LEADS_OFFSET(state, offset) {
@@ -211,11 +210,11 @@ export default createStore({
     },
 
     UPDATE_COMPANY(state, editedCompany) {
-      let index = state.companies.findIndex( company => company.id == editedCompany.id)
+      let index = state.companies.findIndex(company => company.id == editedCompany.id)
       state.companies.splice(index, 1, editedCompany)
     }
   },
-  
+
   actions: {
     async add_company({ dispatch, state }, company) {
       await axios({
@@ -223,13 +222,13 @@ export default createStore({
         url: `https://${state.ApiBase}/companies`,
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
-          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token          
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
         },
         data: company
       })
       // load companies and reroute
       dispatch('initialize_companies')
-      router.push({name: 'Companies'})
+      router.push({ name: 'Companies' })
     },
 
     async add_user({ dispatch, state }, user) {
@@ -241,10 +240,11 @@ export default createStore({
           headers: {
             'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
             'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
-          }        })
+          }
+        })
         // reload the users
         dispatch('initialize_users_for_company_id', addedUser.data.company_id)
-      } catch(err) {
+      } catch (err) {
         console.log('error', err)
       }
     },
@@ -256,10 +256,10 @@ export default createStore({
         data: video,
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
-          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,          
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,
         }
       })
-      
+
       commit('ADD_VIDEO', result.data)
     },
 
@@ -269,7 +269,7 @@ export default createStore({
         url: `https://${state.ApiBase}/users/` + payload.userId,
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
-          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token          
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
         }
       })
 
@@ -283,22 +283,22 @@ export default createStore({
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
           'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,
-        }        
+        }
       })
 
       commit('DELETE_VIDEO', videoId)
     },
-   
+
     async initialize_companies({ commit, state }) {
       let response = await axios({
         method: 'get',
         url: `https://${state.ApiBase}/companies`,
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
-          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token          
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
         }
       })
-  
+
       commit('SET_COMPANIES', response.data)
     },
 
@@ -321,20 +321,24 @@ export default createStore({
       }
     },
 
+    remove_active_chat({ commit }) {
+      commit('REMOVE_ACTIVE_CHAT')
+    },
+
     async initialize_leads_for_company_id({ commit, state }, id) {
       console.log('in initialize_leads...')
-      
-        const result = await axios({
-          method: 'get',
-          url: `https://${state.ApiBase}/leads?company_id=` + id,
-          headers: {
-            'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
-            'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
-          }
-        })
-        // state.leadsLoaded = true
-        
-        commit('SET_LEADS', result.data)
+
+      const result = await axios({
+        method: 'get',
+        url: `https://${state.ApiBase}/leads?company_id=` + id,
+        headers: {
+          'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
+        }
+      })
+      // state.leadsLoaded = true
+
+      commit('SET_LEADS', result.data)
     },
 
     async initialize_users_for_company_id({ commit, state }, id) {
@@ -343,10 +347,10 @@ export default createStore({
         url: `https://${state.ApiBase}/users?company_id=` + id,
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
-          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,          
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,
         }
       })
-      commit ('SET_USERS', result.data)
+      commit('SET_USERS', result.data)
     },
 
     async initialize_videos_for_company_id({ commit, state }, id) {
@@ -355,7 +359,7 @@ export default createStore({
         url: `https://${state.ApiBase}/videos?company_id=` + id,
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
-          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,          
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,
         }
       })
 
@@ -389,13 +393,13 @@ export default createStore({
         data: company,
         headers: {
           'X-User-Email': 'hal.helms@gmail.com',
-          'X-User-Token': 'v8hDDSeYYQx2x52dynPk' 
+          'X-User-Token': 'v8hDDSeYYQx2x52dynPk'
         }
       })
         .then(commit('UPDATE_COMPANY', company))
         .then(router.push({ name: 'Companies' }))
         .catch(err => console.log('err', err))
-    },    
+    },
 
     async update_user({ dispatch, state }, user) {
       await axios({
@@ -403,7 +407,7 @@ export default createStore({
         url: `https://${state.ApiBase}/users/` + user.id,
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
-          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,          
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,
         },
         data: user,
       })
@@ -415,9 +419,9 @@ export default createStore({
     next_leads({ commit, state }) {
       commit('SET_LEADS_OFFSET', state.leadsOffset + state.leadsPerPage)
     },
-    
+
     previous_leads({ commit, state }) {
-      commit('SET_LEADS_OFFSET', state.leadsOffset !== 0 ? state.leadsOffset - state.leadsPerPage  : 0)
+      commit('SET_LEADS_OFFSET', state.leadsOffset !== 0 ? state.leadsOffset - state.leadsPerPage : 0)
     },
 
   },
