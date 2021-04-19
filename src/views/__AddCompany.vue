@@ -1,5 +1,6 @@
 <template>
 <div class="edit">
+company: {{ company }}
     <!-- title -->
     <AddHeader/>
     <div class="columns-2">
