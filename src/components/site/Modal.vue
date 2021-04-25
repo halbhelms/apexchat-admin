@@ -2,7 +2,7 @@
     <div class="outer modal-on">
         <div class="modal-content">
             <div class="modal-header">
-                <div>{{ $props._chat }}</div>
+                <!-- <div>{{ $props._chat }}</div> -->
                 <!-- header for lead -->
                 <img v-if="_selectedLead.disputed" id="disputed-icon" src="../site/disputed.png" width="36"/>
                 <span class="header-text">Details for Lead No. {{ _selectedLead.apex_lead_id }} </span>
@@ -130,10 +130,10 @@
             messages() {
                 // if we only want to show visitor messages
                 if (this.visitorOnly) {
-                    return this.$props._chat.filter( message => message.display_name == 'Visitor')
+                    return this.$props._chat.chat_messages.filter( message => message.display_name == 'Visitor')
                 // or we want to display all messages
                 } else {
-                    return this.$props._chat
+                    return this.$props._chat.chat_messages
                 }
             }
         }
