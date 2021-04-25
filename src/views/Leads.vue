@@ -47,6 +47,7 @@
         data() {
             return {
                 leads: [],
+                selectedLeadId: null,
                 selectedLead: null,
                 chat: []
             }

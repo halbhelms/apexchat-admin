@@ -1,34 +1,134 @@
 <template>
-    company: {{ company }}
-    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <section-header>Company Info</section-header>
     <form @submit.prevent="submitForm">
-        <div class="company-info-form" v-if="company">
-            <base-input _label="Company name" _id="company-name"  v-model="company.name"></base-input>
+        <div class="company-info-form">
+            <!-- company name -->
+            <div class="form-control">
+                <input 
+                    id="name" 
+                    class="text-input" 
+                    v-model="company.name" 
+                    type="text" />
+                <label for="name">Company name</label>
+            </div>
+            <!-- company email -->
+            <div class="form-control">
+                <input 
+                    id="email" 
+                    class="text-input" 
+                    v-model="company.email" 
+                    type="text" />
+                <label for="email">Company email</label>
+            </div>
+            <!-- company phone -->
+            <div class="form-control">
+                <input 
+                    id="phone" 
+                    class="text-input" 
+                    v-model="company.phone" 
+                    type="tel" />
+                <label for="phone">Company Phone</label>
+            </div>
+            <!-- company domain -->
+            <div class="form-control">
+                <input 
+                    id="domain" 
+                    class="text-input" 
+                    v-model="company.domain" 
+                    type="text" />
+                <label for="domain">Website address</label>
+            </div>
+            <!-- company logo url -->
+            <div class="form-control">
+                <input 
+                    id="logo-url" 
+                    class="text-input" 
+                    v-model="company.logo_url" 
+                    type="text" />
+                <label for="logo-url">URL to logo image</label>
+            </div>
+            <!-- time zone -->
+            <div class="form-control">
+                <select 
+                    class="timezone" 
+                    id="time-zone" 
+                    v-model="company.time_zone">
+                    <option v-for="timeZone in timeZones" :key="timeZone" :value="timeZone">{{ timeZone }}</option>
+                </select>
+                <label for="time-zone">Time zone</label>
+            </div>
+            <!-- company owner -->
+            <div class="form-control">
+                <input 
+                    id="owner" 
+                    class="text-input" 
+                    v-model="company.owner" 
+                    type="text" />
+                <label for="owner">Owner</label>
+            </div>
+            <!-- company since -->
+            <div class="form-control">
+                <input 
+                    id="since" 
+                    class="text-input" 
+                    v-model="company.since" 
+                    type="text" />
+                <label for="since">Customer since (year)</label>
+            </div>
+            <!-- Apex company id-->
+            <div class="form-control">
+                <input 
+                    id="apex_company_id" 
+                    class="text-input" 
+                    v-model="company.apex_company_id" 
+                    type="tel" />
+                <label for="apex_company_id">Apex company ID</label>
+            </div>
+            <!-- Apex company name-->
+            <div class="form-control">
+                <input 
+                    id="apex_company_id" 
+                    class="text-input" 
+                    v-model="company.apex_company_name" 
+                    type="tel" />
+                <label for="apex_company_id">Apex company name</label>
+            </div>
+            <!-- other Apex company info-->
+            <div class="form-control">
+                <textarea 
+                    id="apex_info" 
+                    class="text-input" 
+                    v-model="company.apex_info" />
+                <label class="textarea" for="apex_info">Other Apex company info</label>
+            </div>
+            <!-- Self managing?-->
+            <div class="form-control">
+                <div class="checkbox-control">
+                    <input 
+                        type="checkbox" 
+                        id="self-managed" 
+                        class="checkbox" 
+                        :value="status" />
+                    <label class="checkbox-label" for="self-managed">Self manages website?</label>
+                </div>
+            </div>
+            <!-- Status?-->
+            <div class="form-control">
+                <div class="checkbox-control">
+                    <input 
+                        type="checkbox" 
+                        id="active-status" 
+                        class="checkbox" 
+                        @click="updateStatus"
+                        />
+                    <label 
+                        class="checkbox-label" 
+                        for="active-status">Account active?</label>
+                </div>
+            </div>
             
-            <base-input _optional="true" _label="Website address" _id="domain" v-model="company.domain" _type="url" ></base-input>
-            
-            <base-input _optional="true" _label="Logo url" _id="logo-url" v-model="company.logo_url" ></base-input>
-            
-            <base-select _label="Time zone" :_styles="styles.timeZone" _id="time-zone" v-model="company.time_zone" :_options="timeZones"></base-select>
-            
-            <base-input _optional _label="Owner" _id="owner" v-model="company.owner" ></base-input>
-            
-            <base-input _label="Customer since (year)" _id="since" v-model="company.since" ></base-input>
-            
-            <base-input _label="Email" _type="email" _id="email" v-model="company.email" ></base-input>
-            
-            <base-input _optional="true" _label="Phone" _type="tel" _id="phone" v-model="company.phone" ></base-input>
-            
-            <base-input _label="Apex company ID" _id="apex-company-id" v-model="company.apex_company_id" ></base-input>
-            
-            <base-textarea :_optional="true" _label="Apex info" _id="apex-info" v-model="company.apex_info" ></base-textarea>
-            
-            <base-checkbox _label="Self manage website?" :_styles="styles.selfManage" _id="self-managed-web" v-model="company.self_managed_web"></base-checkbox>
-            
-            <base-select _label="Active status" _id="status" v-model="company.status" :_options="statusOptions" :_styles="styles.activeStatus" class="select"></base-select>
+            <button type="submit">{{ buttonLabel }}</button>
 
-            <base-button :_styles="styles.submitButton" _type="submit">{{ buttonLabel }}</base-button>
         </div>
     </form>
 </template>
@@ -81,6 +181,20 @@
                             width: '82px',
                         }
                     }
+                },
+                company: {
+                    name: '',
+                    domain: '',
+                    logo_url: '',
+                    time_zone: '',
+                    owner: '',
+                    email: '',
+                    phone: '',
+                    apex_company_id: '',
+                    apex_company_name: '',
+                    apex_info: '',
+                    status: '', 
+                    self_managed_web: false,
                 }
             }
         },
@@ -99,6 +213,14 @@
                     this.$store.dispatch('add_company', this.company)
                 }
             },
+
+            updateStatus(event) {
+                if (event.target.checked) {
+                    this.company.status = 'active'
+                } else {
+                    this.company.status = 'suspended'
+                }
+            },
         },
 
         computed: {
@@ -109,21 +231,81 @@
                 return 'Add'
             },
 
-            company() {
-                if (this.$route.params.id) {
-                    return this.$store.getters.getCompanyById(this.$route.params.id)
-                } else {
-                    return {status: 'active'}
-                }
+            status() {
+
             }
+        },
+
+        mounted() {
+            if (this.$route.params.id) {
+                this.company =  this.$store.getters.getCompanyById(this.$route.params.id)
+            } 
         },
     }
 </script>
 
 <style scoped>
+    :root {
+        --blue: rgb(17,107,227);
+    }
     .company-info-form {
         width: 400px;
         margin: 0 auto;
+    }
+
+    .form-control {
+        position: relative;
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    textarea.text-input {
+        height: 5rem;
+    }
+    .text-input, .timezone {
+        width: 100%;
+        height: 2.5rem;
+        display: relative;
+        font-size: 1.4rem;
+    }
+
+    label {
+        display: block;
+        text-align: left;
+        position: relative;
+        /* background-color: var(--blue); */
+        background-color: rgb(17,107,227);
+        color: white;
+        top: -12px;
+        padding-left: 6px;
+    }
+
+    label.textarea {
+        position: relative;
+        top: -18px;
+    }
+
+    label.checkbox-label {
+        display: inline-block;
+        width: 90%;
+        position: relative;
+        left: 20px;
+    }
+
+    div.checkbox-control {
+        background: rgb(17,107,227);
+        /* background: var(--blue) */
+    }
+
+    div.checkbox-control input {
+        position: relative;
+        bottom: 6px;
+        left: 6px;
+    }
+    div.checkbox-control label {
+        position: relative;
+        top: -6px;
+        left: 6px;
     }
 
     .company-info-form * {
@@ -135,9 +317,16 @@
         margin-bottom: 24px;
     }
 
-    #time-zone {
-        margin: 0 auto;
+    button {
+        width: 200px;
+        height: 40px;
+        background: rgb(17,107,227);
+        /* background: var(--blue); */
+        color: white;
+        font-size: 1.4rem;
+        border-radius: 20px;
         position: relative;
-        left: -62px;
+        top: 20px;
     }
+
 </style>

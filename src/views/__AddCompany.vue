@@ -1,6 +1,5 @@
 <template>
 <div class="edit">
-company: {{ company }}
     <!-- title -->
     <AddHeader/>
     <div class="columns-2">
@@ -26,16 +25,16 @@ company: {{ company }}
 
         data() {
             return {
-                company: {
-                    apexInfo: null,
-                    selfManage: false,
-                    email: null,
-                    users: [],
-                    phone: null,
-                    name: null,
-                    owner: null,
-                    since: new Date().getFullYear()
-                },
+                // company: {
+                //     apexInfo: null,
+                //     selfManage: false,
+                //     email: null,
+                //     users: [],
+                //     phone: null,
+                //     name: null,
+                //     owner: null,
+                //     since: new Date().getFullYear()
+                // },
                 user: {
                     userName: null,
                     email: null,
@@ -47,9 +46,9 @@ company: {{ company }}
         },
 
         methods: {
-            submitCompanyForm() {
-                this.$store.dispatch('add_company', this.company)
-            },
+            // submitCompanyForm() {
+            //     this.$store.dispatch('add_company', this.company)
+            // },
 
             submitUserForm() {
                 this.company.users.push(this.user)

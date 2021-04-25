@@ -1,4 +1,5 @@
 <template>
+    props: this.$props
     <div class="outer modal-on">
         <div class="modal-content">
             <div class="modal-header">
