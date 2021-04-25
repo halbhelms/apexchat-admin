@@ -1,4 +1,5 @@
 <template>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="chat-line-item" :class="[ _message.display_name == 'Visitor' ? 'visitor' : 'agent' ]" >
         <!-- a message from a chat -->
         <div class="message">

@@ -1,4 +1,5 @@
 <template>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <section-header>Company Info</section-header>
     <form @submit.prevent="submitForm">
         <div class="company-info-form">

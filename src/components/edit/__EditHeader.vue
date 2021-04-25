@@ -1,4 +1,5 @@
 <template>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="header">
         <!-- <div class="title">Edit: {{ _companyName }}</div> -->
         <section-header>{{ _companyName }}</section-header>

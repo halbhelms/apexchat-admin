@@ -1,4 +1,5 @@
 <template>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="outer modal-on">
         <div class="modal-content">
             <div class="modal-header">

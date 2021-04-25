@@ -1,4 +1,5 @@
 <template>
+    <div v-if="inDev" class="inDev">{{ $options.name }}</div>
     <div class="header">
         <!-- faq logo -->
         <div class="faq-logo">
@@ -19,12 +20,12 @@
             <!-- username -->
             <div class="form-control">
                 <label for="email">Email</label>
-                <input type="email" id="email" :placeholder="accountInfo.username" v-model="accountInfo.username">
+                <input type="email" id="email" :placeholder="accountInfo.email" v-model="accountInfo.username">
             </div>
             <!-- password -->
             <div class="form-control">
                 <label for="password">Password</label>
-                <input type="text" id="password" :placeholder="accountInfo.username" v-model="accountInfo.password">
+                <input type="text" id="password" :placeholder="accountInfo.temporary_password" v-model="accountInfo.password">
             </div>
             <!-- cancel and submit buttons -->
             <div class="account-buttons">
@@ -131,7 +132,7 @@
         background-color: white;
         border-radius: 12px;
         padding: 6px;
-        width: 260px;
+        width: 380px;
         height: 140px;
         z-index: 99;
     }
