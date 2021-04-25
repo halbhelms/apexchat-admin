@@ -1,8 +1,8 @@
 <template>
-    props: this.$props
     <div class="outer modal-on">
         <div class="modal-content">
             <div class="modal-header">
+                <div>{{ $props._chat }}</div>
                 <!-- header for lead -->
                 <img v-if="_selectedLead.disputed" id="disputed-icon" src="../site/disputed.png" width="36"/>
                 <span class="header-text">Details for Lead No. {{ _selectedLead.apex_lead_id }} </span>
@@ -114,11 +114,9 @@
             },
 
             location() {
-                if (this.$props._selectedLead.state || this.$props._selectedLead.state) {
-                    return `${this.$props_selectedLead.city} ${this.$props._selectedLead.state}`
-                } else {
-                    return "Missing"
-                }
+                
+                    return `${this.$props_selectedLead?.city} ${this.$props._selectedLead?.state}`
+                
             },
 
             email() {

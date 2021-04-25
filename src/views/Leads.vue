@@ -26,8 +26,10 @@
             @modal-off="noSelectedLead" 
             v-if="selectedLead" 
             :_selectedLead="selectedLead" 
-            :_chat="activeChat" />
+            :_chat="$store.state.activeChat" />
     </div>
+    <div>{{ $store.state.activeChat }}</div>
+
 </template>
 
 <script>
@@ -55,15 +57,19 @@
 
         methods: {
             leadDrilldown(leadId) {
+                console.log('leadId', leadId)
                 // clear out any existing from previous requests
                 this.selectedLeadId = leadId
                 // this.chatId = null;
                 // get new lead and associated chat
-                this.selectedLead = this.$store.getters.getLeadById(leadId)
+                let selectedLead = this.$store.getters.getLeadById(leadId)
+                console.log('selectedLead',selectedLead)
                 
-                if (this.selectedLead.chat_id) {
-                    this.$store.dispatch('load_and_set_active_chat_by_id', this.selectedLead.chat_id)
+                if (selectedLead.chat_id) {
+                    this.$store.dispatch('load_and_set_active_chat_by_id', selectedLead.chat_id)
                 }
+
+                this.selectedLead = selectedLead
             },
 
             noSelectedLead() {
