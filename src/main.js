@@ -27,7 +27,7 @@ app.component('section-header', SectionHeader)
 app.component('split-columns', SplitColumns)
 
 app.config.globalProperties.inDev = false
-app.config.globalProperties.apiUrl = "https://codelifepro.herokuapp.com/"
+// app.config.globalProperties.apiUrl = "https://codelifepro.herokuapp.com/"
 
 app.mount("#app");
   
