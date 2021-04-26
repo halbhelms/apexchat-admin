@@ -121,6 +121,7 @@
                         id="active-status" 
                         class="checkbox" 
                         @click="updateStatus"
+                        v-model="isActive"
                         />
                     <label 
                         class="checkbox-label" 
@@ -234,6 +235,14 @@
 
             status() {
 
+            },
+
+            isActive() {
+                if (this.company.status === 'active') {
+                    return true
+                } else {
+                    return false
+                }
             }
         },
 
