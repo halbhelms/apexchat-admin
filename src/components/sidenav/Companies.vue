@@ -1,6 +1,6 @@
 <template>
     <div class="sidebar-nav-element" v-bind:class="{active: $store.state.active === 'support'}" @click="setActiveNav('companies')">
-        <img class="customer-icon" src="./customer.png" alt="" width="64">
+        <img class="customer-icon" src="./company.png" alt="" width="64">
 
         <div class="label">Companies</div>
     </div>
