@@ -21,7 +21,7 @@
                     
                     <div class="contact-name contact-box name">
                         <div class="contact-name-title title la">Name</div>
-                        <div class="contact-name-data data la">{{ _selectedLead.raw_data.name }}</div>
+                        <div class="contact-name-data data la">{{ _selectedLead.contact }}</div>
                     </div>
                 </div>
                 
