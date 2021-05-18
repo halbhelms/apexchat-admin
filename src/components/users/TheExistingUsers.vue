@@ -44,8 +44,8 @@
             }
         },
 
-        created() {
-            // this.users = this.$store.state.companyUsers
+        mounted() {
+            
         }
     }
 </script>

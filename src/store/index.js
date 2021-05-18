@@ -437,6 +437,21 @@ export default createStore({
       dispatch('loadLeadsLast60', id)
     },
 
+    async initialize_users_for_company_id({ commit, state }, id) {
+      const users = await axios({
+        method: 'get',
+        url: `https://${state.ApiBase}/users`,
+        params: {
+          company_id: id,
+        },
+        headers: {
+          'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
+        }
+      })
+      commit('SET_USERS', users.data)
+    },
+
     async initialize_videos_for_company_id({ commit, state }, id) {
       let result = await axios({
         method: 'get',
