@@ -30,13 +30,13 @@
                 <input v-model="user.phone" type="text" id="user-phone" />
             </div>
             <!-- is user an admin? -->
-            <div class="form-element is-admin">
+            <!-- <div class="form-element is-admin">
                 <div></div>
                 <div>
                     <input type="checkbox" v-model="user.is_admin"  id="is-admin" />
                     <label class="no-bold" for="is-admin">User is an Admin</label>
                 </div>
-            </div>
+            </div> -->
             <div class="filler"></div>
             <!-- user buttons -->
             <button @click="clearUserForm" class="cancel">Cancel</button>
