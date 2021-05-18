@@ -13,7 +13,7 @@
             :_chat_id="lead.chat_id"
             :_date="lead.generated_at"
             :_type="lead.lead_type"
-            :_contact="lead.raw_data.name"
+            :_contact="lead.contact"
             :_city="lead.city"
             :_state="lead.state"
             :_status="lead.status"/>
@@ -113,6 +113,14 @@
             hasMoreLeads() {
                 let totalLeads = this.$store.getters.getLeadsForDateFilter.total
                 return totalLeads > this.leadsRetrieved
+            },
+
+            selectedLeads() {
+                if (this.$store.state.leadsLast60) {
+                    return this.$store.state[this.$store.state.timeFrame]
+                } else {
+                    return []
+                }
             },
         },
 

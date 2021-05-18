@@ -430,11 +430,11 @@ export default createStore({
       commit('SET_LOADING', false)
     },
 
-    async initialize_users_for_company_id({ dispatch }, id) {
-      dispatch(loadLeadsAll, id)
-      dispatch(loadLeadsLastLogin, id)
-      dispatch(loadLeadsLast30, id)
-      dispatch(loadLeadsLast60, id)
+    async initialize_leads_for_company_id({ dispatch }, id) {
+      dispatch('loadLeadsAll', id)
+      dispatch('loadLeadsLastLogin', id)
+      dispatch('loadLeadsLast30', id)
+      dispatch('loadLeadsLast60', id)
     },
 
     async initialize_videos_for_company_id({ commit, state }, id) {
