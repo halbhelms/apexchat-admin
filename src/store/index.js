@@ -16,6 +16,10 @@ export default createStore({
     // leads to display
     // activeSlice: [],
     leads: [],
+    leadsLastLogin: null,
+    leadsLast30: null,
+    leadsLast60: null,
+    loading: true,
     chats: {},
     videos: [],
     users: [],
@@ -189,6 +193,22 @@ export default createStore({
       state.leads = leads
     },
 
+    SET_LEADS_LAST_LOGIN(state, leadsLastLogin) {
+      state.leadsLastLogin = leadsLastLogin
+    },
+
+    SET_LEADS_LAST_30(state, leadsLast30) {
+      state.leadsLast30 = leadsLast30
+    },
+
+    SET_LEADS_LAST_60(state, leadsLast60) {
+      state.leadsLast60 = leadsLast60
+    },
+
+    SET_LOADING(state, bool) {
+      state.loading = bool
+    },
+
     SET_DISPUTED(state, { leadId, status }) {
       let index = state.leads.findIndex(lead => lead.id == leadId)
       let lead = state.leads[index]
@@ -325,32 +345,96 @@ export default createStore({
       commit('REMOVE_ACTIVE_CHAT')
     },
 
-    async initialize_leads_for_company_id({ commit, state }, id) {
-      console.log('in initialize_leads...')
+    // async initialize_leads_for_company_id({ commit, state}, id) {
+    //   commit('SET_LOADING', true)
+    //   const result = await axios({
+    //     method: 'get',
+    //     url: `https://${state.ApiBase}/leads?company_id=` + id,
+    //     headers: {
+    //       'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+    //       'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
+    //     }
+    //   })
+    //   commit('SET_LEADS', result.data)
+    //   commit('SET_LOADING', false)
+    // },
 
+    async loadLeadsLastLogin({ commit, state }, id) {
+      commit('SET_LOADING', true)
       const result = await axios({
         method: 'get',
-        url: `https://${state.ApiBase}/leads?company_id=` + id,
+        url: `https://${state.ApiBase}/leads`,
+        params: {
+          company_id: id,
+          start_date: 'last_login'
+        },
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
           'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
         }
       })
-      // state.leadsLoaded = true
-
-      commit('SET_LEADS', result.data)
+      commit('SET_LEADS_LAST_LOGIN', result.data)
+      commit('SET_LOADING', false)
     },
 
-    async initialize_users_for_company_id({ commit, state }, id) {
-      let result = await axios({
+    async loadLeadsLast30({ commit, state }, id) {
+      commit('SET_LOADING', true)
+      const result = await axios({
         method: 'get',
-        url: `https://${state.ApiBase}/users?company_id=` + id,
+        url: `https://${state.ApiBase}/leads`,
+        params: {
+          company_id: id,
+          start_date: 'last_30'
+        },
         headers: {
           'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
-          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token,
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
         }
       })
-      commit('SET_USERS', result.data)
+      commit('SET_LEADS_LAST_30', result.data)
+      commit('SET_LOADING', false)
+    },
+
+    async loadLeadsLast60({ commit, state }, id) {
+      commit('SET_LOADING', true)
+      const result = await axios({
+        method: 'get',
+        url: `https://${state.ApiBase}/leads`,
+        params: {
+          company_id: id,
+          start_date: 'last_60'
+        },
+        headers: {
+          'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
+        }
+      })
+      commit('SET_LEADS_LAST_60', result.data)
+      commit('SET_LOADING', false)
+    },
+
+    async loadLeadsAll({ commit, state }, id) {
+      commit('SET_LOADING', true)
+      const result = await axios({
+        method: 'get',
+        url: `https://${state.ApiBase}/leads`,
+        params: {
+          company_id: id,
+        },
+        headers: {
+          'X-User-Email': JSON.parse(sessionStorage.getItem('currentUser')).email,
+          'X-User-Token': JSON.parse(sessionStorage.getItem('currentUser')).authentication_token
+        }
+      })
+      commit('SET_LEADS', result.data)
+      commit('SET_LOADING', false)
+    },
+
+    async initialize_users_for_company_id({ dispatch }, id) {
+      dispatch(loadLeadsAll, id)
+      dispatch(loadLeadsLastLogin, id)
+      dispatch(loadLeadsLast30, id)
+      dispatch(loadLeadsLast60, id)
     },
 
     async initialize_videos_for_company_id({ commit, state }, id) {
