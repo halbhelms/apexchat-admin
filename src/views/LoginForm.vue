@@ -1,6 +1,6 @@
 <template>
     <div v-if='inDev' class='inDev'>{{ options.name}}</div>
-    <section-header>Login</section-header>
+    <section-header>FAQ NOW Admin Login</section-header>
     <form class="login-form" @submit.prevent="loginUser">
         <base-input _label="Email" v-model="login.email" _id="email"></base-input>
         <base-input _label="Password" _type="password" v-model="login.password" _id="password"></base-input>
