@@ -25,7 +25,7 @@
             <!-- password -->
             <div class="form-control">
                 <label for="password">Password</label>
-                <input type="text" id="password" :placeholder="accountInfo.temporary_password" v-model="accountInfo.password">
+                <input type="password" id="password" :placeholder="accountInfo.temporary_password" v-model="accountInfo.password">
             </div>
             <!-- cancel and submit buttons -->
             <div class="account-buttons">
