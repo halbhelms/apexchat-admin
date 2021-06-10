@@ -28,7 +28,7 @@
             :_selectedLead="selectedLead" 
             :_chat="$store.state.activeChat" />
     </div>
-    <div>{{ $store.state.activeChat }}</div>
+    <!-- <div>{{ $store.state.activeChat }}</div> -->
 
 </template>
 
